@@ -37,8 +37,8 @@ const siteConfig = {
   newsletter: {
     enabled: true,
     embedUrl: 'https://subscribe-forms.beehiiv.com/a32a2710-173d-423e-b754-3a4cd3c25cc9',
-    title: 'Stay Updated',
-    description: 'Get updates on calling out phone lunks.',
+    title: 'Get smart - subscribe and follow',
+    description: 'More amazing ideas like this, open source releases, updates, and learnings',
   },
 
   // Navigation menu items

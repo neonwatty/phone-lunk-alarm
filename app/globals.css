@@ -193,14 +193,17 @@
   }
 
   .btn-secondary {
-    background: var(--color-background-elevated);
-    color: var(--color-text-primary);
-    border-color: var(--color-border-primary);
+    background: transparent;
+    color: var(--color-accent-primary);
+    border: 2px solid var(--color-accent-primary);
+    font-weight: 600;
   }
 
   .btn-secondary:hover {
-    border-color: var(--color-accent-primary);
-    color: var(--color-accent-primary);
+    background: var(--color-accent-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-large);
   }
 
   /* Card Styles */

@@ -45,6 +45,13 @@ export default function Footer() {
           </div>
         )}
 
+        {/* Tagline */}
+        <div className="text-center mb-8">
+          <p className="text-xl font-bold" style={{ color: 'var(--color-text-primary)' }}>
+            Stop being a douche: leave your phone at home
+          </p>
+        </div>
+
         <div className="flex flex-col sm:flex-row justify-between items-center text-sm transition-all duration-300">
           <div className="mb-6 sm:mb-0">
             <p className="font-medium transition-all duration-300"

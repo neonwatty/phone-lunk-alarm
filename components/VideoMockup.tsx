@@ -37,7 +37,7 @@ export default function VideoMockup() {
           <>
             {/* Warning banner - always visible */}
             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
-              <div className="bg-red-600 text-white px-6 py-3 rounded-lg font-bold text-xl shadow-2xl">
+              <div className="bg-red-600 text-white px-3 py-1.5 sm:px-6 sm:py-3 rounded-lg font-bold text-sm sm:text-xl shadow-2xl">
                 🚨 PHONE LUNK DETECTED 🚨
               </div>
             </div>
@@ -90,7 +90,7 @@ export default function VideoMockup() {
         backgroundColor: 'var(--color-accent-light)',
         color: 'var(--color-accent-primary)'
       }}>
-        ↑ Live simulation showing Phone Lunk in action
+        ↑ Phone detected = alarm triggered - that's the whole game
       </p>
     </div>
   )

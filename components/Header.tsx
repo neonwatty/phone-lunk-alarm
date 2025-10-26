@@ -13,7 +13,7 @@ export default function Header() {
       <nav className="max-w-4xl mx-auto px-4 py-4" aria-label="Top">
         <div className="flex items-center justify-between">
           {/* Logo/Site name */}
-          <Link href="/" className="font-bold text-2xl transition-all duration-300"
+          <Link href="/" className="font-bold text-xl sm:text-2xl transition-all duration-300"
                 style={{
                   color: 'var(--color-text-primary)',
                   letterSpacing: '-0.02em',
@@ -23,12 +23,12 @@ export default function Header() {
           </Link>
 
           {/* Navigation */}
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-3 sm:space-x-8">
             {siteConfig.navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-lg font-medium transition-all duration-300 relative group"
+                className="text-sm sm:text-lg font-medium transition-all duration-300 relative group"
                 style={{ color: 'var(--color-text-secondary)' }}
               >
                 <span className="group-hover:text-opacity-100 transition-all duration-300"
@@ -41,7 +41,7 @@ export default function Header() {
                       style={{ background: 'var(--color-border-primary)' }}></span>
               </Link>
             ))}
-            <div className="scale-125">
+            <div className="scale-100 sm:scale-125">
               <ThemeToggle />
             </div>
           </div>

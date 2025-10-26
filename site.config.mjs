@@ -9,8 +9,8 @@ const siteConfig = {
   // Basic site information
   site: {
     name: 'Phone Lunk',
-    tagline: 'Get off your phone and work',
-    description: 'Fuck you and your phone. I\'m here to work. Get off the machine if you\'re just gonna scroll.',
+    tagline: 'Fuck your phone',
+    description: 'Phone Lunk detects idiots doom scrolling at the gym and puts them on blast.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://yourusername.github.io/phone-lunk-alarm',
     keywords: ['gym', 'phone detection', 'ai', 'fitness', 'lunk alarm'],
   },
@@ -49,8 +49,8 @@ const siteConfig = {
 
   // Hero section configuration
   hero: {
-    headline: 'Phone Lunk',
-    subheadline: 'Fuck you and your fucking phone. I\'m here to work. If you just want to sit around and doom scroll then fuck off the machine I want to use.',
+    headline: 'Fuck Your Phone',
+    subheadline: 'Phone Lunk detects idiots doom scrolling at the gym and puts them on blast.',
     primaryCTA: {
       text: 'Try the Demo',
       href: '#demo',
@@ -77,7 +77,7 @@ const siteConfig = {
     },
     {
       title: 'Protect Gym Culture',
-      description: 'Keep benches free and rest times honest. Because your gym deserves better than TikTok between sets.',
+      description: 'Stop phone lunks from camping on equipment. Free up benches and machines from doom scrollers hogging what you need.',
       icon: 'shield-check',
     },
     {
@@ -108,8 +108,8 @@ const siteConfig = {
   // SEO defaults
   seo: {
     titleTemplate: '%s | Phone Lunk',
-    defaultTitle: 'Phone Lunk - Get Off Your Phone',
-    description: 'Fuck you and your phone. I\'m here to work. Get off the machine if you\'re just gonna scroll.',
+    defaultTitle: 'Phone Lunk - Fuck Your Phone',
+    description: 'Phone Lunk detects idiots doom scrolling at the gym and puts them on blast.',
     openGraph: {
       type: 'website',
       locale: 'en_US',

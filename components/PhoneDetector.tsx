@@ -132,7 +132,7 @@ export default function PhoneDetector() {
           Try It Yourself
         </h2>
         <p className="text-lg mb-4" style={{ color: 'var(--color-text-secondary)' }}>
-          Allow camera access and hold up your phone. Watch the alarm trigger in real-time.
+          Tired of waiting for equipment while someone camps on it scrolling? This is for you. Hold up your phone and watch the alarm trigger.
         </p>
         <div className="inline-block bg-yellow-500 bg-opacity-20 border border-yellow-500 rounded-lg px-4 py-2 text-sm text-yellow-600 dark:text-yellow-400">
           ⚠️ Your camera feed stays private - all processing happens in your browser

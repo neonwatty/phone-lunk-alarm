@@ -9,7 +9,7 @@ export default function StructuredData({ type = 'website' }: StructuredDataProps
     '@context': 'https://schema.org',
     '@type': 'Website',
     name: 'Phone Lunk',
-    description: 'AI-powered phone detection for gyms. Get off your phone and work.',
+    description: 'Phone Lunk detects idiots doom scrolling at the gym and puts them on blast.',
     url: siteUrl,
     author: {
       '@type': 'Person',

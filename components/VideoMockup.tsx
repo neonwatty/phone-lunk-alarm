@@ -36,8 +36,8 @@ export default function VideoMockup() {
           {/* Detection overlays */}
           <>
             {/* Warning banner - always visible */}
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
-              <div className="bg-red-600 text-white px-3 py-1.5 sm:px-6 sm:py-3 rounded-lg font-bold text-sm sm:text-xl shadow-2xl">
+            <div className="absolute top-2 sm:top-4 left-1/2 transform -translate-x-1/2 z-10">
+              <div className="bg-red-600 text-white px-2 py-0.5 sm:px-6 sm:py-3 rounded text-xs sm:text-xl font-bold shadow-2xl">
                 🚨 PHONE LUNK DETECTED 🚨
               </div>
             </div>
@@ -55,18 +55,18 @@ export default function VideoMockup() {
           </>
 
           {/* Camera indicator */}
-          <div className="absolute top-4 left-4 flex items-center gap-2 bg-black bg-opacity-50 px-3 py-2 rounded-lg">
-            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-            <span className="text-white text-sm font-medium">MONITORING</span>
+          <div className="absolute top-2 sm:top-4 left-2 sm:left-4 flex items-center gap-1 sm:gap-2 bg-black bg-opacity-50 px-2 py-1 sm:px-3 sm:py-2 rounded-lg">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse" />
+            <span className="text-white text-xs sm:text-sm font-medium">MONITORING</span>
           </div>
 
           {/* Status indicator */}
-          <div className="absolute bottom-4 left-4 bg-black bg-opacity-70 backdrop-blur-sm px-4 py-2 rounded-lg">
-            <div className="flex flex-col gap-1">
-              <span className={`text-sm font-bold ${alarmActive ? 'text-red-400' : 'text-green-400'}`}>
+          <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 bg-black bg-opacity-70 backdrop-blur-sm px-2 py-1 sm:px-4 sm:py-2 rounded-lg">
+            <div className="flex flex-col gap-0.5 sm:gap-1">
+              <span className={`text-xs sm:text-sm font-bold ${alarmActive ? 'text-red-400' : 'text-green-400'}`}>
                 {alarmActive ? '⚠️ PHONE DETECTED' : '✓ Monitoring'}
               </span>
-              <span className="text-xs text-gray-300">
+              <span className="text-xs text-gray-300 hidden sm:inline">
                 Objects: {alarmActive ? '2' : '1'} detected
               </span>
             </div>

@@ -25,7 +25,7 @@ export default function Newsletter({ customHeading, customDescription }: Newslet
         {!customHeading && (
           <p className="text-base transition-all duration-300"
              style={{ color: 'var(--color-text-secondary)' }}>
-            Phone detection tech updates and gym culture insights
+            More amazing ideas like this, open source releases, updates, and learnings
           </p>
         )}
       </div>

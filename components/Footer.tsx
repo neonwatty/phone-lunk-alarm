@@ -52,7 +52,15 @@ export default function Footer() {
                  color: 'var(--color-text-secondary)',
                  letterSpacing: '-0.01em'
                }}>
-              © {currentYear} {siteConfig.author.name}
+              © {currentYear}{' '}
+              <a
+                href={siteConfig.social.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-70 transition-opacity"
+              >
+                {siteConfig.author.name}
+              </a>
             </p>
           </div>
 

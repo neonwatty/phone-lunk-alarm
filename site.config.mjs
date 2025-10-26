@@ -17,7 +17,7 @@ const siteConfig = {
 
   // Author/company information
   author: {
-    name: 'Your Name',
+    name: 'Phone Lunk Daddy',
     role: 'Product Builder',
     bio: 'Building innovative tools and products.',
     email: 'hello@example.com',

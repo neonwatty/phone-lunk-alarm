@@ -8,11 +8,11 @@
 const siteConfig = {
   // Basic site information
   site: {
-    name: 'Product Name',
-    tagline: 'Build something amazing',
-    description: 'A modern, performant landing page built with Next.js',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://yourusername.github.io/your-repo',
-    keywords: ['product', 'nextjs', 'landing-page', 'saas'],
+    name: 'Phone Lunk Alarm',
+    tagline: 'Stop the scroll, hit your goals',
+    description: 'AI-powered phone detection for gyms. Because scrolling between sets isn\'t a workout.',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://yourusername.github.io/phone-lunk-alarm',
+    keywords: ['gym', 'phone detection', 'ai', 'fitness', 'lunk alarm'],
   },
 
   // Author/company information
@@ -37,28 +37,27 @@ const siteConfig = {
   newsletter: {
     enabled: true,
     embedUrl: 'https://subscribe-forms.beehiiv.com/a32a2710-173d-423e-b754-3a4cd3c25cc9',
-    title: 'Subscribe to Newsletter',
-    description: 'Get the latest updates delivered to your inbox.',
+    title: 'Stay Updated on Phone Lunk Prevention',
+    description: 'Get gym tech updates and new detection features delivered straight to your inbox.',
   },
 
   // Navigation menu items
   navigation: [
-    { name: 'Features', href: '#features' },
     { name: 'About', href: '/about' },
-    { name: 'Docs', href: '#docs' },
+    { name: 'Newsletter', href: '/newsletter' },
   ],
 
   // Hero section configuration
   hero: {
-    headline: 'Build Your Next Big Idea',
-    subheadline: 'A powerful, easy-to-use platform that helps you ship faster and grow bigger.',
+    headline: 'Phones Down. Gains Up.',
+    subheadline: 'We see you scrolling between sets. AI-powered detection that calls out phone lunks in real-time. Time to keep your gym focused.',
     primaryCTA: {
-      text: 'Get Started',
-      href: '#features',
+      text: 'Try the Demo',
+      href: '#demo',
     },
     secondaryCTA: {
-      text: 'Learn More',
-      href: '/about',
+      text: 'How It Works',
+      href: '#features',
     },
     // Optional: Add image path like '/images/hero-image.png'
     image: null,
@@ -67,50 +66,50 @@ const siteConfig = {
   // Features section
   features: [
     {
-      title: 'Lightning Fast',
-      description: 'Optimized for performance with static site generation and modern best practices.',
-      icon: 'bolt', // heroicons name
+      title: 'AI Snitch Mode',
+      description: 'Real-time object detection powered by TensorFlow.js. Catches phones in the wild with scary accuracy.',
+      icon: 'camera', // heroicons name
     },
     {
-      title: 'Fully Customizable',
-      description: 'Every aspect of your site can be customized through simple configuration.',
-      icon: 'cog-6-tooth',
+      title: 'Instant Shame',
+      description: 'Visual alarms and warning boxes appear the moment someone pulls out their phone. No mercy.',
+      icon: 'bell-alert',
     },
     {
-      title: 'Deploy Anywhere',
-      description: 'Static export makes it easy to deploy to GitHub Pages, Vercel, Netlify, or any static host.',
-      icon: 'rocket-launch',
+      title: 'Protect Gym Culture',
+      description: 'Keep benches free and rest times honest. Because your gym deserves better than TikTok between sets.',
+      icon: 'shield-check',
     },
     {
-      title: 'Dark Mode',
-      description: 'Beautiful light and dark themes that automatically adapt to user preferences.',
-      icon: 'moon',
+      title: 'Browser-Based',
+      description: 'No app install needed. Works right in the browser with webcam access. Try it yourself.',
+      icon: 'globe-alt',
     },
     {
-      title: 'TypeScript',
-      description: 'Built with TypeScript for better developer experience and type safety.',
-      icon: 'code-bracket',
+      title: 'Actually Works',
+      description: 'Built on COCO-SSD model trained on millions of images. Detects phones with impressive accuracy.',
+      icon: 'check-badge',
     },
     {
-      title: 'SEO Optimized',
-      description: 'Built-in SEO best practices with meta tags, Open Graph, and Twitter Cards.',
-      icon: 'magnifying-glass',
+      title: 'Planet Fitness Vibes',
+      description: 'Inspired by the legendary lunk alarm. Same energy, different target. Red lights and all.',
+      icon: 'fire',
     },
   ],
 
   // Call-to-action section
   cta: {
-    headline: 'Ready to Get Started?',
-    description: 'Join thousands of developers building amazing products.',
-    buttonText: 'Start Building',
-    buttonHref: '#',
+    headline: 'Ready to Keep Your Gym Real?',
+    description: 'Test the phone detection yourself. Pull out your phone on camera and watch what happens.',
+    buttonText: 'Try the Detector',
+    buttonHref: '#demo',
   },
 
   // SEO defaults
   seo: {
-    titleTemplate: '%s | Product Name',
-    defaultTitle: 'Product Name - Build something amazing',
-    description: 'A modern, performant landing page built with Next.js',
+    titleTemplate: '%s | Phone Lunk Alarm',
+    defaultTitle: 'Phone Lunk Alarm - Stop the Scroll, Hit Your Goals',
+    description: 'AI-powered phone detection for gyms. Because scrolling between sets isn\'t a workout.',
     openGraph: {
       type: 'website',
       locale: 'en_US',

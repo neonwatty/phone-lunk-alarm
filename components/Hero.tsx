@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import siteConfig from '@/site.config.mjs'
+import VideoMockup from './VideoMockup'
 
 export default function Hero() {
   const { hero } = siteConfig
 
   return (
-    <section className="max-w-4xl mx-auto px-4 py-20 md:py-32">
+    <section className="max-w-6xl mx-auto px-4 py-20 md:py-32">
       <div className="text-center">
         {/* Headline */}
         <h1 className="heading-xl mb-6 stagger-animation stagger-delay-1"
@@ -38,17 +39,10 @@ export default function Hero() {
           )}
         </div>
 
-        {/* Optional Hero Image */}
-        {hero.image && (
-          <div className="mt-16 stagger-animation stagger-delay-4">
-            <img
-              src={hero.image}
-              alt={hero.headline}
-              className="rounded-xl shadow-2xl mx-auto"
-              style={{ maxWidth: '800px', width: '100%' }}
-            />
-          </div>
-        )}
+        {/* Video Mockup Demo */}
+        <div className="stagger-animation stagger-delay-4">
+          <VideoMockup />
+        </div>
       </div>
     </section>
   )

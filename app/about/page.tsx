@@ -1,78 +1,53 @@
+import { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import siteConfig from '@/site.config.mjs'
+import StructuredData from '@/components/StructuredData'
 
-export const metadata = {
-  title: 'About',
-  description: `Learn more about ${siteConfig.site.name}`,
+export const metadata: Metadata = {
+  title: 'About Jeremy',
+  description: 'AI Engineer, HVAC certified technician, and Religious Studies BA passionate about building intelligent systems.',
 }
 
 export default function About() {
-  const { author, site } = siteConfig
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <>
+      <StructuredData type="website" />
 
-      <main className="flex-grow">
-        <article className="max-w-3xl mx-auto px-4 py-20">
-          <div className="mb-12">
-            <h1 className="heading-xl mb-6"
-                style={{ color: 'var(--color-text-primary)' }}>
-              About {site.name}
-            </h1>
-            <p className="text-xl"
-               style={{ color: 'var(--color-text-secondary)', lineHeight: '1.7' }}>
-              {site.description}
-            </p>
-          </div>
+      <div className="min-h-screen flex flex-col transition-colors" style={{ backgroundColor: 'transparent' }}>
+        <Header />
 
-          <div className="card mb-12">
-            <h2 className="heading-md mb-4"
-                style={{ color: 'var(--color-text-primary)' }}>
-              About {author.name}
-            </h2>
-
-            <div className="mb-4">
-              <p className="font-medium mb-2"
-                 style={{ color: 'var(--color-text-secondary)' }}>
-                {author.role}
-              </p>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.7' }}>
-                {author.bio}
-              </p>
-            </div>
-
-            {author.email && (
-              <div className="mt-6">
-                <a
-                  href={`mailto:${author.email}`}
-                  className="btn btn-primary"
-                >
-                  Get in Touch
-                </a>
+        <main className="mb-10">
+          <div className="max-w-4xl mx-auto px-4 py-12">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <div className="mb-4 text-center">
+                <img
+                  src="/images/jeremy-watt-headshot.jpg"
+                  alt="Jeremy Watt"
+                  className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-indigo-200 dark:border-indigo-700 shadow-xl mb-6"
+                />
+                <h1 className="text-4xl font-bold mb-4">Hi, I'm Jeremy!</h1>
               </div>
-            )}
-          </div>
 
-          <div className="prose max-w-none"
-               style={{ color: 'var(--color-text-secondary)' }}>
-            <h2 style={{ color: 'var(--color-text-primary)' }}>
-              Customize This Page
-            </h2>
-            <p>
-              This is a template page. To customize it:
-            </p>
-            <ol>
-              <li>Edit the content in <code>site.config.mjs</code></li>
-              <li>Modify this page at <code>app/about/page.tsx</code></li>
-              <li>Add more sections as needed</li>
-            </ol>
-          </div>
-        </article>
-      </main>
+              <div className="space-y-3">
+                <section>
+                  <p className="text-lg text-center" style={{ color: 'var(--color-text-primary)' }}>
+                    I'm an AI Engineer busy building and thinking about the exponential timeline we live in.
+                  </p>
+                </section>
 
-      <Footer />
-    </div>
+                <section>
+                  <p className="text-lg text-center" style={{ color: 'var(--color-text-primary)' }}>
+                    In previous lives I've been a scholar of Religion, a PhD student in Machine Learning, and an HVAC certified technician.
+                  </p>
+                </section>
+
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <Footer />
+      </div>
+    </>
   )
 }

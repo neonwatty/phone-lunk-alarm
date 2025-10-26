@@ -15,7 +15,7 @@ export default function Footer() {
       <div className="max-w-4xl mx-auto px-4 py-12">
         {/* Newsletter Section */}
         {siteConfig.newsletter?.enabled && (
-          <div className="mb-8 text-center">
+          <div id="newsletter" className="mb-8 text-center">
             <h3 className="text-lg font-semibold mb-2"
                 style={{ color: 'var(--color-text-primary)' }}>
               {siteConfig.newsletter.title}

@@ -351,3 +351,51 @@
       linear-gradient(90deg, rgba(0, 0, 0, 0.12) 1px, transparent 1px) !important;
   }
 }
+
+/* Phone Lunk Alarm Custom Styles */
+@layer utilities {
+  /* Alarm flash animation */
+  @keyframes alarmFlash {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+
+  @keyframes alarmPulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes sirenspin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Red alarm border effect */
+  .alarm-border {
+    animation: alarmPulse 0.5s ease-in-out infinite;
+    border-color: #EF4444 !important;
+  }
+
+  /* Warning badge animation */
+  @keyframes warningBounce {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-10px) rotate(-5deg);
+    }
+    75% {
+      transform: translateY(-10px) rotate(5deg);
+    }
+  }
+
+  .warning-bounce {
+    animation: warningBounce 0.6s ease-in-out infinite;
+  }
+}

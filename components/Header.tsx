@@ -28,7 +28,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium transition-all duration-300 relative group"
+                className="text-base font-medium transition-all duration-300 relative group"
                 style={{ color: 'var(--color-text-secondary)' }}
               >
                 <span className="group-hover:text-opacity-100 transition-all duration-300"
@@ -41,7 +41,9 @@ export default function Header() {
                       style={{ background: 'var(--color-border-primary)' }}></span>
               </Link>
             ))}
-            <ThemeToggle />
+            <div className="scale-110">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </nav>

@@ -27,7 +27,7 @@ const siteConfig = {
   social: {
     github: 'https://github.com/neonwatty',
     twitter: 'https://x.com/neonwatty',
-    linkedin: null,
+    linkedin: 'https://www.linkedin.com/in/jeremy-watt/',
     email: null,
     blog: 'https://neonwatty.com/',
     reddit: 'https://www.reddit.com/user/neonwatty/',
@@ -137,10 +137,10 @@ const siteConfig = {
 
   // Theme colors (CSS custom properties)
   theme: {
-    // Primary brand color (indigo/purple by default)
-    primaryColor: '#6366F1',
-    // Accent color for highlights
-    accentColor: '#8B5CF6',
+    // Primary brand color (Planet Fitness purple)
+    primaryColor: '#A4278D',
+    // Accent color for highlights (Planet Fitness yellow)
+    accentColor: '#F9F72E',
   },
 }
 

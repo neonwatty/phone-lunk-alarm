@@ -15,8 +15,12 @@ export default function Hero() {
         </h1>
 
         {/* Subheadline */}
-        <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto stagger-animation stagger-delay-2"
-           style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
+        <p className="text-xl md:text-2xl mb-12 max-w-5xl mx-auto stagger-animation stagger-delay-2 px-6 py-3 rounded-lg inline-block"
+           style={{
+             backgroundColor: 'var(--color-accent-light)',
+             color: 'var(--color-accent-primary)',
+             lineHeight: '1.6'
+           }}>
           {hero.subheadline}
         </p>
 

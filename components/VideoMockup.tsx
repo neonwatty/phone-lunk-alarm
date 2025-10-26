@@ -86,8 +86,11 @@ export default function VideoMockup() {
       </div>
 
       {/* Info text */}
-      <p className="text-center mt-4 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-        ↑ Live simulation showing phone detection in action
+      <p className="text-center mt-4 text-sm px-4 py-2 rounded-lg inline-block" style={{
+        backgroundColor: 'var(--color-accent-light)',
+        color: 'var(--color-accent-primary)'
+      }}>
+        ↑ Live simulation showing Phone Lunk in action
       </p>
     </div>
   )

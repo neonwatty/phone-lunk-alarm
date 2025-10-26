@@ -29,7 +29,7 @@ export default function Features() {
           color: 'var(--color-accent-primary)',
           lineHeight: '1.6'
         }}>
-          Everything you need to build amazing products
+          Stop being a douche: leave your phone at home
         </p>
       </div>
 

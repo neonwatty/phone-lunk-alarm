@@ -1,14 +1,19 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Newsletter from '@/components/Newsletter'
 
 function NewsletterContent() {
   const searchParams = useSearchParams()
-  const isFromWaitlist = searchParams.get('utm_source') === 'waitlist'
+  const [showMessage, setShowMessage] = useState(false)
+
+  useEffect(() => {
+    const isFromWaitlist = searchParams?.get('utm_source') === 'waitlist'
+    setShowMessage(isFromWaitlist)
+  }, [searchParams])
 
   return (
     <div className="min-h-screen flex flex-col transition-all duration-300"
@@ -18,7 +23,7 @@ function NewsletterContent() {
       <main className="flex-grow">
         <div className="max-w-3xl mx-auto px-4 py-20">
           {/* Waitlist Message */}
-          {isFromWaitlist && (
+          {showMessage && (
             <div className="text-center mb-8">
               <p className="text-2xl font-bold px-6 py-4 rounded-lg inline-block"
                  style={{

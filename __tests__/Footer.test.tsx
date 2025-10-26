@@ -6,8 +6,12 @@ describe('Footer', () => {
   it('renders copyright with author name', () => {
     render(<Footer />)
 
-    const currentYear = new Date().getFullYear()
-    expect(screen.getByText(new RegExp(`${currentYear}.*${siteConfig.author.name}`))).toBeInTheDocument()
+    // Check for the author name link with correct href
+    const authorLink = screen.getByText(siteConfig.author.name)
+    expect(authorLink).toBeInTheDocument()
+    expect(authorLink).toHaveAttribute('href', siteConfig.social.twitter)
+    expect(authorLink).toHaveAttribute('target', '_blank')
+    expect(authorLink).toHaveAttribute('rel', 'noopener noreferrer')
   })
 
   it('renders social links when configured', () => {

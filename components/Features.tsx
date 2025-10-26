@@ -60,7 +60,24 @@ export default function Features() {
               </h3>
 
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
-                {feature.description}
+                {feature.description.split(/(\[.*?\])/).map((part, i) => {
+                  if (part.startsWith('[') && part.endsWith(']')) {
+                    return (
+                      <span
+                        key={i}
+                        className="px-2 py-1 rounded"
+                        style={{
+                          backgroundColor: 'var(--color-accent-light)',
+                          color: 'var(--color-accent-primary)',
+                          fontWeight: '600'
+                        }}
+                      >
+                        {part.slice(1, -1)}
+                      </span>
+                    )
+                  }
+                  return part
+                })}
               </p>
             </div>
           )

@@ -67,32 +67,32 @@ const siteConfig = {
   features: [
     {
       title: 'AI Snitch Mode',
-      description: 'Real-time object detection powered by TensorFlow.js. Catches phones in the wild with scary accuracy.',
+      description: 'Real-time object detection powered by [TensorFlow.js]. Catches phones in the wild with scary accuracy.',
       icon: 'camera', // heroicons name
     },
     {
       title: 'Instant Shame',
-      description: 'Visual alarms and warning boxes appear the moment someone pulls out their phone. No mercy.',
+      description: 'Visual alarms and warning boxes appear the moment someone pulls out their phone. [No mercy].',
       icon: 'bell-alert',
     },
     {
       title: 'Protect Gym Culture',
-      description: 'Stop phone lunks from camping on equipment. Free up benches and machines from doom scrollers hogging what you need.',
+      description: 'Stop [phone lunks] from camping on equipment. Free up benches and machines from doom scrollers hogging what you need.',
       icon: 'shield-check',
     },
     {
       title: 'Actually Possible',
-      description: 'You know we could actually build this now right? Same energy, different target.',
+      description: 'You know we could [actually build this] now right?',
       icon: 'light-bulb',
     },
     {
       title: 'Actually Works',
-      description: 'Built on COCO-SSD model trained on millions of images. Detects phones with impressive accuracy.',
+      description: 'Built on [COCO-SSD model] trained on millions of images. Detects phones with impressive accuracy.',
       icon: 'check-badge',
     },
     {
       title: 'Planet Fitness Vibes',
-      description: 'Inspired by the legendary lunk alarm. Same energy, different target. Red lights and all.',
+      description: 'Inspired by the legendary [lunk alarm]. Same energy, different target. Red lights and all.',
       icon: 'fire',
     },
   ],

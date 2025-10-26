@@ -82,7 +82,7 @@ const siteConfig = {
     },
     {
       title: 'Actually Possible',
-      description: 'You know we could [actually build this] now right?',
+      description: 'Sure this is a joke, but you know we could [actually build this] now right?',
       icon: 'light-bulb',
     },
     {

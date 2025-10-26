@@ -44,7 +44,7 @@ const siteConfig = {
   // Navigation menu items
   navigation: [
     { name: 'About', href: '/about' },
-    { name: 'Newsletter', href: '/newsletter' },
+    { name: 'Join the Waitlist', href: '/newsletter?utm_source=waitlist' },
   ],
 
   // Hero section configuration

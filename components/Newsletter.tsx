@@ -1,4 +1,9 @@
-export default function Newsletter() {
+interface NewsletterProps {
+  customHeading?: string
+  customDescription?: string
+}
+
+export default function Newsletter({ customHeading, customDescription }: NewsletterProps) {
   return (
     <div className="w-full transition-all duration-300">
       <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
@@ -9,12 +14,20 @@ export default function Newsletter() {
               color: 'var(--color-text-primary)',
               letterSpacing: '-0.02em'
             }}>
-          Subscribe for updates
+          {customHeading || 'Subscribe for updates'}
         </h3>
-        <p className="text-base transition-all duration-300"
-           style={{ color: 'var(--color-text-secondary)' }}>
-          Phone detection tech updates and gym culture insights
-        </p>
+        {customDescription && (
+          <p className="text-base transition-all duration-300"
+             style={{ color: 'var(--color-text-secondary)' }}>
+            {customDescription}
+          </p>
+        )}
+        {!customHeading && (
+          <p className="text-base transition-all duration-300"
+             style={{ color: 'var(--color-text-secondary)' }}>
+            Phone detection tech updates and gym culture insights
+          </p>
+        )}
       </div>
 
       <iframe

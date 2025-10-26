@@ -38,7 +38,8 @@ function NewsletterContent() {
 
           {/* Newsletter Signup */}
           <Newsletter
-            customHeading={showMessage ? "Smarten up and subscribe to my newsletter and follow me on social" : undefined}
+            customHeading={showMessage ? "Get smart - subscribe and follow" : undefined}
+            customDescription={showMessage ? "More amazing ideas like this, open source releases, updates, and learnings" : undefined}
           />
 
           {/* Social Links - Only show when from waitlist */}

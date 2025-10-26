@@ -37,6 +37,13 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.author.name }],
   creator: siteConfig.author.name,
   metadataBase: new URL(siteConfig.site.url),
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: '/images/apple-touch-icon.png',
+  },
   openGraph: {
     type: siteConfig.seo.openGraph.type as any,
     locale: siteConfig.seo.openGraph.locale,

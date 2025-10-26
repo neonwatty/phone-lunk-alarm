@@ -16,10 +16,35 @@ export default function PhoneDetector() {
   const [detectionCount, setDetectionCount] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [isCompatible, setIsCompatible] = useState(true)
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Check browser compatibility
+  useEffect(() => {
+    const checkCompatibility = () => {
+      const hasUserMedia = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+      const hasWebGL = (() => {
+        try {
+          const canvas = document.createElement('canvas')
+          return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+        } catch (e) {
+          return false
+        }
+      })()
+
+      setIsCompatible(hasUserMedia && hasWebGL)
+    }
+
+    checkCompatibility()
+  }, [])
 
   // Load the model
   useEffect(() => {
+    if (!isCompatible) {
+      setIsLoading(false)
+      return
+    }
+
     const loadModel = async () => {
       try {
         setIsLoading(true)
@@ -37,7 +62,7 @@ export default function PhoneDetector() {
     }
 
     loadModel()
-  }, [])
+  }, [isCompatible])
 
   // Run detection on video frames
   const detectPhone = async () => {
@@ -131,10 +156,11 @@ export default function PhoneDetector() {
         <h2 className="heading-lg mb-4" style={{ color: 'var(--color-text-primary)' }}>
           Try It Yourself
         </h2>
-        <p className="text-lg mb-4 px-6 py-3 rounded-lg inline-block" style={{
+        <p className="text-base md:text-lg mb-4 px-4 md:px-6 py-3 rounded-lg" style={{
           backgroundColor: 'var(--color-accent-light)',
           color: 'var(--color-accent-primary)',
-          lineHeight: '1.6'
+          lineHeight: '1.6',
+          display: 'inline-block'
         }}>
           Tired of waiting for equipment while someone camps on it scrolling? This is for you. Hold up your phone and watch the alarm trigger.
         </p>
@@ -144,8 +170,18 @@ export default function PhoneDetector() {
       </div>
 
       <div className="relative">
+        {/* Browser compatibility fallback */}
+        {!isCompatible && !isLoading && (
+          <div className="bg-gray-800 rounded-2xl p-12 text-center border-2 border-purple-500">
+            <p className="text-white text-2xl mb-2">😜</p>
+            <p className="text-white text-xl font-bold">
+              If you were using a better browser you would see the demo here
+            </p>
+          </div>
+        )}
+
         {/* Loading state */}
-        {isLoading && (
+        {isLoading && isCompatible && (
           <div className="bg-gray-800 rounded-2xl p-12 text-center">
             <div className="animate-spin text-6xl mb-4">⚙️</div>
             <p className="text-white text-xl">Loading AI model...</p>
@@ -154,14 +190,14 @@ export default function PhoneDetector() {
         )}
 
         {/* Error state */}
-        {error && (
+        {error && isCompatible && (
           <div className="bg-red-900 bg-opacity-20 border border-red-500 rounded-2xl p-8 text-center">
             <p className="text-red-400 text-xl mb-2">⚠️ {error}</p>
           </div>
         )}
 
         {/* Webcam and canvas */}
-        {!isLoading && !error && (
+        {!isLoading && !error && isCompatible && (
           <div className="relative rounded-2xl overflow-hidden shadow-2xl">
             {/* Webcam feed */}
             <Webcam

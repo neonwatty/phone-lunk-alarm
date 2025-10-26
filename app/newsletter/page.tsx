@@ -1,14 +1,15 @@
+'use client'
+
+import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Newsletter from '@/components/Newsletter'
-import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Newsletter',
-  description: 'Subscribe for updates on phone detection tech, gym culture insights, and new features',
-}
+function NewsletterContent() {
+  const searchParams = useSearchParams()
+  const isFromWaitlist = searchParams.get('utm_source') === 'waitlist'
 
-export default function NewsletterPage() {
   return (
     <div className="min-h-screen flex flex-col transition-all duration-300"
          style={{ backgroundColor: 'transparent' }}>
@@ -16,6 +17,19 @@ export default function NewsletterPage() {
 
       <main className="flex-grow">
         <div className="max-w-3xl mx-auto px-4 py-20">
+          {/* Waitlist Message */}
+          {isFromWaitlist && (
+            <div className="text-center mb-8">
+              <p className="text-2xl font-bold px-6 py-4 rounded-lg inline-block"
+                 style={{
+                   backgroundColor: 'var(--color-accent-light)',
+                   color: 'var(--color-accent-primary)'
+                 }}>
+                Wow you're an easy mark!
+              </p>
+            </div>
+          )}
+
           {/* Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-5xl font-extrabold mb-6 leading-tight transition-all duration-300"
@@ -93,5 +107,20 @@ export default function NewsletterPage() {
 
       <Footer />
     </div>
+  )
+}
+
+export default function NewsletterPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex flex-col transition-all duration-300"
+           style={{ backgroundColor: 'transparent' }}>
+        <Header />
+        <main className="flex-grow" />
+        <Footer />
+      </div>
+    }>
+      <NewsletterContent />
+    </Suspense>
   )
 }

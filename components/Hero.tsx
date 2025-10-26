@@ -15,11 +15,12 @@ export default function Hero() {
         </h1>
 
         {/* Subheadline */}
-        <p className="text-xl md:text-2xl mb-12 max-w-5xl mx-auto stagger-animation stagger-delay-2 px-6 py-3 rounded-lg inline-block"
+        <p className="text-lg md:text-xl lg:text-2xl mb-12 max-w-5xl mx-auto stagger-animation stagger-delay-2 px-4 md:px-6 py-3 rounded-lg"
            style={{
              backgroundColor: 'var(--color-accent-light)',
              color: 'var(--color-accent-primary)',
-             lineHeight: '1.6'
+             lineHeight: '1.6',
+             display: 'inline-block'
            }}>
           {hero.subheadline}
         </p>
@@ -41,6 +42,13 @@ export default function Hero() {
               {hero.secondaryCTA.text}
             </Link>
           )}
+
+          <Link
+            href="/newsletter?utm_source=waitlist"
+            className="btn btn-primary w-full sm:w-auto"
+          >
+            Join the Waitlist
+          </Link>
         </div>
 
         {/* Video Mockup Demo */}

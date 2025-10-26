@@ -27,6 +27,8 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains'
 })
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.seo.defaultTitle,
@@ -39,10 +41,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.site.url),
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: `${basePath}/favicon.svg`, type: 'image/svg+xml' },
+      { url: `${basePath}/favicon.ico`, sizes: 'any' },
     ],
-    apple: '/images/apple-touch-icon.png',
+    apple: `${basePath}/images/apple-touch-icon.png`,
   },
   openGraph: {
     type: siteConfig.seo.openGraph.type as any,
@@ -82,9 +84,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href={`${basePath}/favicon.svg`} type="image/svg+xml" />
+        <link rel="apple-touch-icon" href={`${basePath}/images/apple-touch-icon.png`} />
+        <link rel="manifest" href={`${basePath}/manifest.json`} />
       </head>
       <body className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans grid-pattern`}>
         {GA_TRACKING_ID && (

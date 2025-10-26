@@ -8,8 +8,8 @@ export default function StructuredData({ type = 'website' }: StructuredDataProps
   const websiteStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'Website',
-    name: 'Phone Lunk Alarm',
-    description: 'AI-powered phone detection for gyms. Because scrolling between sets isn\'t a workout.',
+    name: 'Phone Lunk',
+    description: 'AI-powered phone detection for gyms. Get off your phone and work.',
     url: siteUrl,
     author: {
       '@type': 'Person',
@@ -17,7 +17,7 @@ export default function StructuredData({ type = 'website' }: StructuredDataProps
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Phone Lunk Alarm',
+      name: 'Phone Lunk',
       logo: {
         '@type': 'ImageObject',
         url: `${siteUrl}/images/logo.png`

@@ -8,9 +8,9 @@
 const siteConfig = {
   // Basic site information
   site: {
-    name: 'Phone Lunk Alarm',
-    tagline: 'Stop the scroll, hit your goals',
-    description: 'AI-powered phone detection for gyms. Because scrolling between sets isn\'t a workout.',
+    name: 'Phone Lunk',
+    tagline: 'Get off your phone and work',
+    description: 'Fuck you and your phone. I\'m here to work. Get off the machine if you\'re just gonna scroll.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://yourusername.github.io/phone-lunk-alarm',
     keywords: ['gym', 'phone detection', 'ai', 'fitness', 'lunk alarm'],
   },
@@ -37,8 +37,8 @@ const siteConfig = {
   newsletter: {
     enabled: true,
     embedUrl: 'https://subscribe-forms.beehiiv.com/a32a2710-173d-423e-b754-3a4cd3c25cc9',
-    title: 'Stay Updated on Phone Lunk Prevention',
-    description: 'Get gym tech updates and new detection features delivered straight to your inbox.',
+    title: 'Stay Updated',
+    description: 'Get updates on calling out phone lunks.',
   },
 
   // Navigation menu items
@@ -49,8 +49,8 @@ const siteConfig = {
 
   // Hero section configuration
   hero: {
-    headline: 'Phones Down. Gains Up.',
-    subheadline: 'We see you scrolling between sets. AI-powered detection that calls out phone lunks in real-time. Time to keep your gym focused.',
+    headline: 'Phone Lunk',
+    subheadline: 'Fuck you and your fucking phone. I\'m here to work. If you just want to sit around and doom scroll then fuck off the machine I want to use.',
     primaryCTA: {
       text: 'Try the Demo',
       href: '#demo',
@@ -107,9 +107,9 @@ const siteConfig = {
 
   // SEO defaults
   seo: {
-    titleTemplate: '%s | Phone Lunk Alarm',
-    defaultTitle: 'Phone Lunk Alarm - Stop the Scroll, Hit Your Goals',
-    description: 'AI-powered phone detection for gyms. Because scrolling between sets isn\'t a workout.',
+    titleTemplate: '%s | Phone Lunk',
+    defaultTitle: 'Phone Lunk - Get Off Your Phone',
+    description: 'Fuck you and your phone. I\'m here to work. Get off the machine if you\'re just gonna scroll.',
     openGraph: {
       type: 'website',
       locale: 'en_US',

@@ -81,9 +81,9 @@ const siteConfig = {
       icon: 'shield-check',
     },
     {
-      title: 'Browser-Based',
-      description: 'No app install needed. Works right in the browser with webcam access. Try it yourself.',
-      icon: 'globe-alt',
+      title: 'Actually Possible',
+      description: 'You know we could actually build this now right? Same energy, different target.',
+      icon: 'light-bulb',
     },
     {
       title: 'Actually Works',

@@ -90,7 +90,7 @@ export default function VideoMockup() {
         backgroundColor: 'var(--color-accent-light)',
         color: 'var(--color-accent-primary)'
       }}>
-        ↑ Phone detected = alarm triggered - that's the whole game
+        ↑ Phone detected = alarm triggered + let the shaming begin!
       </p>
     </div>
   )

@@ -24,8 +24,11 @@ export default function Features() {
             style={{ color: 'var(--color-text-primary)' }}>
           Features
         </h2>
-        <p className="text-lg"
-           style={{ color: 'var(--color-text-secondary)' }}>
+        <p className="text-lg px-6 py-3 rounded-lg inline-block" style={{
+          backgroundColor: 'var(--color-accent-light)',
+          color: 'var(--color-accent-primary)',
+          lineHeight: '1.6'
+        }}>
           Everything you need to build amazing products
         </p>
       </div>

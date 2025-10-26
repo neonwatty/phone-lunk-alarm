@@ -13,7 +13,7 @@ export default function Header() {
       <nav className="max-w-4xl mx-auto px-4 py-4" aria-label="Top">
         <div className="flex items-center justify-between">
           {/* Logo/Site name */}
-          <Link href="/" className="font-bold text-lg transition-all duration-300"
+          <Link href="/" className="font-bold text-2xl transition-all duration-300"
                 style={{
                   color: 'var(--color-text-primary)',
                   letterSpacing: '-0.02em',

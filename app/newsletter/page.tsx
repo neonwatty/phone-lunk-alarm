@@ -38,7 +38,7 @@ function NewsletterContent() {
 
           {/* Newsletter Signup */}
           <Newsletter
-            customHeading={showMessage ? "Get smart - subscribe and follow" : undefined}
+            customHeading={showMessage ? "Get smart - subscribe for more from the guy who made this" : undefined}
             customDescription={showMessage ? "More amazing ideas like this, open source releases, updates, and learnings" : undefined}
           />
 

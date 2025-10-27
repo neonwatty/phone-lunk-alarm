@@ -18,7 +18,20 @@ export default function Footer() {
           <div id="newsletter" className="mb-8 text-center">
             <h3 className="text-lg font-semibold mb-2"
                 style={{ color: 'var(--color-text-primary)' }}>
-              {siteConfig.newsletter.title}
+              {siteConfig.newsletter.title.split('guy who made this').map((part, i, arr) => (
+                <span key={i}>
+                  {part}
+                  {i < arr.length - 1 && (
+                    <a
+                      href="/about"
+                      className="hover:opacity-70 transition-opacity underline"
+                      style={{ color: 'var(--color-text-primary)' }}
+                    >
+                      guy who made this
+                    </a>
+                  )}
+                </span>
+              ))}
             </h3>
             <p className="text-sm mb-4"
                style={{ color: 'var(--color-text-secondary)' }}>

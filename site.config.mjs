@@ -37,7 +37,7 @@ const siteConfig = {
   newsletter: {
     enabled: true,
     embedUrl: 'https://subscribe-forms.beehiiv.com/a32a2710-173d-423e-b754-3a4cd3c25cc9',
-    title: 'Get smart - subscribe and follow',
+    title: 'Get smart - subscribe for more from the guy who made this',
     description: 'More amazing ideas like this, open source releases, updates, and learnings',
   },
 

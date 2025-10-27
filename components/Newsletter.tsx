@@ -4,6 +4,34 @@ interface NewsletterProps {
 }
 
 export default function Newsletter({ customHeading, customDescription }: NewsletterProps) {
+  // Parse the heading to add link for "guy who made this"
+  const renderHeading = () => {
+    const heading = customHeading || 'Subscribe for updates'
+    const parts = heading.split('guy who made this')
+
+    if (parts.length > 1) {
+      return (
+        <>
+          {parts.map((part, i, arr) => (
+            <span key={i}>
+              {part}
+              {i < arr.length - 1 && (
+                <a
+                  href="/about"
+                  className="hover:opacity-70 transition-opacity underline"
+                  style={{ color: 'var(--color-text-primary)' }}
+                >
+                  guy who made this
+                </a>
+              )}
+            </span>
+          ))}
+        </>
+      )
+    }
+    return heading
+  }
+
   return (
     <div className="w-full transition-all duration-300">
       <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
@@ -14,7 +42,7 @@ export default function Newsletter({ customHeading, customDescription }: Newslet
               color: 'var(--color-text-primary)',
               letterSpacing: '-0.02em'
             }}>
-          {customHeading || 'Subscribe for updates'}
+          {renderHeading()}
         </h3>
         {customDescription && (
           <p className="text-base transition-all duration-300"

@@ -28,7 +28,7 @@ export default function About() {
                 <h1 className="text-4xl font-bold mb-4">Hi, I'm Jeremy!</h1>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-6">
                 <section>
                   <p className="text-lg text-center" style={{ color: 'var(--color-text-primary)' }}>
                     I'm an AI Engineer busy building and thinking about the exponential timeline we live in.
@@ -39,6 +39,83 @@ export default function About() {
                   <p className="text-lg text-center" style={{ color: 'var(--color-text-primary)' }}>
                     In previous lives I've been a scholar of Religion, a PhD student in Machine Learning, and an HVAC certified technician.
                   </p>
+                </section>
+
+                <section className="mt-8">
+                  <h2 className="text-2xl font-bold text-center mb-4" style={{ color: 'var(--color-text-primary)' }}>
+                    Projects
+                  </h2>
+                  <div className="grid gap-4 max-w-2xl mx-auto">
+                    <div className="p-4 rounded-lg border" style={{ borderColor: 'var(--color-border-primary)', backgroundColor: 'var(--color-background-secondary)' }}>
+                      <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>
+                        <a href="https://chromewebstore.google.com/detail/ytgify/dnljofakogbecppbkmnoffppkfdmpfje" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+                          YTGify
+                        </a>
+                      </h3>
+                      <p style={{ color: 'var(--color-text-secondary)' }}>
+                        Chrome Extension that enables users to instantly create GIFs from YouTube videos.
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-lg border" style={{ borderColor: 'var(--color-border-primary)', backgroundColor: 'var(--color-background-secondary)' }}>
+                      <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>
+                        <a href="https://mybodyscans.xyz/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+                          MyBodyScans
+                        </a>
+                      </h3>
+                      <p style={{ color: 'var(--color-text-secondary)' }}>
+                        AI-powered application designed to help organize InBody scan data.
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-lg border" style={{ borderColor: 'var(--color-border-primary)', backgroundColor: 'var(--color-background-secondary)' }}>
+                      <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>
+                        <a href="https://www.npmjs.com/package/tfq" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+                          TFQ (Test Failure Queue)
+                        </a>
+                      </h3>
+                      <p style={{ color: 'var(--color-text-secondary)' }}>
+                        Debugging tool powered by Claude Code that addresses test failures without context overload.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="mt-8">
+                  <h2 className="text-2xl font-bold text-center mb-4" style={{ color: 'var(--color-text-primary)' }}>
+                    Book
+                  </h2>
+                  <div className="max-w-2xl mx-auto p-4 rounded-lg border" style={{ borderColor: 'var(--color-border-primary)', backgroundColor: 'var(--color-background-secondary)' }}>
+                    <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>
+                      Machine Learning Refined: Foundations, Algorithms, and Applications
+                    </h3>
+                    <p className="mb-3" style={{ color: 'var(--color-text-secondary)' }}>
+                      By Jeremy Watt, Reza Borhani, Aggelos K. Katsaggelos
+                    </p>
+                    <p className="mb-4" style={{ color: 'var(--color-text-secondary)' }}>
+                      Published by Cambridge University Press
+                    </p>
+                    <div className="flex gap-3">
+                      <a
+                        href="https://www.amazon.com/Machine-Learning-Refined-Foundations-Applications/dp/1108480721"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-4 py-2 rounded-lg font-medium hover:opacity-80 transition-opacity"
+                        style={{ backgroundColor: 'var(--color-accent-primary)', color: 'white' }}
+                      >
+                        View on Amazon
+                      </a>
+                      <a
+                        href="https://github.com/neonwatty/machine-learning-refined"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-4 py-2 rounded-lg font-medium hover:opacity-80 transition-opacity"
+                        style={{ backgroundColor: 'var(--color-background-tertiary)', color: 'var(--color-text-primary)', border: '1px solid var(--color-border-primary)' }}
+                      >
+                        GitHub Repo
+                      </a>
+                    </div>
+                  </div>
                 </section>
 
               </div>

@@ -61,6 +61,13 @@ export default function Footer() {
               >
                 {siteConfig.author.name}
               </a>
+              {' · '}
+              <a
+                href="/about"
+                className="hover:opacity-70 transition-opacity"
+              >
+                About
+              </a>
             </p>
           </div>
 

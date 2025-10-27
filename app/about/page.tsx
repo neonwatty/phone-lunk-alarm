@@ -45,7 +45,7 @@ export default function About() {
 
                 <section className="mt-8">
                   <h2 className="text-2xl font-bold text-center mb-6" style={{ color: 'var(--color-text-primary)' }}>
-                    Projects
+                    Recent Projects
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <a href="https://chromewebstore.google.com/detail/ytgify/dnljofakogbecppbkmnoffppkfdmpfje" target="_blank" rel="noopener noreferrer" className="glass-card rounded-xl overflow-hidden group hover:transform hover:scale-[1.02] transition-all duration-300">
@@ -110,6 +110,13 @@ export default function About() {
                   </h2>
                   <div className="max-w-3xl mx-auto glass-card rounded-xl overflow-hidden p-6">
                     <div className="flex flex-col md:flex-row gap-6">
+                      <div className="flex-shrink-0 mx-auto md:mx-0">
+                        <img
+                          src={`${basePath}/images/ml-refined-cover.png`}
+                          alt="Machine Learning Refined Book Cover"
+                          className="w-48 h-auto rounded-lg shadow-lg"
+                        />
+                      </div>
                       <div className="flex-1">
                         <h3 className="text-2xl font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>
                           Machine Learning Refined: Foundations, Algorithms, and Applications

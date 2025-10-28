@@ -25,25 +25,25 @@ const siteConfig = {
 
   // Social media links (set to null to hide)
   social: {
-    github: 'https://github.com/neonwatty',
+    github: null,
     twitter: 'https://x.com/neonwatty',
-    linkedin: 'https://www.linkedin.com/in/jeremy-watt/',
+    linkedin: null,
     email: null,
     blog: 'https://neonwatty.com/',
-    reddit: 'https://www.reddit.com/user/neonwatty/',
+    reddit: null,
   },
 
   // Newsletter configuration (Beehiiv embed)
   newsletter: {
-    enabled: true,
-    embedUrl: 'https://subscribe-forms.beehiiv.com/a32a2710-173d-423e-b754-3a4cd3c25cc9',
-    title: 'Get smart - subscribe for more from the guy who made this',
-    description: 'More amazing ideas like this, open source releases, updates, and learnings',
+    enabled: false,
+    embedUrl: '',
+    title: '',
+    description: '',
   },
 
   // Navigation menu items
   navigation: [
-    { name: 'Join the Waitlist', href: '/newsletter?utm_source=waitlist' },
+    { name: 'Join the Waitlist', href: '/waitlist?utm_source=waitlist' },
   ],
 
   // Hero section configuration

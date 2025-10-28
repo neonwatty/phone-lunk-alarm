@@ -44,7 +44,7 @@ export default function Hero() {
           )}
 
           <Link
-            href="/newsletter?utm_source=waitlist"
+            href="/waitlist?utm_source=waitlist"
             className="btn btn-primary w-full sm:w-auto"
           >
             Join the Waitlist

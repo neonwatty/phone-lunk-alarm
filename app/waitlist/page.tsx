@@ -1,6 +1,8 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
 export default function NewsletterPage() {
   return (
     <>
@@ -47,7 +49,7 @@ export default function NewsletterPage() {
                   className="inline-block transition-opacity hover:opacity-90"
                 >
                   <img
-                    src="/chrome-web-store-badge.png"
+                    src={`${basePath}/chrome-web-store-badge.png`}
                     alt="Available in the Chrome Web Store"
                     className="h-16 sm:h-20 w-auto"
                   />

@@ -89,6 +89,9 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
+                  // Add loading class to prevent transitions during theme initialization
+                  document.documentElement.classList.add('loading');
+
                   const savedTheme = localStorage.getItem('theme');
                   const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                   const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
@@ -100,6 +103,13 @@ export default function RootLayout({
                     document.documentElement.classList.remove('light');
                     document.documentElement.classList.add('dark');
                   }
+
+                  // Remove loading class after a frame to re-enable transitions
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                      document.documentElement.classList.remove('loading');
+                    });
+                  });
                 } catch (e) {}
               })();
             `,

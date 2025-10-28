@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent transitions on page load to avoid theme flicker */
+html.loading * {
+  transition: none !important;
+}
+
 @layer base {
   :root {
     /* Professional Dark UI Design System - Default */

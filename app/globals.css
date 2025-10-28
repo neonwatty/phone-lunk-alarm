@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 /* Prevent transitions on page load to avoid theme flicker */
-html.loading * {
+html:not(.loaded) *,
+html:not(.loaded) *::before,
+html:not(.loaded) *::after {
   transition: none !important;
+  animation-duration: 0s !important;
 }
 
 @layer base {

@@ -1,8 +1,13 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import ThemeToggle from './ThemeToggle'
 import siteConfig from '@/site.config.mjs'
 
 export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md transition-all duration-300"
             style={{
@@ -22,13 +27,13 @@ export default function Header() {
             {siteConfig.site.name}
           </Link>
 
-          {/* Navigation */}
-          <div className="flex items-center space-x-3 sm:space-x-8">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-3 lg:space-x-6">
             {siteConfig.navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm sm:text-lg font-medium transition-all duration-300 relative group"
+                className="text-sm lg:text-base font-medium transition-all duration-300 relative group whitespace-nowrap"
                 style={{ color: 'var(--color-text-secondary)' }}
               >
                 <span className="group-hover:text-opacity-100 transition-all duration-300"
@@ -41,11 +46,53 @@ export default function Header() {
                       style={{ background: 'var(--color-border-primary)' }}></span>
               </Link>
             ))}
-            <div className="scale-100 sm:scale-125">
+            <div className="scale-100 lg:scale-110">
               <ThemeToggle />
             </div>
           </div>
+
+          {/* Mobile Menu Button & Theme Toggle */}
+          <div className="flex md:hidden items-center space-x-3">
+            <ThemeToggle />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-md transition-all duration-300"
+              style={{ color: 'var(--color-text-primary)' }}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden mt-4 py-4 space-y-3 border-t"
+               style={{ borderColor: 'var(--color-border-primary)' }}>
+            {siteConfig.navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 px-3 rounded-md font-medium transition-all duration-300"
+                style={{
+                  color: 'var(--color-text-secondary)',
+                  backgroundColor: 'var(--color-background-secondary)'
+                }}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        )}
       </nav>
     </header>
   )

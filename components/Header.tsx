@@ -28,40 +28,25 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
-            {siteConfig.navigation.map((item, index) => {
-              const isLastItem = index === siteConfig.navigation.length - 1
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-sm lg:text-base font-medium transition-all duration-300 rounded-full px-3 py-1.5 lg:px-4 lg:py-2 whitespace-nowrap ${
-                    isLastItem ? 'font-semibold' : ''
-                  }`}
-                  style={{
-                    color: 'var(--color-text-secondary)',
-                    backgroundColor: isLastItem ? 'var(--color-accent-primary)' : 'var(--color-background-secondary)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = isLastItem
-                      ? 'var(--color-accent-primary)'
-                      : 'var(--color-background-tertiary)'
-                    if (isLastItem) {
-                      e.currentTarget.style.color = 'var(--color-text-inverse)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = isLastItem
-                      ? 'var(--color-accent-primary)'
-                      : 'var(--color-background-secondary)'
-                    e.currentTarget.style.color = 'var(--color-text-secondary)'
-                  }}
-                >
+          <div className="hidden md:flex items-center space-x-3 lg:space-x-6">
+            {siteConfig.navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm lg:text-base font-medium transition-all duration-300 relative group whitespace-nowrap"
+                style={{ color: 'var(--color-text-secondary)' }}
+              >
+                <span className="group-hover:text-opacity-100 transition-all duration-300"
+                      style={{
+                        color: 'var(--color-text-secondary)'
+                      }}>
                   {item.name}
-                </Link>
-              )
-            })}
-            <div className="scale-100 lg:scale-110 ml-2">
+                </span>
+                <span className="absolute bottom-0 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
+                      style={{ background: 'var(--color-border-primary)' }}></span>
+              </Link>
+            ))}
+            <div className="scale-100 lg:scale-110">
               <ThemeToggle />
             </div>
           </div>

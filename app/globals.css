@@ -32,7 +32,7 @@ html:not(.loaded) *::after {
     --color-alarm-blue: #0066FF;
 
     /* Professional borders */
-    --color-border-primary: #6b7280;
+    --color-border-primary: #9ca3af;
     --color-border-secondary: #475569;
     --color-border-subtle: #1f2937;
     --color-border-accent: #A4278D;
@@ -71,7 +71,7 @@ html:not(.loaded) *::after {
     --color-alarm-blue: #0066FF;
 
     /* Light mode borders */
-    --color-border-primary: #9ca3af;
+    --color-border-primary: #4b5563;
     --color-border-secondary: #d1d5db;
     --color-border-subtle: #f3f4f6;
     --color-border-accent: #A4278D;

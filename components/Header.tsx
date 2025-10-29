@@ -28,24 +28,35 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-3 lg:space-x-6">
-            {siteConfig.navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm lg:text-base font-medium transition-all duration-300 relative group whitespace-nowrap"
-                style={{ color: 'var(--color-text-secondary)' }}
-              >
-                <span className="group-hover:text-opacity-100 transition-all duration-300"
-                      style={{
-                        color: 'var(--color-text-secondary)'
-                      }}>
-                  {item.name}
-                </span>
-                <span className="absolute bottom-0 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
-                      style={{ background: 'var(--color-border-primary)' }}></span>
-              </Link>
+          <div className="hidden md:flex items-center">
+            {siteConfig.navigation.map((item, index) => (
+              <div key={item.name} className="flex items-center">
+                <Link
+                  href={item.href}
+                  className="text-sm lg:text-base font-medium transition-all duration-300 relative group whitespace-nowrap px-3 lg:px-4"
+                  style={{ color: 'var(--color-text-secondary)' }}
+                >
+                  <span className="group-hover:text-opacity-100 transition-all duration-300"
+                        style={{
+                          color: 'var(--color-text-secondary)'
+                        }}>
+                    {item.name}
+                  </span>
+                  <span className="absolute bottom-0 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
+                        style={{ background: 'var(--color-border-primary)' }}></span>
+                </Link>
+                {index < siteConfig.navigation.length - 1 && (
+                  <div
+                    className="h-4 w-px mx-1"
+                    style={{ backgroundColor: 'var(--color-border-primary)' }}
+                  />
+                )}
+              </div>
             ))}
+            <div
+              className="h-4 w-px mx-3 lg:mx-4"
+              style={{ backgroundColor: 'var(--color-border-primary)' }}
+            />
             <div className="scale-100 lg:scale-110">
               <ThemeToggle />
             </div>

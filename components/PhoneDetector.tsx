@@ -204,15 +204,26 @@ export default function PhoneDetector() {
         <h2 className="heading-lg mb-4" style={{ color: 'var(--color-text-primary)' }}>
           Try It Yourself
         </h2>
-        <p className="text-base md:text-lg mb-4 px-4 md:px-6 py-3 rounded-lg" style={{
-          backgroundColor: 'var(--color-accent-light)',
-          color: 'var(--color-accent-primary)',
-          lineHeight: '1.6',
-          display: 'inline-block'
-        }}>
-          Hold up your phone to the camera and watch the Phone Lunk magic happen! On mobile? Steal your friend's phone
-        </p>
-        <div className="inline-block bg-yellow-500 bg-opacity-20 border border-yellow-500 rounded-lg px-4 py-2 text-sm text-yellow-600 dark:text-yellow-400">
+
+        {/* Instructions */}
+        <div className="max-w-2xl mx-auto mb-6">
+          <ol className="text-left space-y-3 text-base md:text-lg" style={{ color: 'var(--color-text-secondary)' }}>
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>1.</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Allow camera access</strong> when prompted</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>2.</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Choose front or rear camera</strong> (if on mobile)</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>3.</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Point at a phone lunk</strong> to put them on blast!</span>
+            </li>
+          </ol>
+        </div>
+
+        <div className="inline-block bg-yellow-500 bg-opacity-20 border border-yellow-500 rounded-lg px-4 py-2 text-sm text-yellow-600 dark:text-yellow-400 mb-4">
           ⚠️ Your camera feed stays private - all processing happens in your browser
         </div>
 
@@ -335,29 +346,29 @@ export default function PhoneDetector() {
             />
 
             {/* Status bar */}
-            <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
+            <div className="absolute top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-4 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-2">
               {/* Recording indicator */}
-              <div className="bg-black bg-opacity-60 backdrop-blur-sm px-4 py-2 rounded-lg flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-                <span className="text-white text-sm font-semibold">MONITORING</span>
+              <div className="bg-black bg-opacity-60 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg flex items-center gap-2">
+                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse" />
+                <span className="text-white text-xs sm:text-sm font-semibold">MONITORING</span>
               </div>
 
               {/* Camera controls */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 {/* Camera switch button */}
                 <button
                   onClick={handleCameraSwitch}
-                  className="bg-black bg-opacity-60 backdrop-blur-sm px-4 py-2 rounded-lg hover:bg-opacity-80 transition-all duration-300 flex items-center gap-2"
-                  title="Switch camera"
+                  className="bg-black bg-opacity-60 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:bg-opacity-80 transition-all duration-300 flex items-center gap-1.5 sm:gap-2"
+                  title={`Switch to ${facingMode === 'user' ? 'rear' : 'front'} camera`}
                 >
-                  <span className="text-white text-xl">🔄</span>
+                  <span className="text-white text-base sm:text-lg">{facingMode === 'user' ? '🤳' : '📱'}</span>
                   <span className="text-white text-xs font-semibold">
-                    {facingMode === 'user' ? 'FRONT' : 'BACK'}
+                    {facingMode === 'user' ? 'Front' : 'Rear'}
                   </span>
                 </button>
 
-                {/* Detection counter */}
-                <div className="bg-black bg-opacity-60 backdrop-blur-sm px-4 py-2 rounded-lg">
+                {/* Detection counter - hidden on mobile */}
+                <div className="hidden sm:block bg-black bg-opacity-60 backdrop-blur-sm px-4 py-2 rounded-lg">
                   <span className="text-white text-sm font-semibold">
                     Detections: {detectionCount}
                   </span>

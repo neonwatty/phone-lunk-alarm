@@ -238,11 +238,11 @@ describe('PhoneDetector', () => {
       await user.click(startButton)
 
       await waitFor(() => {
-        expect(screen.getByText(/BACK/i)).toBeInTheDocument()
+        expect(screen.getByTitle(/Switch to front camera/i)).toBeInTheDocument()
       })
 
-      // Switch camera - find by text content since title attribute isn't accessible name
-      const switchButton = screen.getByText(/🔄/)
+      // Switch camera - find by title attribute
+      const switchButton = screen.getByTitle(/Switch to front camera/i)
       await user.click(switchButton)
 
       // Fast-forward the setTimeout
@@ -251,7 +251,7 @@ describe('PhoneDetector', () => {
       })
 
       await waitFor(() => {
-        expect(screen.getByText(/FRONT/i)).toBeInTheDocument()
+        expect(screen.getByTitle(/Switch to rear camera/i)).toBeInTheDocument()
       })
     })
 
@@ -271,9 +271,9 @@ describe('PhoneDetector', () => {
         expect(screen.getByTestId('webcam-mock')).toBeInTheDocument()
       })
 
-      // Camera switch button should be present (find by icon)
-      expect(screen.getByText(/🔄/)).toBeInTheDocument()
-      expect(screen.getByText(/BACK/i)).toBeInTheDocument()
+      // Camera switch button should be present (find by title attribute)
+      expect(screen.getByTitle(/Switch to front camera/i)).toBeInTheDocument()
+      expect(screen.getByText(/📱/)).toBeInTheDocument()
     })
   })
 

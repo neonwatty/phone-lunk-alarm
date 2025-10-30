@@ -17,6 +17,8 @@ export default function PhoneDetector() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isCompatible, setIsCompatible] = useState(true)
+  const [isCameraActive, setIsCameraActive] = useState(false)
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment') // Default to back camera
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
   // Check browser compatibility
@@ -136,9 +138,9 @@ export default function PhoneDetector() {
     }
   }
 
-  // Start detection loop when model is loaded
+  // Start detection loop when model is loaded AND camera is active
   useEffect(() => {
-    if (modelLoaded) {
+    if (modelLoaded && isCameraActive) {
       detectionIntervalRef.current = setInterval(detectPhone, 200) // Run every 200ms (~5 FPS)
     }
 
@@ -148,7 +150,53 @@ export default function PhoneDetector() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modelLoaded, phoneDetected])
+  }, [modelLoaded, phoneDetected, isCameraActive])
+
+  // Toggle camera on/off
+  const toggleCamera = () => {
+    if (isCameraActive) {
+      // Stop camera
+      setIsCameraActive(false)
+      setPhoneDetected(false)
+
+      // Stop the media stream
+      if (webcamRef.current?.video?.srcObject) {
+        const stream = webcamRef.current.video.srcObject as MediaStream
+        stream.getTracks().forEach(track => track.stop())
+      }
+    } else {
+      // Start camera
+      setError(null) // Clear any previous errors
+      setIsCameraActive(true)
+    }
+  }
+
+  // Retry camera access after error
+  const handleRetry = () => {
+    setError(null)
+    setIsCameraActive(true)
+  }
+
+  // Switch between front and back camera
+  const handleCameraSwitch = () => {
+    // Stop current stream
+    if (webcamRef.current?.video?.srcObject) {
+      const stream = webcamRef.current.video.srcObject as MediaStream
+      stream.getTracks().forEach(track => track.stop())
+    }
+
+    // Toggle facing mode
+    setFacingMode(prev => prev === 'user' ? 'environment' : 'user')
+
+    // Clear detection state during switch
+    setPhoneDetected(false)
+
+    // Brief pause to ensure stream stops before restarting
+    setIsCameraActive(false)
+    setTimeout(() => {
+      setIsCameraActive(true)
+    }, 100)
+  }
 
   return (
     <section id="demo" className="max-w-5xl mx-auto px-4 py-20">
@@ -156,17 +204,56 @@ export default function PhoneDetector() {
         <h2 className="heading-lg mb-4" style={{ color: 'var(--color-text-primary)' }}>
           Try It Yourself
         </h2>
-        <p className="text-base md:text-lg mb-4 px-4 md:px-6 py-3 rounded-lg" style={{
-          backgroundColor: 'var(--color-accent-light)',
-          color: 'var(--color-accent-primary)',
-          lineHeight: '1.6',
-          display: 'inline-block'
-        }}>
-          Hold up your phone to the camera and watch the Phone Lunk magic happen! On mobile? Steal your friend's phone
-        </p>
-        <div className="inline-block bg-yellow-500 bg-opacity-20 border border-yellow-500 rounded-lg px-4 py-2 text-sm text-yellow-600 dark:text-yellow-400">
+
+        {/* Instructions */}
+        <div className="max-w-2xl mx-auto mb-6">
+          <ol className="text-left space-y-3 text-base md:text-lg" style={{ color: 'var(--color-text-secondary)' }}>
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>1.</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Allow camera access</strong> when prompted</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>2.</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Choose front or rear camera</strong> (if on mobile)</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>3.</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Point at a phone lunk</strong> to put them on blast!</span>
+            </li>
+          </ol>
+        </div>
+
+        <div className="inline-block bg-yellow-500 bg-opacity-20 border border-yellow-500 rounded-lg px-4 py-2 text-sm text-yellow-600 dark:text-yellow-400 mb-4">
           ⚠️ Your camera feed stays private - all processing happens in your browser
         </div>
+
+        {/* Camera Toggle Button */}
+        {!isLoading && !error && isCompatible && (
+          <div className="mt-6">
+            <button
+              onClick={toggleCamera}
+              className="btn-primary text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300"
+              style={{
+                background: isCameraActive
+                  ? 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)'
+                  : 'var(--gradient-professional)',
+                transform: 'scale(1)',
+              }}
+            >
+              {isCameraActive ? (
+                <>
+                  <span className="inline-block mr-2">🛑</span>
+                  Stop Camera
+                </>
+              ) : (
+                <>
+                  <span className="inline-block mr-2">📷</span>
+                  Start Camera
+                </>
+              )}
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="relative">
@@ -192,12 +279,33 @@ export default function PhoneDetector() {
         {/* Error state */}
         {error && isCompatible && (
           <div className="bg-red-900 bg-opacity-20 border border-red-500 rounded-2xl p-8 text-center">
-            <p className="text-red-400 text-xl mb-2">⚠️ {error}</p>
+            <p className="text-red-400 text-xl mb-4">⚠️ {error}</p>
+            <button
+              onClick={handleRetry}
+              className="btn-primary text-base px-6 py-3"
+              style={{
+                background: 'var(--gradient-professional)',
+              }}
+            >
+              <span className="inline-block mr-2">🔄</span>
+              Try Again
+            </button>
           </div>
         )}
 
-        {/* Webcam and canvas */}
-        {!isLoading && !error && isCompatible && (
+        {/* Camera placeholder (when camera is off) */}
+        {!isLoading && !error && isCompatible && !isCameraActive && (
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-800 aspect-video flex items-center justify-center">
+            <div className="text-center p-12">
+              <div className="text-6xl mb-4">📷</div>
+              <p className="text-white text-xl font-bold mb-2">Camera is off</p>
+              <p className="text-gray-400">Click "Start Camera" to begin detection</p>
+            </div>
+          </div>
+        )}
+
+        {/* Webcam and canvas (when camera is active) */}
+        {!isLoading && !error && isCompatible && isCameraActive && (
           <div className="relative rounded-2xl overflow-hidden shadow-2xl">
             {/* Webcam feed */}
             <Webcam
@@ -206,13 +314,28 @@ export default function PhoneDetector() {
               className="w-full h-auto"
               screenshotFormat="image/jpeg"
               videoConstraints={{
-                facingMode: 'user',
+                facingMode: facingMode,
                 width: 1280,
                 height: 720,
               }}
-              onUserMediaError={(err) => {
+              onUserMediaError={(err: any) => {
                 console.error('Camera error:', err)
-                setError('Camera access denied. Please allow camera access and refresh.')
+
+                // Parse specific error types
+                let errorMessage = 'Camera access failed. Please try again.'
+
+                if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+                  errorMessage = 'No camera detected. This demo requires a webcam.'
+                } else if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+                  errorMessage = 'Camera access denied. Please allow camera access in your browser settings.'
+                } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+                  errorMessage = 'Camera is being used by another application. Please close other apps using the camera.'
+                } else if (err.name === 'OverconstrainedError' || err.name === 'ConstraintNotSatisfiedError') {
+                  errorMessage = 'Selected camera mode not available. Try switching cameras.'
+                }
+
+                setError(errorMessage)
+                setIsCameraActive(false)
               }}
             />
 
@@ -223,18 +346,33 @@ export default function PhoneDetector() {
             />
 
             {/* Status bar */}
-            <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
+            <div className="absolute top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-4 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-2">
               {/* Recording indicator */}
-              <div className="bg-black bg-opacity-60 backdrop-blur-sm px-4 py-2 rounded-lg flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-                <span className="text-white text-sm font-semibold">MONITORING</span>
+              <div className="bg-black bg-opacity-60 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg flex items-center gap-2">
+                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse" />
+                <span className="text-white text-xs sm:text-sm font-semibold">MONITORING</span>
               </div>
 
-              {/* Detection counter */}
-              <div className="bg-black bg-opacity-60 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <span className="text-white text-sm font-semibold">
-                  Detections: {detectionCount}
-                </span>
+              {/* Camera controls */}
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                {/* Camera switch button */}
+                <button
+                  onClick={handleCameraSwitch}
+                  className="bg-black bg-opacity-60 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:bg-opacity-80 transition-all duration-300 flex items-center gap-1.5 sm:gap-2"
+                  title={`Switch to ${facingMode === 'user' ? 'rear' : 'front'} camera`}
+                >
+                  <span className="text-white text-base sm:text-lg">{facingMode === 'user' ? '🤳' : '📱'}</span>
+                  <span className="text-white text-xs font-semibold">
+                    {facingMode === 'user' ? 'Front' : 'Rear'}
+                  </span>
+                </button>
+
+                {/* Detection counter - hidden on mobile */}
+                <div className="hidden sm:block bg-black bg-opacity-60 backdrop-blur-sm px-4 py-2 rounded-lg">
+                  <span className="text-white text-sm font-semibold">
+                    Detections: {detectionCount}
+                  </span>
+                </div>
               </div>
             </div>
 

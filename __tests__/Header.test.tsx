@@ -33,7 +33,8 @@ describe('Header', () => {
       </ThemeProvider>
     )
 
-    const themeToggle = screen.getByRole('button', { name: /switch to/i })
-    expect(themeToggle).toBeInTheDocument()
+    // There are two theme toggles (desktop and mobile)
+    const themeToggles = screen.getAllByRole('button', { name: /switch to/i })
+    expect(themeToggles.length).toBeGreaterThanOrEqual(1)
   })
 })

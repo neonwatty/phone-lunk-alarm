@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A minimal, reusable static Next.js template for product landing pages with GitHub Pages deployment",
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint app components --ext .js,.jsx,.ts,.tsx",

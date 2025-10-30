@@ -44,7 +44,8 @@ const siteConfig = {
   // Navigation menu items
   navigation: [
     { name: 'About', href: '/waitlist?utm_source=waitlist' },
-    { name: 'Features', href: '/waitlist?utm_source=waitlist' },
+    { name: 'Features', href: '#features' },
+    { name: 'Try it Now', href: '#demo' },
     { name: 'Investors', href: '/waitlist?utm_source=waitlist' },
     { name: 'Join the Waitlist', href: '/waitlist?utm_source=waitlist' },
   ],

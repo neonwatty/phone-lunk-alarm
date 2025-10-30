@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Prevent transitions on page load to avoid theme flicker */
 html:not(.loaded) *,
 html:not(.loaded) *::before,

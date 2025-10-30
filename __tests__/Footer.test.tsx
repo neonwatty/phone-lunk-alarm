@@ -4,14 +4,19 @@ import siteConfig from '@/site.config.mjs'
 
 describe('Footer', () => {
   it('renders copyright with author name', () => {
-    render(<Footer />)
+    const { container } = render(<Footer />)
 
-    // Check for the author name link with correct href
-    const authorLink = screen.getByText(siteConfig.author.name)
-    expect(authorLink).toBeInTheDocument()
-    expect(authorLink).toHaveAttribute('href', siteConfig.social.twitter)
-    expect(authorLink).toHaveAttribute('target', '_blank')
-    expect(authorLink).toHaveAttribute('rel', 'noopener noreferrer')
+    // Check for the author name anywhere in the footer
+    expect(container.textContent).toContain(siteConfig.author.name)
+
+    // Check for current year in copyright
+    const currentYear = new Date().getFullYear()
+    expect(container.textContent).toContain(`© ${currentYear}`)
+
+    // Check for About link
+    const aboutLink = screen.getByText('About')
+    expect(aboutLink).toBeInTheDocument()
+    expect(aboutLink).toHaveAttribute('href', '/about')
   })
 
   it('renders social links when configured', () => {

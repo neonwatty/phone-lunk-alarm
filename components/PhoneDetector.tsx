@@ -20,6 +20,8 @@ export default function PhoneDetector() {
   const [isCameraActive, setIsCameraActive] = useState(false)
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment') // Default to back camera
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const alarmTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const lastAlarmTimeRef = useRef<number>(0)
 
   // Check browser compatibility
   useEffect(() => {
@@ -100,7 +102,7 @@ export default function PhoneDetector() {
       let phoneFound = false
 
       predictions.forEach((prediction: any) => {
-        if (prediction.class === 'cell phone' && prediction.score > 0.5) {
+        if (prediction.class === 'cell phone' && prediction.score > 0.35) {
           phoneFound = true
 
           // Draw bounding box
@@ -125,13 +127,25 @@ export default function PhoneDetector() {
       })
 
       // Update detection state
-      if (phoneFound && !phoneDetected) {
+      const now = Date.now()
+      const timeSinceLastAlarm = now - lastAlarmTimeRef.current
+      const COOLDOWN_PERIOD = 3000 // 3 seconds cooldown after alarm dismisses
+
+      if (phoneFound && !phoneDetected && timeSinceLastAlarm >= COOLDOWN_PERIOD) {
         setPhoneDetected(true)
         setDetectionCount((prev) => prev + 1)
-        // Auto-dismiss alarm after 2 seconds
-        setTimeout(() => setPhoneDetected(false), 2000)
-      } else if (!phoneFound && phoneDetected) {
-        setPhoneDetected(false)
+        lastAlarmTimeRef.current = now
+
+        // Clear any existing alarm timeout to prevent overlapping alarms
+        if (alarmTimeoutRef.current) {
+          clearTimeout(alarmTimeoutRef.current)
+        }
+
+        // Auto-dismiss alarm after 5 seconds
+        alarmTimeoutRef.current = setTimeout(() => {
+          setPhoneDetected(false)
+          alarmTimeoutRef.current = null
+        }, 5000)
       }
     } catch (err) {
       console.error('Detection error:', err)
@@ -141,16 +155,19 @@ export default function PhoneDetector() {
   // Start detection loop when model is loaded AND camera is active
   useEffect(() => {
     if (modelLoaded && isCameraActive) {
-      detectionIntervalRef.current = setInterval(detectPhone, 200) // Run every 200ms (~5 FPS)
+      detectionIntervalRef.current = setInterval(detectPhone, 100) // Run every 100ms (~10 FPS)
     }
 
     return () => {
       if (detectionIntervalRef.current) {
         clearInterval(detectionIntervalRef.current)
       }
+      if (alarmTimeoutRef.current) {
+        clearTimeout(alarmTimeoutRef.current)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modelLoaded, phoneDetected, isCameraActive])
+  }, [modelLoaded, isCameraActive])
 
   // Toggle camera on/off
   const toggleCamera = () => {
@@ -158,6 +175,12 @@ export default function PhoneDetector() {
       // Stop camera
       setIsCameraActive(false)
       setPhoneDetected(false)
+
+      // Clear any active alarm timeout
+      if (alarmTimeoutRef.current) {
+        clearTimeout(alarmTimeoutRef.current)
+        alarmTimeoutRef.current = null
+      }
 
       // Stop the media stream
       if (webcamRef.current?.video?.srcObject) {
@@ -190,6 +213,12 @@ export default function PhoneDetector() {
 
     // Clear detection state during switch
     setPhoneDetected(false)
+
+    // Clear any active alarm timeout
+    if (alarmTimeoutRef.current) {
+      clearTimeout(alarmTimeoutRef.current)
+      alarmTimeoutRef.current = null
+    }
 
     // Brief pause to ensure stream stops before restarting
     setIsCameraActive(false)
@@ -399,7 +428,7 @@ export default function PhoneDetector() {
               Real-Time Detection
             </div>
             <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-              Runs at ~5 FPS for smooth performance
+              Runs at ~10 FPS for smooth performance
             </div>
           </div>
           <div className="card text-center">

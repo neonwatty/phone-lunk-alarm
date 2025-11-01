@@ -27,16 +27,6 @@ test.describe('Home Page', () => {
     await expect(featuresSection).toBeVisible()
   })
 
-  test('should have working navigation', async ({ page }) => {
-    await page.goto('/')
-
-    // Click on About link
-    await page.click('text=About')
-
-    // Should navigate to about page
-    await expect(page).toHaveURL(/.*about/)
-  })
-
   test('should have working theme toggle', async ({ page }) => {
     await page.goto('/')
 

@@ -22,13 +22,6 @@ export default function Footer() {
                }}>
               © {currentYear}{' '}
               {siteConfig.author.name}
-              {' · '}
-              <a
-                href="/about"
-                className="hover:opacity-70 transition-opacity"
-              >
-                About
-              </a>
             </p>
           </div>
 

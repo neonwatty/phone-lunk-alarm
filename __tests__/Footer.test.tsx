@@ -12,11 +12,6 @@ describe('Footer', () => {
     // Check for current year in copyright
     const currentYear = new Date().getFullYear()
     expect(container.textContent).toContain(`© ${currentYear}`)
-
-    // Check for About link
-    const aboutLink = screen.getByText('About')
-    expect(aboutLink).toBeInTheDocument()
-    expect(aboutLink).toHaveAttribute('href', '/about')
   })
 
   it('renders social links when configured', () => {

@@ -21,7 +21,14 @@ export default function Footer() {
                  letterSpacing: '-0.01em'
                }}>
               © {currentYear}{' '}
-              {siteConfig.author.name}
+              <a
+                href={siteConfig.social.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-70 transition-opacity"
+              >
+                {siteConfig.author.name}
+              </a>
             </p>
           </div>
 

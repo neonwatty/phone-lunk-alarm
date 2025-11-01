@@ -23,4 +23,18 @@ describe('Footer', () => {
       expect(githubLink).toHaveAttribute('href', siteConfig.social.github)
     }
   })
+
+  it('renders author name as a link to Twitter', () => {
+    render(<Footer />)
+
+    // Find the author name link
+    const authorLink = screen.getByRole('link', { name: siteConfig.author.name })
+
+    // Verify it points to the Twitter URL
+    expect(authorLink).toHaveAttribute('href', siteConfig.social.twitter)
+
+    // Verify it has proper security and accessibility attributes
+    expect(authorLink).toHaveAttribute('target', '_blank')
+    expect(authorLink).toHaveAttribute('rel', 'noopener noreferrer')
+  })
 })

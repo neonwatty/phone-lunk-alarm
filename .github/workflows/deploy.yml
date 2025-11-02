@@ -30,15 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Extract repository name
-        id: repo_name
-        run: echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_OUTPUT
-
       - name: Build with Next.js
         run: npm run build
         env:
-          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || format('https://{0}.github.io/{1}', github.repository_owner, steps.repo_name.outputs.REPO_NAME) }}
-          NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH || format('/{0}', steps.repo_name.outputs.REPO_NAME) }}
+          NEXT_PUBLIC_SITE_URL: 'https://phone-lunk.app'
+          NEXT_PUBLIC_BASE_PATH: ''
           NEXT_PUBLIC_GA_ID: ${{ secrets.NEXT_PUBLIC_GA_ID }}
 
       - name: Add .nojekyll file

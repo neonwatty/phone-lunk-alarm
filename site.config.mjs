@@ -11,7 +11,7 @@ const siteConfig = {
     name: 'Phone Lunk',
     tagline: 'Fuck your phone',
     description: 'Phone Lunk detects idiots doom scrolling at the gym and puts them on blast.',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://yourusername.github.io/phone-lunk-alarm',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://phone-lunk.app',
     keywords: ['gym', 'phone detection', 'ai', 'fitness', 'lunk alarm'],
   },
 

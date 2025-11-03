@@ -43,8 +43,15 @@ export const metadata: Metadata = {
     icon: [
       { url: `${basePath}/favicon.svg`, type: 'image/svg+xml' },
       { url: `${basePath}/favicon.ico`, sizes: 'any' },
+      { url: `${basePath}/favicon-16x16.png`, sizes: '16x16', type: 'image/png' },
+      { url: `${basePath}/favicon-32x32.png`, sizes: '32x32', type: 'image/png' },
+      { url: `${basePath}/favicon-96x96.png`, sizes: '96x96', type: 'image/png' },
     ],
-    apple: `${basePath}/images/apple-touch-icon.png`,
+    apple: [
+      { url: `${basePath}/images/apple-touch-icon.png`, sizes: '180x180', type: 'image/png' },
+      { url: `${basePath}/images/apple-touch-icon-152x152.png`, sizes: '152x152', type: 'image/png' },
+      { url: `${basePath}/images/apple-touch-icon-167x167.png`, sizes: '167x167', type: 'image/png' },
+    ],
   },
   openGraph: {
     type: siteConfig.seo.openGraph.type as any,
@@ -59,6 +66,8 @@ export const metadata: Metadata = {
     card: siteConfig.seo.twitter.cardType as any,
     title: siteConfig.site.name,
     description: siteConfig.seo.description,
+    creator: siteConfig.seo.twitter.handle,
+    site: siteConfig.seo.twitter.site,
     images: siteConfig.seo.openGraph.images.map(img => img.url),
   },
   robots: {

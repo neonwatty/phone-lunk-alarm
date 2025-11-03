@@ -1,21 +1,48 @@
 {
-  "name": "Product Name",
-  "short_name": "Product",
-  "description": "A modern, performant landing page",
+  "name": "Phone Lunk - Fuck Your Phone",
+  "short_name": "Phone Lunk",
+  "description": "AI-powered phone detection for gyms. Catches idiots doom scrolling and puts them on blast.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#111827",
-  "theme_color": "#6366F1",
+  "theme_color": "#A4278D",
   "icons": [
     {
       "src": "/favicon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/images/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "/images/apple-touch-icon.png",
       "sizes": "180x180",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
-  ]
+  ],
+  "categories": ["fitness", "productivity", "utilities"]
 }

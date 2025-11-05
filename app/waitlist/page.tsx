@@ -40,8 +40,9 @@ export default function NewsletterPage() {
           {/* YTgify Section */}
           <div className="space-y-8">
             <div className="text-center">
-              {/* Chrome Web Store Badge */}
-              <div className="mb-8">
+              {/* Browser Extension Badges */}
+              <div className="mb-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                {/* Chrome Web Store Badge */}
                 <a
                   href="https://chromewebstore.google.com/detail/ytgify/dnljofakogbecppbkmnoffppkfdmpfje"
                   target="_blank"
@@ -51,6 +52,20 @@ export default function NewsletterPage() {
                   <img
                     src={`${basePath}/chrome-web-store-badge.png`}
                     alt="Available in the Chrome Web Store"
+                    className="h-16 sm:h-20 w-auto"
+                  />
+                </a>
+
+                {/* Firefox Add-ons Badge */}
+                <a
+                  href="https://addons.mozilla.org/en-US/firefox/addon/ytgify-for-firefox/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block transition-opacity hover:opacity-90"
+                >
+                  <img
+                    src={`${basePath}/firefox-addons-badge.png`}
+                    alt="Get the Firefox Add-on"
                     className="h-16 sm:h-20 w-auto"
                   />
                 </a>

@@ -30,7 +30,7 @@ export default function Features() {
           lineHeight: '1.6',
           display: 'inline-block'
         }}>
-          Stop being a douche: leave your phone at home
+          The complete solution for equipment utilization and member satisfaction
         </p>
       </div>
 

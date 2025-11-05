@@ -137,56 +137,113 @@ console.log('\n🖼️  Generating Open Graph Image...');
 const ogWidth = 1200;
 const ogHeight = 630;
 
-// Create SVG for OG image with text
-const ogSvg = `
+// Load gym background frame
+const bgFramePath = path.join(imagesDir, 'og-background.jpg');
+const bgFrame = await sharp(bgFramePath)
+  .resize(ogWidth, ogHeight, {
+    fit: 'cover',       // Crop to fill 1200x630
+    position: 'center'  // Center crop
+  })
+  .toBuffer();
+
+// Create SVG overlay with detection elements (transparent background)
+const overlaySvg = `
 <svg width="${ogWidth}" height="${ogHeight}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:${PRIMARY_COLOR};stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:${PRIMARY_COLOR};stop-opacity:1" />
-      <stop offset="100%" style="stop-color:${ACCENT_COLOR};stop-opacity:1" />
-    </linearGradient>
+    <filter id="redGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="
+        1 0 0 0 0
+        0 0.3 0 0 0
+        0 0 0.3 0 0
+        0 0 0 0.6 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Drop shadow for text readability -->
+    <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.8"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="${ogWidth}" height="${ogHeight}" fill="url(#bgGrad)"/>
+  <!-- Semi-transparent dark overlay for contrast -->
+  <rect width="${ogWidth}" height="${ogHeight}" fill="black" opacity="0.35"/>
 
-  <!-- Alarm icon (large, centered-left) -->
-  <g transform="translate(150, 165)">
-    <rect width="300" height="300" rx="60" fill="url(#logoGrad)"/>
-    <circle cx="150" cy="105" r="45" fill="#FF0000" opacity="0.9"/>
-    <circle cx="150" cy="105" r="30" fill="#FF4444" opacity="0.8"/>
-    <rect x="105" y="135" width="90" height="60" rx="9" fill="#1a1a1a"/>
-    <rect x="90" y="195" width="120" height="24" rx="12" fill="#333333"/>
-    <text x="150" y="174" font-size="60" font-weight="bold" text-anchor="middle" fill="white" font-family="Arial, sans-serif">!</text>
+  <!-- Detection scene centered -->
+  <g transform="translate(600, 315)">
+    <!-- Outer red alarm rings -->
+    <circle cx="0" cy="0" r="280" fill="none" stroke="#DC2626" stroke-width="4" opacity="0.4"/>
+    <circle cx="0" cy="0" r="240" fill="none" stroke="#DC2626" stroke-width="5" opacity="0.5"/>
+    <circle cx="0" cy="0" r="200" fill="none" stroke="#EF4444" stroke-width="6" opacity="0.6"/>
+
+    <!-- Red glow -->
+    <circle cx="0" cy="0" r="180" fill="#DC2626" opacity="0.25"/>
+
+    <!-- Detection bounding box (larger, around where phone would be) -->
+    <rect x="-100" y="-140" width="200" height="280" rx="12"
+          fill="none" stroke="#EF4444" stroke-width="8" opacity="0.95"/>
+
+    <!-- Corner brackets -->
+    <path d="M -100,-140 L -100,-100 M -100,-140 L -60,-140"
+          stroke="#EF4444" stroke-width="12" stroke-linecap="round" opacity="0.95"/>
+    <path d="M 100,-140 L 100,-100 M 100,-140 L 60,-140"
+          stroke="#EF4444" stroke-width="12" stroke-linecap="round" opacity="0.95"/>
+    <path d="M -100,140 L -100,100 M -100,140 L -60,140"
+          stroke="#EF4444" stroke-width="12" stroke-linecap="round" opacity="0.95"/>
+    <path d="M 100,140 L 100,100 M 100,140 L 60,140"
+          stroke="#EF4444" stroke-width="12" stroke-linecap="round" opacity="0.95"/>
+
+    <!-- Detection label with shadow for readability -->
+    <g filter="url(#textShadow)">
+      <rect x="-130" y="-200" width="260" height="55" rx="8" fill="#EF4444" opacity="0.98"/>
+      <rect x="-128" y="-198" width="256" height="51" rx="7" fill="none" stroke="#FF6666" stroke-width="2"/>
+      <text x="0" y="-168" font-family="Arial, sans-serif" font-size="26"
+            font-weight="bold" text-anchor="middle" fill="white">
+        📱 PHONE LUNK DETECTED
+      </text>
+    </g>
   </g>
 
-  <!-- Text content -->
-  <text x="550" y="220" font-family="Arial, sans-serif" font-size="84" font-weight="bold" fill="white">
-    PHONE LUNK
-  </text>
-  <text x="550" y="310" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="${ACCENT_COLOR}">
-    Fuck Your Phone
-  </text>
-  <text x="550" y="410" font-family="Arial, sans-serif" font-size="32" fill="#E5E7EB" opacity="0.9">
-    AI-powered phone detection
-  </text>
-  <text x="550" y="460" font-family="Arial, sans-serif" font-size="32" fill="#E5E7EB" opacity="0.9">
-    for gyms that give a shit
-  </text>
+  <!-- Alert text at top with shadow -->
+  <g filter="url(#textShadow)">
+    <text x="600" y="80" font-family="Arial, sans-serif" font-size="52"
+          font-weight="bold" text-anchor="middle" fill="#EF4444">
+      PHONE LUNK DETECTED
+    </text>
+  </g>
 
-  <!-- Domain -->
-  <text x="550" y="540" font-family="Arial, sans-serif" font-size="28" fill="${ACCENT_COLOR}" opacity="0.8">
-    phone-lunk.app
-  </text>
+  <!-- Definition and branding at bottom with shadow -->
+  <g filter="url(#textShadow)">
+    <text x="600" y="550" font-family="Arial, sans-serif" font-size="32"
+          font-weight="600" font-style="italic" text-anchor="middle" fill="${ACCENT_COLOR}">
+      Doom-scrolling equipment hog
+    </text>
+    <text x="600" y="595" font-family="Arial, sans-serif" font-size="28"
+          font-weight="600" text-anchor="middle" fill="white">
+      phone-lunk.app
+    </text>
+  </g>
 </svg>
 `;
 
-await sharp(Buffer.from(ogSvg))
-  .resize(ogWidth, ogHeight)
+// Composite background + overlay
+await sharp(bgFrame)
+  .composite([{
+    input: Buffer.from(overlaySvg),
+    top: 0,
+    left: 0
+  }])
   .jpeg({ quality: 90 })
   .toFile(path.join(imagesDir, 'og-image.jpg'));
 
@@ -198,8 +255,13 @@ console.log('✅ Open Graph image generated: 1200x630');
 
 console.log('\n🐦 Generating Twitter Card Image...');
 
-await sharp(Buffer.from(ogSvg))
-  .resize(ogWidth, ogHeight)
+// Use same composite approach as OG image
+await sharp(bgFrame)
+  .composite([{
+    input: Buffer.from(overlaySvg),
+    top: 0,
+    left: 0
+  }])
   .jpeg({ quality: 90 })
   .toFile(path.join(imagesDir, 'twitter-card.jpg'));
 

@@ -14,19 +14,27 @@ export default function Hero() {
           {hero.headline}
         </h1>
 
+        {/* Definition Box */}
+        <div className="max-w-3xl mx-auto mb-6 stagger-animation stagger-delay-2">
+          <div className="bg-[#F9F72E] text-[#A4278D] px-6 py-4 rounded-lg">
+            <p className="text-sm md:text-base font-medium">
+              <span className="italic">Phone Lunk (n.)</span> - Doom-scrolling equipment hog
+            </p>
+          </div>
+        </div>
+
         {/* Subheadline */}
-        <p className="text-lg md:text-xl lg:text-2xl mb-12 max-w-5xl mx-auto stagger-animation stagger-delay-2 px-4 md:px-6 py-3 rounded-lg"
-           style={{
-             backgroundColor: 'var(--color-accent-light)',
-             color: 'var(--color-accent-primary)',
-             lineHeight: '1.6',
-             display: 'inline-block'
-           }}>
-          {hero.subheadline}
+        <p className="text-lg md:text-xl mb-12 max-w-4xl mx-auto stagger-animation stagger-delay-3">
+          {hero.subheadline.split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < hero.subheadline.split('\n').length - 1 && <br />}
+            </span>
+          ))}
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center stagger-animation stagger-delay-3">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center stagger-animation stagger-delay-4">
           <Link
             href={hero.primaryCTA.href}
             className="btn btn-primary w-full sm:w-auto"
@@ -52,7 +60,7 @@ export default function Hero() {
         </div>
 
         {/* Video Mockup Demo */}
-        <div className="stagger-animation stagger-delay-4">
+        <div className="stagger-animation stagger-delay-5">
           <VideoMockup />
         </div>
       </div>

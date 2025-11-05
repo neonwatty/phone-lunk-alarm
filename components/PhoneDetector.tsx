@@ -231,7 +231,7 @@ export default function PhoneDetector() {
     <section id="demo" className="max-w-5xl mx-auto px-4 py-20">
       <div className="text-center mb-12">
         <h2 className="heading-lg mb-4" style={{ color: 'var(--color-text-primary)' }}>
-          Try It Yourself
+          See The Technology In Action
         </h2>
 
         {/* Instructions */}
@@ -239,15 +239,15 @@ export default function PhoneDetector() {
           <ol className="text-left space-y-3 text-base md:text-lg" style={{ color: 'var(--color-text-secondary)' }}>
             <li className="flex items-start gap-3">
               <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>1.</span>
-              <span><strong style={{ color: 'var(--color-text-primary)' }}>Allow camera access</strong> when prompted</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Allow camera access</strong> to test our AI detection engine</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>2.</span>
-              <span><strong style={{ color: 'var(--color-text-primary)' }}>Choose front or rear camera</strong> (if on mobile)</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Select camera mode</strong> (front or rear on mobile devices)</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>3.</span>
-              <span><strong style={{ color: 'var(--color-text-primary)' }}>Point at a phone lunk</strong> to put them on blast!</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Hold up your phone</strong> to see real-time detection in action</span>
             </li>
           </ol>
         </div>
@@ -434,10 +434,10 @@ export default function PhoneDetector() {
           <div className="card text-center">
             <div className="text-3xl mb-2">🔒</div>
             <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
-              Privacy First
+              Enterprise Security
             </div>
             <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-              All processing in-browser, no uploads
+              On-premise processing, zero cloud uploads
             </div>
           </div>
           <div className="card text-center">

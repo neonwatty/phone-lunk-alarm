@@ -2,9 +2,21 @@
 
 import { useState, useEffect } from 'react'
 
+// Rotating example GIFs - compressed and optimized
+const EXAMPLE_GIFS = [
+  '/images/examples/phone-lunk-1.gif',
+  '/images/examples/phone-lunk-2.gif',
+  '/images/examples/phone-lunk-3.gif'
+] as const
+
+const GIF_DISPLAY_DURATION = 5000 // 5 seconds per GIF
+const TRANSITION_DURATION = 300 // 300ms crossfade
+
 export default function VideoMockup() {
   const [alarmActive, setAlarmActive] = useState(false)
   const [showPersonBox, setShowPersonBox] = useState(true)
+  const [currentGifIndex, setCurrentGifIndex] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   // Simulate phone detection for demo purposes - synced with GIF timing
   useEffect(() => {
@@ -20,17 +32,39 @@ export default function VideoMockup() {
     return () => clearInterval(interval)
   }, [])
 
+  // Rotate through example GIFs automatically
+  useEffect(() => {
+    // Preload all GIFs for smooth transitions
+    EXAMPLE_GIFS.forEach(gif => {
+      const img = new Image()
+      img.src = gif
+    })
+
+    // Set up rotation interval
+    const rotationInterval = setInterval(() => {
+      setIsTransitioning(true)
+      setTimeout(() => {
+        setCurrentGifIndex((prev) => (prev + 1) % EXAMPLE_GIFS.length)
+        setIsTransitioning(false)
+      }, TRANSITION_DURATION)
+    }, GIF_DISPLAY_DURATION)
+
+    return () => clearInterval(rotationInterval)
+  }, [])
+
   return (
     <div className="relative w-full max-w-3xl mx-auto mt-12">
       {/* Main mockup container */}
       <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
         {/* Simulated camera feed with GIF */}
         <div className="relative aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-          {/* Gym phone GIF from makeagif */}
+          {/* Rotating gym phone GIFs - automatically cycles through examples */}
           <img
-            src="https://i.makeagif.com/media/4-27-2014/ergLmS.gif"
-            alt="Person on phone in gym"
-            className="w-full h-full object-contain pointer-events-none"
+            src={EXAMPLE_GIFS[currentGifIndex]}
+            alt={`Phone Lunk example ${currentGifIndex + 1} - Person on phone in gym`}
+            className={`w-full h-full object-contain pointer-events-none transition-opacity duration-300 ${
+              isTransitioning ? 'opacity-0' : 'opacity-100'
+            }`}
           />
 
           {/* Detection overlays */}

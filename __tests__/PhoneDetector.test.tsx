@@ -54,7 +54,7 @@ describe('PhoneDetector', () => {
   describe('Initial Rendering', () => {
     it('renders without crashing', () => {
       render(<PhoneDetector />)
-      expect(screen.getByText(/Try It Yourself/i)).toBeInTheDocument()
+      expect(screen.getByText(/See The Technology In Action/i)).toBeInTheDocument()
     })
 
     it('shows loading state while model loads', () => {
@@ -505,9 +505,10 @@ describe('PhoneDetector', () => {
     it('displays info cards about the detector', () => {
       render(<PhoneDetector />)
 
-      expect(screen.getByText(/Real-Time Detection/i)).toBeInTheDocument()
-      expect(screen.getByText(/Privacy First/i)).toBeInTheDocument()
-      expect(screen.getByText(/COCO-SSD Model/i)).toBeInTheDocument()
+      // Use getAllByText to handle multiple occurrences (e.g., in different states)
+      expect(screen.getAllByText(/Real-Time Detection/i).length).toBeGreaterThan(0)
+      expect(screen.getAllByText(/Enterprise Security/i).length).toBeGreaterThan(0)
+      expect(screen.getAllByText(/COCO-SSD Model/i).length).toBeGreaterThan(0)
     })
   })
 })

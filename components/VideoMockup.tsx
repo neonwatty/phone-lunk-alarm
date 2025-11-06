@@ -6,11 +6,10 @@ import { useState, useEffect } from 'react'
 const EXAMPLE_GIFS = [
   '/images/examples/phone-lunk-1.gif',
   '/images/examples/phone-lunk-2.gif',
-  '/images/examples/phone-lunk-3.gif',
-  '/images/examples/phone-lunk-4.gif'
+  '/images/examples/phone-lunk-3.gif'
 ] as const
 
-const GIF_DISPLAY_DURATION = 8000 // 8 seconds per GIF
+const GIF_DISPLAY_DURATION = 5000 // 5 seconds per GIF
 const TRANSITION_DURATION = 300 // 300ms crossfade
 
 export default function VideoMockup() {

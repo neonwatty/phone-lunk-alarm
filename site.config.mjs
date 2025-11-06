@@ -75,19 +75,19 @@ const siteConfig = {
         number: 1,
         emoji: '💻',
         title: 'Zero Hardware Required',
-        description: 'Works with your current CCTV and security cameras. Simple software installation, zero hardware costs. Deploy in minutes, not days.'
+        description: 'Plug-n-play with your existing cameras.'
       },
       {
         number: 2,
         emoji: '🧠',
         title: 'Real-Time Detection',
-        description: 'Our TensorFlow-powered AI monitors your gym floor 24/7, detecting phone usage on equipment with 95%+ accuracy. Machine learning that actually works.'
+        description: 'AI never blinks. Finds doom-scrolling hogs wherever they lurk.'
       },
       {
         number: 3,
         emoji: '🚨',
         title: 'Automated Enforcement',
-        description: 'Trigger lunk alarms, send staff alerts, or display warnings on digital signage. Configurable escalation protocols for repeat offenders. Zero confrontation required.'
+        description: 'Sinners shamed publicly. Let the lunk alarm ring.'
       }
     ]
   },

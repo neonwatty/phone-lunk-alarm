@@ -12,7 +12,11 @@ describe('Hero', () => {
   it('renders subheadline', () => {
     render(<Hero />)
 
-    expect(screen.getByText(siteConfig.hero.subheadline)).toBeInTheDocument()
+    // The subheadline is split by '\n' and rendered across multiple spans with <br/> tags
+    const lines = siteConfig.hero.subheadline.split('\n')
+    lines.forEach(line => {
+      expect(screen.getByText(line.trim())).toBeInTheDocument()
+    })
   })
 
   it('renders primary CTA button', () => {

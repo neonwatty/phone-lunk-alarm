@@ -29,6 +29,10 @@
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/cli": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.4.4",
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tensorflow-models/coco-ssd": "^2.2.3",

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Phone Lunk</string>
+    <string name="title_activity_main">Phone Lunk</string>
+    <string name="package_name">com.phonelunk.app</string>
+    <string name="custom_url_scheme">com.phonelunk.app</string>
+</resources>

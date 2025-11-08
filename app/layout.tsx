@@ -83,6 +83,14 @@ export const metadata: Metadata = {
   },
 }
 
+// Viewport configuration for native mobile (safe areas)
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover', // Required for safe area support on iOS
+}
+
 export default function RootLayout({
   children,
 }: {

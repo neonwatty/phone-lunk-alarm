@@ -22,7 +22,7 @@ export default function Footer() {
                }}>
               © {currentYear}{' '}
               <a
-                href={siteConfig.social.twitter}
+                href={siteConfig.social.blog}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition-opacity"

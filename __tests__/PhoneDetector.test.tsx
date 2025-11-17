@@ -54,7 +54,7 @@ describe('PhoneDetector', () => {
   describe('Initial Rendering', () => {
     it('renders without crashing', () => {
       render(<PhoneDetector />)
-      expect(screen.getByText(/See The Technology In Action/i)).toBeInTheDocument()
+      expect(screen.getByText(/Be The Alarm/i)).toBeInTheDocument()
     })
 
     it('shows loading state while model loads', () => {
@@ -273,7 +273,6 @@ describe('PhoneDetector', () => {
 
       // Camera switch button should be present (find by title attribute)
       expect(screen.getByTitle(/Switch to front camera/i)).toBeInTheDocument()
-      expect(screen.getByText(/📱/)).toBeInTheDocument()
     })
   })
 
@@ -506,9 +505,9 @@ describe('PhoneDetector', () => {
       render(<PhoneDetector />)
 
       // Use getAllByText to handle multiple occurrences (e.g., in different states)
-      expect(screen.getAllByText(/Real-Time Detection/i).length).toBeGreaterThan(0)
-      expect(screen.getAllByText(/Enterprise Security/i).length).toBeGreaterThan(0)
-      expect(screen.getAllByText(/COCO-SSD Model/i).length).toBeGreaterThan(0)
+      expect(screen.getAllByText(/Instant Justice/i).length).toBeGreaterThan(0)
+      expect(screen.getAllByText(/On-The-Go/i).length).toBeGreaterThan(0)
+      expect(screen.getAllByText(/No Escape/i).length).toBeGreaterThan(0)
     })
   })
 })

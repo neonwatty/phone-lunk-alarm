@@ -231,23 +231,26 @@ export default function PhoneDetector() {
     <section id="demo" className="max-w-5xl mx-auto px-4 py-20">
       <div className="text-center mb-12">
         <h2 className="heading-lg mb-4" style={{ color: 'var(--color-text-primary)' }}>
-          See The Technology In Action
+          Be The Alarm
         </h2>
 
         {/* Instructions */}
         <div className="max-w-2xl mx-auto mb-6">
+          <p className="text-base md:text-lg mb-4" style={{ color: 'var(--color-text-secondary)' }}>
+            Gym doesn't have Phone-Lunk yet? Take matters into your own hands
+          </p>
           <ol className="text-left space-y-3 text-base md:text-lg" style={{ color: 'var(--color-text-secondary)' }}>
             <li className="flex items-start gap-3">
               <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>1.</span>
-              <span><strong style={{ color: 'var(--color-text-primary)' }}>Allow camera access</strong> to test our AI detection engine</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Allow camera access</strong> to activate vigilante mode</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>2.</span>
-              <span><strong style={{ color: 'var(--color-text-primary)' }}>Select camera mode</strong> (front or rear on mobile devices)</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Spot a phone-lunk</strong> scrolling between sets</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>3.</span>
-              <span><strong style={{ color: 'var(--color-text-primary)' }}>Hold up your phone</strong> to see real-time detection in action</span>
+              <span><strong style={{ color: 'var(--color-text-primary)' }}>Whip out your phone</strong>, point, and put them on blast</span>
             </li>
           </ol>
         </div>
@@ -423,30 +426,30 @@ export default function PhoneDetector() {
         {/* Info cards */}
         <div className="grid md:grid-cols-3 gap-4 mt-8">
           <div className="card text-center">
+            <div className="text-3xl mb-2">⚡</div>
+            <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+              Instant Justice
+            </div>
+            <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
+              Real-time phone detection
+            </div>
+          </div>
+          <div className="card text-center">
+            <div className="text-3xl mb-2">📱</div>
+            <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+              On-The-Go
+            </div>
+            <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
+              Your personal enforcement tool
+            </div>
+          </div>
+          <div className="card text-center">
             <div className="text-3xl mb-2">🎯</div>
             <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
-              Real-Time Detection
+              No Escape
             </div>
             <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-              Runs at ~10 FPS for smooth performance
-            </div>
-          </div>
-          <div className="card text-center">
-            <div className="text-3xl mb-2">🔒</div>
-            <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
-              Enterprise Security
-            </div>
-            <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-              On-premise processing, zero cloud uploads
-            </div>
-          </div>
-          <div className="card text-center">
-            <div className="text-3xl mb-2">🧠</div>
-            <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
-              COCO-SSD Model
-            </div>
-            <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-              Trained on millions of images
+              AI-powered detection
             </div>
           </div>
         </div>

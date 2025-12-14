@@ -274,14 +274,140 @@ building things that probably shouldn't exist
 
 ---
 
-## Part 4: Implementation Priority
+## Part 4: "Build It For Real" Interest Capture
 
-### Phase 1: Quick Wins (Reveal Page Updates)
-1. Redesign reveal page for screenshot-ability
-2. Add @neonwatty handle prominently
+### 4.1 Concept
+
+The gag app doubles as a **validation funnel**. While most visitors are here for the joke, some will think "wait, I actually want this for my gym." Capture that signal.
+
+**Why this works:**
+- Honest framing is disarming and authentic
+- Low commitment for user (just email)
+- Captures real demand signal without promising anything
+- Doesn't undermine the gag - enhances it with a "but actually..." twist
+
+### 4.2 Messaging & Tone
+
+**Key principle:** Be honest about the uncertainty. You're not a startup pitching - you're a developer who made a joke, experiences this pain yourself, and is genuinely curious.
+
+**Hero copy for the "serious" path:**
+
+> "I built this as a joke because I'm tired of waiting for equipment at my gym. But... should it be real? If enough people want this, I might actually build it."
+
+**Promise to users:**
+
+> "I'll let you know if this becomes real. No promises, no spam."
+
+### 4.3 Reveal Page Redesign (Updated)
+
+The reveal page now has two parallel paths with equal prominence:
+
+```
+┌───────────────────────────────────────────────────────┐
+│                                                       │
+│                  🚨 GOTCHA 🚨                         │
+│                                                       │
+│  OK, this isn't real.                                 │
+│                                                       │
+│  I built it as a joke because I'm tired of waiting   │
+│  for equipment at my gym.                            │
+│                                                       │
+│  But... should it be?                                │
+│                                                       │
+│  ┌─────────────────────────────────────────────────┐ │
+│  │                                                 │ │
+│  │  If you actually want this for your gym:       │ │
+│  │                                                 │ │
+│  │  [Email                                      ]  │ │
+│  │  [Yes, actually build this →]                   │ │
+│  │                                                 │ │
+│  │  I'll let you know if it becomes real.         │ │
+│  │  No promises, no spam.                         │ │
+│  │                                                 │ │
+│  └─────────────────────────────────────────────────┘ │
+│                                                       │
+│  ─────────────────── or ───────────────────          │
+│                                                       │
+│  Just here for the meme?                             │
+│                                                       │
+│  [Share your L]  [Follow @neonwatty]                 │
+│                                                       │
+│  built by @neonwatty                                 │
+│  (follow for more dumb things)                       │
+│                                                       │
+└───────────────────────────────────────────────────────┘
+```
+
+### 4.4 Google Form Setup
+
+**Form fields:**
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| Email | Email | Yes | Primary contact |
+| Gym type | Dropdown | No | Options: Commercial gym, CrossFit/boutique, Home gym, Other |
+| Location | Short text | No | City/region for market research |
+| Pain point | Long text | No | "Tell me about your phone lunk problem" |
+
+**Form settings:**
+- Title: "Phone Lunk - Interest List"
+- Description: "Thanks for your interest! I'll reach out if/when this becomes real."
+- Confirmation message: "Got it! I'll be in touch if this becomes a real thing."
+- Collect emails: Yes (for response tracking)
+- Limit to 1 response: Optional (prevents spam but may block legitimate re-submissions)
+
+**Google Form URL:** Will be embedded via iframe or linked directly from the CTA button.
+
+### 4.5 Integration Options
+
+**Option A: Direct link to Google Form**
+- Button opens Google Form in new tab
+- Simplest implementation
+- User leaves the page
+
+**Option B: Embedded form**
+- Embed Google Form iframe directly in reveal page
+- User stays on page
+- Slightly more complex but better UX
+
+**Option C: Custom form → Google Sheets**
+- Build custom form UI matching site design
+- Submit to Google Sheets via API or Formspree/Basin
+- Best UX, most work
+
+**Recommendation:** Start with **Option A** (direct link) for speed. Upgrade to Option B or C later if conversion matters.
+
+### 4.6 Button Behavior
+
+**"Yes, actually build this" button:**
+```
+<a href="https://forms.gle/YOUR_FORM_ID" target="_blank" rel="noopener noreferrer">
+  Yes, actually build this →
+</a>
+```
+
+Alternatively, if embedding:
+- Click reveals iframe below the email field
+- Or opens modal with embedded form
+
+---
+
+## Part 5: Implementation Priority
+
+### Phase 1: Reveal Page Overhaul
+1. Redesign reveal page with new copy and layout
+2. Add "serious interest" section with Google Form link
 3. Add "Share your L" buttons (Twitter, Copy Link)
+4. Add @neonwatty handle and follow CTA
+5. Style for screenshot-ability
 
-### Phase 2: Core Feature (Clip Recording)
+### Phase 2: Google Form Setup
+1. Create Google Form with fields above
+2. Test submission flow
+3. Set up email notifications for responses
+4. Link form to reveal page
+
+### Phase 3: Clip Recording Feature
 1. Add recording state management
 2. Implement canvas compositing with watermark
 3. Add floating record/stop button UI
@@ -289,12 +415,12 @@ building things that probably shouldn't exist
 5. Add download functionality
 6. Add social share buttons
 
-### Phase 3: Social Proof (Optional)
+### Phase 4: Social Proof (Optional)
 1. Add counter to homepage
 2. Decide real vs playful fake
 3. Implement analytics tracking if real
 
-### Phase 4: Content Creation
+### Phase 5: Content Creation & Launch
 1. Create 2-3 short video clips (screen recordings)
 2. Prepare platform-specific post copy
 3. Update social bios
@@ -308,6 +434,7 @@ building things that probably shouldn't exist
 |--------|--------|
 | Site visitors (Week 1) | 5,000+ |
 | Reveal page views | 20%+ of visitors |
+| **"Build it" form submissions** | **50+** |
 | Clip recordings created | 500+ |
 | Social shares (tracked) | 200+ |
 | New @neonwatty followers | 100+ |
@@ -317,6 +444,7 @@ building things that probably shouldn't exist
 ## Open Questions
 
 1. **Counter:** Real tracking vs playfully fake? If real, what analytics to use?
-2. **Reveal page:** Keep YTgify mention, or fully pivot to personal brand CTA?
-3. **Launch timing:** January = peak gym season. Target specific date?
-4. **Other socials for share buttons:** Instagram? TikTok? LinkedIn?
+2. **Launch timing:** January = peak gym season. Target specific date?
+3. **Other socials for share buttons:** Instagram? TikTok? LinkedIn?
+4. **Form embedding:** Direct link vs embedded iframe vs custom form?
+5. **Threshold for "building it":** At what point would you seriously consider making this real?

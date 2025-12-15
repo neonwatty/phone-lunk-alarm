@@ -1,101 +1,152 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ShareButtons from '@/components/ShareButtons'
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdrAJe0M7T6RhIQTu70es-5UOPqICZi_epAlw5x8PRCSvhJRQ/viewform'
 
-export default function NewsletterPage() {
+export default function RevealPage() {
   return (
     <>
       <Header />
       <main className="min-h-screen flex items-center justify-center px-4 py-20">
-        <div className="max-w-4xl mx-auto">
-          {/* Headline */}
-          <div className="text-center mb-8">
-            <p className="text-2xl font-bold px-6 py-4 rounded-lg inline-block"
-               style={{
-                 backgroundColor: 'var(--color-accent-light)',
-                 color: 'var(--color-accent-primary)'
-               }}>
-              Wow you&apos;re an easy mark!
+        <div className="max-w-2xl mx-auto">
+          {/* GOTCHA Header */}
+          <div className="text-center mb-8 stagger-animation stagger-delay-1">
+            <span className="text-6xl md:text-7xl">🚨</span>
+            <h1
+              className="text-4xl md:text-5xl font-bold mt-4"
+              style={{ color: 'var(--color-text-primary)' }}
+            >
+              GOTCHA
+            </h1>
+          </div>
+
+          {/* Punchline */}
+          <div className="text-center mb-8 stagger-animation stagger-delay-2">
+            <p
+              className="text-xl md:text-2xl font-medium mb-4"
+              style={{ color: 'var(--color-text-primary)' }}
+            >
+              OK, this isn&apos;t real.
+            </p>
+            <p
+              className="text-lg md:text-xl"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
+              I built it as a joke because I&apos;m tired of waiting for equipment at my gym.
             </p>
           </div>
 
-          {/* Description */}
-          <div className="text-center mb-12">
-            <p className="text-lg md:text-xl max-w-3xl mx-auto"
-               style={{ color: 'var(--color-text-secondary)' }}>
-              This thing isn&apos;t real (yet)!
-              <br />
-              <br />
-              <span className="font-bold px-6 py-4 rounded-lg inline-block"
-                    style={{
-                      backgroundColor: 'var(--color-accent-light)',
-                      color: 'var(--color-accent-primary)'
-                    }}>
-                But this is: YTgify - a browser extension that lets you quickly clip GIFs from any YouTube video right in the player!
-              </span>
+          {/* The Twist */}
+          <div className="text-center mb-10 stagger-animation stagger-delay-3">
+            <p
+              className="text-2xl md:text-3xl font-bold"
+              style={{ color: 'var(--color-accent-primary)' }}
+            >
+              But... should it be?
             </p>
           </div>
 
-          {/* YTgify Section */}
-          <div className="space-y-8">
+          {/* Build It For Real Section */}
+          <div
+            className="rounded-xl p-6 md:p-8 mb-10 stagger-animation stagger-delay-4"
+            style={{
+              background: 'var(--gradient-elevated)',
+              border: '1px solid var(--color-border-primary)',
+            }}
+          >
+            <p
+              className="text-lg font-medium mb-6 text-center"
+              style={{ color: 'var(--color-text-primary)' }}
+            >
+              If you actually want this for your gym:
+            </p>
+
             <div className="text-center">
-              {/* Browser Extension Badges */}
-              <div className="mb-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
-                {/* Chrome Web Store Badge */}
-                <a
-                  href="https://chromewebstore.google.com/detail/ytgify/dnljofakogbecppbkmnoffppkfdmpfje"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block transition-opacity hover:opacity-90"
+              <a
+                href={GOOGLE_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary inline-flex items-center gap-2 text-lg"
+              >
+                Yes, actually build this
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <img
-                    src={`${basePath}/chrome-web-store-badge.png`}
-                    alt="Available in the Chrome Web Store"
-                    className="h-16 sm:h-20 w-auto"
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
                   />
-                </a>
-
-                {/* Firefox Add-ons Badge */}
-                <a
-                  href="https://addons.mozilla.org/en-US/firefox/addon/ytgify-for-firefox/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block transition-opacity hover:opacity-90"
-                >
-                  <img
-                    src={`${basePath}/firefox-addons-badge.png`}
-                    alt="Get the Firefox Add-on"
-                    className="h-16 sm:h-20 w-auto"
-                  />
-                </a>
-              </div>
+                </svg>
+              </a>
             </div>
 
-            {/* Demo Video with Arrow Indicator */}
-            <div className="relative">
-              {/* Heading with Finger Emojis */}
-              <div className="text-center mb-6">
-                <h3 className="text-2xl md:text-3xl font-bold"
-                    style={{ color: 'var(--color-text-primary)' }}>
-                  👇 Check it out! 👇
-                </h3>
-              </div>
+            <p
+              className="text-sm mt-6 text-center"
+              style={{ color: 'var(--color-text-tertiary)' }}
+            >
+              I&apos;ll let you know if it becomes real. No promises, no spam.
+            </p>
+          </div>
 
-              {/* Video */}
-              <div className="aspect-video w-full max-w-3xl mx-auto rounded-lg overflow-hidden"
-                   style={{ boxShadow: 'var(--shadow-subtle)' }}>
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/hBBr8SluoQ8"
-                  title="YTgify Demo"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            </div>
+          {/* Divider */}
+          <div className="flex items-center gap-4 mb-10 stagger-animation stagger-delay-5">
+            <div
+              className="flex-1 h-px"
+              style={{ background: 'var(--color-border-secondary)' }}
+            />
+            <span
+              className="text-sm font-medium"
+              style={{ color: 'var(--color-text-tertiary)' }}
+            >
+              or
+            </span>
+            <div
+              className="flex-1 h-px"
+              style={{ background: 'var(--color-border-secondary)' }}
+            />
+          </div>
+
+          {/* Share Your L Section */}
+          <div className="text-center stagger-animation stagger-delay-6">
+            <p
+              className="text-lg mb-6"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
+              Just here for the meme? Share your L:
+            </p>
+
+            <ShareButtons />
+          </div>
+
+          {/* @neonwatty Branding */}
+          <div className="text-center mt-12 pt-8 border-t stagger-animation stagger-delay-6" style={{ borderColor: 'var(--color-border-subtle)' }}>
+            <p
+              className="text-sm mb-2"
+              style={{ color: 'var(--color-text-tertiary)' }}
+            >
+              built by
+            </p>
+            <a
+              href="https://x.com/neonwatty"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl font-bold transition-colors hover:underline"
+              style={{ color: 'var(--color-accent-primary)' }}
+            >
+              @neonwatty
+            </a>
+            <p
+              className="text-sm mt-2"
+              style={{ color: 'var(--color-text-tertiary)' }}
+            >
+              (follow for more dumb things)
+            </p>
           </div>
         </div>
       </main>

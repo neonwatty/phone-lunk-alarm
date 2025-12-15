@@ -1,16 +1,24 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import Webcam from 'react-webcam'
 import AlarmEffect from './AlarmEffect'
+import RecordingPreviewModal from './RecordingPreviewModal'
 
 // We'll load TensorFlow dynamically to avoid SSR issues
 let cocoSsd: any = null
 let tf: any = null
 
+const MAX_RECORDING_DURATION = 30 // seconds
+
 export default function PhoneDetector() {
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const recordingCanvasRef = useRef<HTMLCanvasElement>(null)
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+  const recordedChunksRef = useRef<Blob[]>([])
+  const recordingTimerRef = useRef<NodeJS.Timeout | null>(null)
+
   const [modelLoaded, setModelLoaded] = useState(false)
   const [phoneDetected, setPhoneDetected] = useState(false)
   const [detectionCount, setDetectionCount] = useState(0)
@@ -18,10 +26,18 @@ export default function PhoneDetector() {
   const [error, setError] = useState<string | null>(null)
   const [isCompatible, setIsCompatible] = useState(true)
   const [isCameraActive, setIsCameraActive] = useState(false)
-  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment') // Default to back camera
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment')
+
+  // Recording state
+  const [isRecording, setIsRecording] = useState(false)
+  const [recordingTime, setRecordingTime] = useState(0)
+  const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null)
+  const [showPreview, setShowPreview] = useState(false)
+
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const alarmTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const lastAlarmTimeRef = useRef<number>(0)
+  const phoneDetectedRef = useRef(false) // For recording canvas access
 
   // Check browser compatibility
   useEffect(() => {
@@ -133,6 +149,7 @@ export default function PhoneDetector() {
 
       if (phoneFound && !phoneDetected && timeSinceLastAlarm >= COOLDOWN_PERIOD) {
         setPhoneDetected(true)
+        phoneDetectedRef.current = true
         setDetectionCount((prev) => prev + 1)
         lastAlarmTimeRef.current = now
 
@@ -144,12 +161,198 @@ export default function PhoneDetector() {
         // Auto-dismiss alarm after 5 seconds
         alarmTimeoutRef.current = setTimeout(() => {
           setPhoneDetected(false)
+          phoneDetectedRef.current = false
           alarmTimeoutRef.current = null
         }, 5000)
       }
     } catch (err) {
       console.error('Detection error:', err)
     }
+  }
+
+  // Animation frame counter for bouncing effects
+  const animationFrameRef = useRef(0)
+
+  // Recording functions
+  const drawRecordingFrame = useCallback(() => {
+    const video = webcamRef.current?.video
+    const detectionCanvas = canvasRef.current
+    const recordingCanvas = recordingCanvasRef.current
+
+    if (!video || !detectionCanvas || !recordingCanvas) return
+
+    const ctx = recordingCanvas.getContext('2d')
+    if (!ctx) return
+
+    const width = video.videoWidth || 640
+    const height = video.videoHeight || 480
+    const watermarkHeight = 60
+
+    recordingCanvas.width = width
+    recordingCanvas.height = height + watermarkHeight
+
+    // Draw watermark banner at top
+    ctx.fillStyle = '#EF4444' // Red
+    ctx.fillRect(0, 0, width, watermarkHeight)
+    ctx.fillStyle = '#FFFFFF'
+    ctx.font = 'bold 24px sans-serif'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText('🚨 PHONE LUNK DETECTED 🚨  phone-lunk.app', width / 2, watermarkHeight / 2)
+
+    // Draw video frame
+    ctx.drawImage(video, 0, watermarkHeight, width, height)
+
+    // Draw detection boxes from the detection canvas
+    ctx.drawImage(detectionCanvas, 0, watermarkHeight, width, height)
+
+    // If alarm is active, add alarm effects
+    if (phoneDetectedRef.current) {
+      animationFrameRef.current += 1
+      const frame = animationFrameRef.current
+
+      // Pulsing red overlay (alternates intensity)
+      const pulseIntensity = 0.15 + 0.1 * Math.sin(frame * 0.3)
+      ctx.fillStyle = `rgba(239, 68, 68, ${pulseIntensity})`
+      ctx.fillRect(0, watermarkHeight, width, height)
+
+      // Pulsing border
+      const borderWidth = 6 + 2 * Math.sin(frame * 0.3)
+      ctx.strokeStyle = '#EF4444'
+      ctx.lineWidth = borderWidth
+      ctx.strokeRect(0, watermarkHeight, width, height)
+
+      // Bouncing banner at top of video area
+      const bannerBounce = Math.abs(Math.sin(frame * 0.15)) * 20
+      const bannerY = watermarkHeight + 30 + bannerBounce
+      const bannerWidth = Math.min(400, width * 0.8)
+      const bannerHeight = 50
+      const bannerX = (width - bannerWidth) / 2
+
+      // Banner background with shadow
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'
+      ctx.shadowBlur = 15
+      ctx.shadowOffsetY = 5
+      ctx.fillStyle = '#DC2626'
+      ctx.beginPath()
+      ctx.roundRect(bannerX, bannerY, bannerWidth, bannerHeight, 12)
+      ctx.fill()
+      ctx.shadowColor = 'transparent'
+      ctx.shadowBlur = 0
+      ctx.shadowOffsetY = 0
+
+      // Banner text
+      ctx.fillStyle = '#FFFFFF'
+      ctx.font = 'bold 20px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText('🚨 PHONE LUNK DETECTED 🚨', width / 2, bannerY + bannerHeight / 2)
+
+      // Big bouncing siren in center
+      const sirenBounce = Math.abs(Math.sin(frame * 0.2)) * 30
+      const sirenY = watermarkHeight + height / 2 - 40 + sirenBounce
+      ctx.font = '80px sans-serif'
+      ctx.fillText('🚨', width / 2, sirenY)
+
+      // Corner warning icons (rotating effect simulated with scale pulse)
+      const iconScale = 0.8 + 0.2 * Math.sin(frame * 0.1)
+      const iconSize = Math.floor(40 * iconScale)
+      ctx.font = `${iconSize}px sans-serif`
+
+      const cornerOffset = 30
+      // Top-left
+      ctx.fillText('⚠️', cornerOffset, watermarkHeight + cornerOffset + 20)
+      // Top-right
+      ctx.fillText('⚠️', width - cornerOffset, watermarkHeight + cornerOffset + 20)
+      // Bottom-left
+      ctx.fillText('⚠️', cornerOffset, watermarkHeight + height - cornerOffset)
+      // Bottom-right
+      ctx.fillText('⚠️', width - cornerOffset, watermarkHeight + height - cornerOffset)
+    } else {
+      // Reset animation frame when alarm is not active
+      animationFrameRef.current = 0
+    }
+  }, [])
+
+  const startRecording = useCallback(() => {
+    const recordingCanvas = recordingCanvasRef.current
+    if (!recordingCanvas || !isCameraActive) return
+
+    // Initialize canvas size
+    const video = webcamRef.current?.video
+    if (video) {
+      const width = video.videoWidth || 640
+      const height = video.videoHeight || 480
+      recordingCanvas.width = width
+      recordingCanvas.height = height + 60
+    }
+
+    // Get stream from canvas
+    const stream = recordingCanvas.captureStream(30) // 30 FPS
+
+    // Create MediaRecorder
+    const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
+      ? 'video/webm;codecs=vp9'
+      : MediaRecorder.isTypeSupported('video/webm')
+        ? 'video/webm'
+        : 'video/mp4'
+
+    const mediaRecorder = new MediaRecorder(stream, { mimeType })
+    mediaRecorderRef.current = mediaRecorder
+    recordedChunksRef.current = []
+
+    mediaRecorder.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        recordedChunksRef.current.push(event.data)
+      }
+    }
+
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(recordedChunksRef.current, { type: mimeType })
+      setRecordedBlob(blob)
+      setShowPreview(true)
+    }
+
+    // Start recording
+    mediaRecorder.start(100) // Collect data every 100ms
+    setIsRecording(true)
+    setRecordingTime(0)
+
+    // Start timer
+    recordingTimerRef.current = setInterval(() => {
+      setRecordingTime((prev) => {
+        if (prev >= MAX_RECORDING_DURATION - 1) {
+          stopRecording()
+          return prev
+        }
+        return prev + 1
+      })
+    }, 1000)
+
+    // Start drawing frames to recording canvas
+    const drawLoop = () => {
+      if (mediaRecorderRef.current?.state === 'recording') {
+        drawRecordingFrame()
+        requestAnimationFrame(drawLoop)
+      }
+    }
+    requestAnimationFrame(drawLoop)
+  }, [isCameraActive, drawRecordingFrame])
+
+  const stopRecording = useCallback(() => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop()
+    }
+    if (recordingTimerRef.current) {
+      clearInterval(recordingTimerRef.current)
+      recordingTimerRef.current = null
+    }
+    setIsRecording(false)
+  }, [])
+
+  const handleClosePreview = () => {
+    setShowPreview(false)
+    setRecordedBlob(null)
   }
 
   // Start detection loop when model is loaded AND camera is active
@@ -165,6 +368,13 @@ export default function PhoneDetector() {
       if (alarmTimeoutRef.current) {
         clearTimeout(alarmTimeoutRef.current)
       }
+      // Stop recording if active
+      if (mediaRecorderRef.current?.state === 'recording') {
+        mediaRecorderRef.current.stop()
+      }
+      if (recordingTimerRef.current) {
+        clearInterval(recordingTimerRef.current)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modelLoaded, isCameraActive])
@@ -172,9 +382,15 @@ export default function PhoneDetector() {
   // Toggle camera on/off
   const toggleCamera = () => {
     if (isCameraActive) {
+      // Stop recording first if active
+      if (isRecording) {
+        stopRecording()
+      }
+
       // Stop camera
       setIsCameraActive(false)
       setPhoneDetected(false)
+      phoneDetectedRef.current = false
 
       // Clear any active alarm timeout
       if (alarmTimeoutRef.current) {
@@ -377,6 +593,12 @@ export default function PhoneDetector() {
               className="absolute top-0 left-0 w-full h-full pointer-events-none"
             />
 
+            {/* Hidden recording canvas */}
+            <canvas
+              ref={recordingCanvasRef}
+              className="hidden"
+            />
+
             {/* Status bar */}
             <div className="absolute top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-4 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-2">
               {/* Recording indicator */}
@@ -409,7 +631,7 @@ export default function PhoneDetector() {
             </div>
 
             {/* Bottom status */}
-            <div className="absolute bottom-4 left-4">
+            <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
               <div className="bg-black bg-opacity-60 backdrop-blur-sm px-4 py-2 rounded-lg">
                 <span
                   className={`text-sm font-semibold ${
@@ -418,6 +640,35 @@ export default function PhoneDetector() {
                 >
                   {phoneDetected ? '⚠️ PHONE DETECTED' : '✓ All Clear'}
                 </span>
+              </div>
+
+              {/* Record Button */}
+              <div className="flex items-center gap-3">
+                {isRecording && (
+                  <div className="bg-black bg-opacity-60 backdrop-blur-sm px-3 py-2 rounded-lg flex items-center gap-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
+                    <span className="text-white text-sm font-mono font-bold">
+                      {Math.floor(recordingTime / 60).toString().padStart(2, '0')}:
+                      {(recordingTime % 60).toString().padStart(2, '0')}
+                    </span>
+                    <span className="text-gray-400 text-xs">/ 0:30</span>
+                  </div>
+                )}
+                <button
+                  onClick={isRecording ? stopRecording : startRecording}
+                  className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:scale-110 ${
+                    isRecording
+                      ? 'bg-red-600 hover:bg-red-700'
+                      : 'bg-white hover:bg-gray-100'
+                  }`}
+                  title={isRecording ? 'Stop recording' : 'Start recording'}
+                >
+                  {isRecording ? (
+                    <div className="w-5 h-5 bg-white rounded-sm" />
+                  ) : (
+                    <div className="w-5 h-5 bg-red-600 rounded-full" />
+                  )}
+                </button>
               </div>
             </div>
           </div>
@@ -457,6 +708,14 @@ export default function PhoneDetector() {
 
       {/* Global alarm effect */}
       <AlarmEffect active={phoneDetected} />
+
+      {/* Recording Preview Modal */}
+      {showPreview && recordedBlob && (
+        <RecordingPreviewModal
+          videoBlob={recordedBlob}
+          onClose={handleClosePreview}
+        />
+      )}
     </section>
   )
 }

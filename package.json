@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A minimal, reusable static Next.js template for product landing pages with GitHub Pages deployment",
   "scripts": {
-    "dev": "node server.mjs",
+    "dev": "next dev",
+    "dev:https": "NODE_ENV=development node server.mjs",
     "prebuild": "node scripts/generate-images.mjs",
     "build": "next build",
     "postbuild": "next-sitemap",
@@ -36,9 +37,9 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "date-fns": "^4.1.0",
-    "next": "^15.5.2",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "next": "^15.5.7",
+    "react": "^19.1.4",
+    "react-dom": "^19.1.4",
     "react-hot-toast": "^2.6.0",
     "react-webcam": "^7.2.0",
     "tailwindcss": "^3.4.1"
@@ -51,10 +52,10 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.3.0",
-    "@types/react": "^19.1.12",
+    "@types/react": "19.2.8",
     "@types/react-dom": "^19.1.9",
     "@types/testing-library__jest-dom": "^5.14.9",
-    "autoprefixer": "^10.4.21",
+    "autoprefixer": "^10.4.23",
     "eslint": "^9.34.0",
     "eslint-config-next": "^15.5.4",
     "jest": "^30.1.1",
@@ -62,7 +63,7 @@
     "next-sitemap": "^4.2.3",
     "postcss": "^8.5.6",
     "puppeteer": "^24.29.0",
-    "sharp": "^0.34.4",
-    "typescript": "^5.9.2"
+    "sharp": "^0.34.5",
+    "typescript": "5.9.3"
   }
 }

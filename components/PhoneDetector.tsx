@@ -4,6 +4,18 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import Webcam from 'react-webcam'
 import AlarmEffect from './AlarmEffect'
 import RecordingPreviewModal from './RecordingPreviewModal'
+import SoundSelector from './SoundSelector'
+import ThemeSelector from './ThemeSelector'
+import { useAlarmSound } from '@/hooks/useAlarmSound'
+import {
+  ALARM_THEMES,
+  ThemeKey,
+  IntensityLevel,
+  loadThemePreference,
+  saveThemePreference,
+  loadIntensityPreference,
+  saveIntensityPreference,
+} from '@/lib/alarm-themes'
 
 // We'll load TensorFlow dynamically to avoid SSR issues
 let cocoSsd: any = null
@@ -18,6 +30,36 @@ export default function PhoneDetector() {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const recordedChunksRef = useRef<Blob[]>([])
   const recordingTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Alarm sound hook
+  const {
+    selectedSound,
+    volume,
+    playSound,
+    previewSound,
+    changeSound,
+    changeVolume,
+  } = useAlarmSound()
+
+  // Theme state
+  const [selectedTheme, setSelectedTheme] = useState<ThemeKey>('classic')
+  const [selectedIntensity, setSelectedIntensity] = useState<IntensityLevel>('medium')
+
+  // Load theme preferences on mount
+  useEffect(() => {
+    setSelectedTheme(loadThemePreference())
+    setSelectedIntensity(loadIntensityPreference())
+  }, [])
+
+  const handleThemeChange = useCallback((theme: ThemeKey) => {
+    setSelectedTheme(theme)
+    saveThemePreference(theme)
+  }, [])
+
+  const handleIntensityChange = useCallback((intensity: IntensityLevel) => {
+    setSelectedIntensity(intensity)
+    saveIntensityPreference(intensity)
+  }, [])
 
   const [modelLoaded, setModelLoaded] = useState(false)
   const [phoneDetected, setPhoneDetected] = useState(false)
@@ -121,18 +163,19 @@ export default function PhoneDetector() {
         if (prediction.class === 'cell phone' && prediction.score > 0.35) {
           phoneFound = true
 
-          // Draw bounding box
+          // Draw bounding box with theme colors
           const [x, y, width, height] = prediction.bbox
-          ctx.strokeStyle = '#EF4444' // red-500
+          const theme = ALARM_THEMES[selectedTheme]
+          ctx.strokeStyle = theme.primary
           ctx.lineWidth = 4
           ctx.strokeRect(x, y, width, height)
 
           // Draw label background
-          ctx.fillStyle = '#EF4444'
+          ctx.fillStyle = theme.primary
           ctx.fillRect(x, y - 30, width, 30)
 
           // Draw label text
-          ctx.fillStyle = '#FFFFFF'
+          ctx.fillStyle = theme.textColor
           ctx.font = 'bold 18px sans-serif'
           ctx.fillText(
             `📱 PHONE ${Math.round(prediction.score * 100)}%`,
@@ -152,6 +195,9 @@ export default function PhoneDetector() {
         phoneDetectedRef.current = true
         setDetectionCount((prev) => prev + 1)
         lastAlarmTimeRef.current = now
+
+        // Play alarm sound
+        playSound()
 
         // Clear any existing alarm timeout to prevent overlapping alarms
         if (alarmTimeoutRef.current) {
@@ -184,6 +230,7 @@ export default function PhoneDetector() {
     const ctx = recordingCanvas.getContext('2d')
     if (!ctx) return
 
+    const theme = ALARM_THEMES[selectedTheme]
     const width = video.videoWidth || 640
     const height = video.videoHeight || 480
     const watermarkHeight = 60
@@ -191,10 +238,10 @@ export default function PhoneDetector() {
     recordingCanvas.width = width
     recordingCanvas.height = height + watermarkHeight
 
-    // Draw watermark banner at top
-    ctx.fillStyle = '#EF4444' // Red
+    // Draw watermark banner at top with theme colors
+    ctx.fillStyle = theme.primary
     ctx.fillRect(0, 0, width, watermarkHeight)
-    ctx.fillStyle = '#FFFFFF'
+    ctx.fillStyle = theme.textColor
     ctx.font = 'bold 24px sans-serif'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
@@ -211,14 +258,25 @@ export default function PhoneDetector() {
       animationFrameRef.current += 1
       const frame = animationFrameRef.current
 
-      // Pulsing red overlay (alternates intensity)
+      // Parse theme primary color for rgba overlay
+      const hexToRgb = (hex: string) => {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : { r: 239, g: 68, b: 68 }
+      }
+      const rgb = hexToRgb(theme.primary)
+
+      // Pulsing overlay (alternates intensity)
       const pulseIntensity = 0.15 + 0.1 * Math.sin(frame * 0.3)
-      ctx.fillStyle = `rgba(239, 68, 68, ${pulseIntensity})`
+      ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${pulseIntensity})`
       ctx.fillRect(0, watermarkHeight, width, height)
 
       // Pulsing border
       const borderWidth = 6 + 2 * Math.sin(frame * 0.3)
-      ctx.strokeStyle = '#EF4444'
+      ctx.strokeStyle = theme.primary
       ctx.lineWidth = borderWidth
       ctx.strokeRect(0, watermarkHeight, width, height)
 
@@ -233,7 +291,7 @@ export default function PhoneDetector() {
       ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'
       ctx.shadowBlur = 15
       ctx.shadowOffsetY = 5
-      ctx.fillStyle = '#DC2626'
+      ctx.fillStyle = theme.secondary
       ctx.beginPath()
       ctx.roundRect(bannerX, bannerY, bannerWidth, bannerHeight, 12)
       ctx.fill()
@@ -242,7 +300,7 @@ export default function PhoneDetector() {
       ctx.shadowOffsetY = 0
 
       // Banner text
-      ctx.fillStyle = '#FFFFFF'
+      ctx.fillStyle = theme.textColor
       ctx.font = 'bold 20px sans-serif'
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
@@ -272,7 +330,7 @@ export default function PhoneDetector() {
       // Reset animation frame when alarm is not active
       animationFrameRef.current = 0
     }
-  }, [])
+  }, [selectedTheme])
 
   const startRecording = useCallback(() => {
     const recordingCanvas = recordingCanvasRef.current
@@ -601,10 +659,31 @@ export default function PhoneDetector() {
 
             {/* Status bar */}
             <div className="absolute top-2 left-2 right-2 sm:top-4 sm:left-4 sm:right-4 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-2">
-              {/* Recording indicator */}
-              <div className="bg-black bg-opacity-60 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg flex items-center gap-2">
-                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse" />
-                <span className="text-white text-xs sm:text-sm font-semibold">MONITORING</span>
+              {/* Recording indicator and Sound Settings */}
+              <div className="flex flex-col gap-2">
+                <div className="bg-black bg-opacity-60 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg flex items-center gap-2">
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse" />
+                  <span className="text-white text-xs sm:text-sm font-semibold">MONITORING</span>
+                </div>
+                {/* Sound Selector */}
+                <div className="hidden sm:block">
+                  <SoundSelector
+                    selectedSound={selectedSound}
+                    volume={volume}
+                    onSoundChange={changeSound}
+                    onVolumeChange={changeVolume}
+                    onPreview={previewSound}
+                  />
+                </div>
+                {/* Theme Selector */}
+                <div className="hidden sm:block">
+                  <ThemeSelector
+                    selectedTheme={selectedTheme}
+                    selectedIntensity={selectedIntensity}
+                    onThemeChange={handleThemeChange}
+                    onIntensityChange={handleIntensityChange}
+                  />
+                </div>
               </div>
 
               {/* Camera controls */}
@@ -707,7 +786,7 @@ export default function PhoneDetector() {
       </div>
 
       {/* Global alarm effect */}
-      <AlarmEffect active={phoneDetected} />
+      <AlarmEffect active={phoneDetected} theme={selectedTheme} intensity={selectedIntensity} />
 
       {/* Recording Preview Modal */}
       {showPreview && recordedBlob && (

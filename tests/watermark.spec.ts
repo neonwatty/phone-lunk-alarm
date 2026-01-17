@@ -76,10 +76,10 @@ test.describe('Watermark Feature', () => {
     // Wait for component to stabilize and TensorFlow model to load
     await page.waitForTimeout(2000)
 
-    // Start recording
+    // Start recording - use noWaitAfter to prevent hanging on async operations
     const recordButton = page.locator('button[title="Start recording"]')
     await recordButton.waitFor({ state: 'visible', timeout: 10000 })
-    await recordButton.click({ force: true })
+    await recordButton.click({ force: true, noWaitAfter: true })
 
     // Verify recording started
     await expect(page.locator('button[title="Stop recording"]')).toBeVisible({ timeout: 10000 })
@@ -87,8 +87,8 @@ test.describe('Watermark Feature', () => {
     // Record for 3 seconds to ensure we have content
     await page.waitForTimeout(3000)
 
-    // Stop recording
-    await page.click('button[title="Stop recording"]', { force: true })
+    // Stop recording - use noWaitAfter to prevent hanging
+    await page.locator('button[title="Stop recording"]').click({ force: true, noWaitAfter: true })
 
     // Wait for preview modal with longer timeout
     await expect(page.locator('text=🎬 Your Clip')).toBeVisible({ timeout: 15000 })
@@ -125,15 +125,16 @@ test.describe('Watermark Feature', () => {
     await expect(page.locator('#demo').getByText('MONITORING')).toBeVisible({ timeout: 30000 })
     await page.waitForTimeout(2000)
 
-    // Record a clip
+    // Record a clip - use noWaitAfter to prevent hanging on async operations
     const recordButton = page.locator('button[title="Start recording"]')
     await recordButton.waitFor({ state: 'visible', timeout: 10000 })
-    await recordButton.click({ force: true })
+    await recordButton.click({ force: true, noWaitAfter: true })
 
     await expect(page.locator('button[title="Stop recording"]')).toBeVisible({ timeout: 10000 })
     await page.waitForTimeout(3000) // Record for 3 seconds
 
-    await page.click('button[title="Stop recording"]', { force: true })
+    // Stop recording - use noWaitAfter to prevent hanging
+    await page.locator('button[title="Stop recording"]').click({ force: true, noWaitAfter: true })
 
     // Wait for preview modal
     await expect(page.locator('text=🎬 Your Clip')).toBeVisible({ timeout: 15000 })

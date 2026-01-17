@@ -80,6 +80,24 @@ export default function PhoneDetector() {
   const alarmTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const lastAlarmTimeRef = useRef<number>(0)
   const phoneDetectedRef = useRef(false) // For recording canvas access
+  const watermarkEnabledRef = useRef(true) // For recording canvas access
+
+  // Watermark state
+  const [watermarkEnabled, setWatermarkEnabled] = useState(true)
+
+  // Load watermark preference on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('phoneLunkWatermarkEnabled')
+    const enabled = saved !== 'false' // Default to true
+    setWatermarkEnabled(enabled)
+    watermarkEnabledRef.current = enabled
+  }, [])
+
+  // Sync ref when state changes
+  useEffect(() => {
+    watermarkEnabledRef.current = watermarkEnabled
+    localStorage.setItem('phoneLunkWatermarkEnabled', String(watermarkEnabled))
+  }, [watermarkEnabled])
 
   // Check browser compatibility
   useEffect(() => {
@@ -329,6 +347,29 @@ export default function PhoneDetector() {
     } else {
       // Reset animation frame when alarm is not active
       animationFrameRef.current = 0
+    }
+
+    // Corner watermark (always visible if enabled)
+    if (watermarkEnabledRef.current) {
+      const padding = 15
+      const fontSize = Math.max(14, Math.floor(height * 0.025)) // Proportional to video height
+
+      ctx.save()
+      ctx.font = `bold ${fontSize}px sans-serif`
+      ctx.textAlign = 'right'
+      ctx.textBaseline = 'bottom'
+
+      // Shadow for visibility on any background
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.8)'
+      ctx.shadowBlur = 4
+      ctx.shadowOffsetX = 1
+      ctx.shadowOffsetY = 1
+
+      // Semi-transparent white text
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.75)'
+      ctx.fillText('phone-lunk.app', width - padding, watermarkHeight + height - padding)
+
+      ctx.restore()
     }
   }, [selectedTheme])
 

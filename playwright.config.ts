@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
+import * as path from 'path'
+
+const TEST_VIDEO_PATH = path.join(__dirname, 'tests', 'fixtures', 'test-video.y4m')
 
 export default defineConfig({
   testDir: './tests',
@@ -24,6 +27,30 @@ export default defineConfig({
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
+    },
+    {
+      // Special project for fake camera tests (watermark, recording)
+      name: 'chromium-fake-camera',
+      testMatch: /watermark\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          args: [
+            '--use-fake-device-for-media-stream',
+            '--use-fake-ui-for-media-stream',
+            `--use-file-for-fake-video-capture=${TEST_VIDEO_PATH}`,
+            // Required for WebGL/canvas in headless mode
+            '--enable-webgl',
+            '--use-gl=swiftshader',
+            '--disable-gpu-sandbox',
+            '--enable-unsafe-swiftshader',
+          ],
+        },
+        permissions: ['camera'],
+        // Longer timeout for recording operations
+        actionTimeout: 15000,
+        navigationTimeout: 30000,
+      },
     },
   ],
 

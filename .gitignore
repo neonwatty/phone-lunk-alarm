@@ -42,3 +42,7 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# test fixtures (generated during CI)
+tests/fixtures/*.y4m
+tests/fixtures/*.mjpeg

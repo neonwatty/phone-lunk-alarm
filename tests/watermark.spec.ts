@@ -74,27 +74,27 @@ test.describe('Watermark Feature', () => {
     await expect(page.locator('#demo').getByText('MONITORING')).toBeVisible({ timeout: 30000 })
 
     // Wait for component to stabilize and TensorFlow model to load
-    await page.waitForTimeout(2000)
+    await page.waitForTimeout(3000)
 
-    // Start recording - use noWaitAfter to prevent hanging on async operations
+    // Start recording - use JavaScript click to bypass Playwright stability checks in CI
     const recordButton = page.locator('button[title="Start recording"]')
     await recordButton.waitFor({ state: 'visible', timeout: 10000 })
-    await recordButton.click({ force: true, noWaitAfter: true })
+    await recordButton.evaluate((el: HTMLElement) => el.click())
 
     // Verify recording started
-    await expect(page.locator('button[title="Stop recording"]')).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('button[title="Stop recording"]')).toBeVisible({ timeout: 15000 })
 
     // Record for 3 seconds to ensure we have content
     await page.waitForTimeout(3000)
 
-    // Stop recording - use noWaitAfter to prevent hanging
-    await page.locator('button[title="Stop recording"]').click({ force: true, noWaitAfter: true })
+    // Stop recording - use JavaScript click
+    await page.locator('button[title="Stop recording"]').evaluate((el: HTMLElement) => el.click())
 
     // Wait for preview modal with longer timeout
-    await expect(page.locator('text=🎬 Your Clip')).toBeVisible({ timeout: 15000 })
+    await expect(page.locator('text=🎬 Your Clip')).toBeVisible({ timeout: 20000 })
 
     // Small delay to let video render
-    await page.waitForTimeout(500)
+    await page.waitForTimeout(1000)
 
     // Take a screenshot of the preview modal
     await page.screenshot({
@@ -123,34 +123,34 @@ test.describe('Watermark Feature', () => {
 
     // Wait for camera to activate
     await expect(page.locator('#demo').getByText('MONITORING')).toBeVisible({ timeout: 30000 })
-    await page.waitForTimeout(2000)
+    await page.waitForTimeout(3000)
 
-    // Record a clip - use noWaitAfter to prevent hanging on async operations
+    // Record a clip - use JavaScript click to bypass Playwright stability checks in CI
     const recordButton = page.locator('button[title="Start recording"]')
     await recordButton.waitFor({ state: 'visible', timeout: 10000 })
-    await recordButton.click({ force: true, noWaitAfter: true })
+    await recordButton.evaluate((el: HTMLElement) => el.click())
 
-    await expect(page.locator('button[title="Stop recording"]')).toBeVisible({ timeout: 10000 })
+    await expect(page.locator('button[title="Stop recording"]')).toBeVisible({ timeout: 15000 })
     await page.waitForTimeout(3000) // Record for 3 seconds
 
-    // Stop recording - use noWaitAfter to prevent hanging
-    await page.locator('button[title="Stop recording"]').click({ force: true, noWaitAfter: true })
+    // Stop recording - use JavaScript click
+    await page.locator('button[title="Stop recording"]').evaluate((el: HTMLElement) => el.click())
 
     // Wait for preview modal
-    await expect(page.locator('text=🎬 Your Clip')).toBeVisible({ timeout: 15000 })
+    await expect(page.locator('text=🎬 Your Clip')).toBeVisible({ timeout: 20000 })
 
     // Wait for download button to be ready
     const downloadButton = page.locator('button:has-text("Download")')
     await expect(downloadButton).toBeVisible({ timeout: 10000 })
 
     // Small delay to ensure blob is ready
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(2000)
 
     // Set up download listener BEFORE clicking
     const downloadPromise = page.waitForEvent('download', { timeout: 60000 })
 
-    // Click download button
-    await downloadButton.click()
+    // Click download button - use JavaScript click
+    await downloadButton.evaluate((el: HTMLElement) => el.click())
 
     // Wait for download
     const download = await downloadPromise

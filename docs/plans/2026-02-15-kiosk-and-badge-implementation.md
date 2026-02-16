@@ -2,191 +2,439 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Add a real-time kiosk display mode for gym TVs and an embeddable badge for gym websites, both powered by Supabase Realtime channels.
+**Goal:** Rebuild phone-lunk-alarm on top of the nextjs-supabase-template, then add kiosk display mode and embeddable badge.
 
-**Architecture:** The app currently uses static export (`output: 'export'`). We remove that to enable dynamic routes (`/kiosk/[roomId]`, `/join/[roomId]`, `/badge/[roomId]`). Supabase provides both the database (rooms, daily counts) and real-time pub/sub (detection events via broadcast channels). All real-time logic runs client-side — no custom WebSocket server needed.
+**Architecture:** Start from the template (Next.js 16, Supabase, auth, Tailwind 4, Vitest). Port the ~15 phone-lunk-alarm source files into `src/`. Add Supabase Realtime channels for kiosk ↔ member communication. Rooms are created by authenticated users, joined anonymously via QR code scan.
 
-**Tech Stack:** Supabase (Realtime + Postgres), `@supabase/supabase-js`, `qrcode.react` for QR codes, existing Tailwind + alarm theme system.
+**Tech Stack:** Next.js 16, React 19, Supabase (Auth + Realtime + Postgres), `@supabase/ssr`, Tailwind 4, Vitest, Playwright, `qrcode.react`, TensorFlow.js + COCO-SSD.
 
+**Template repo:** `https://github.com/neonwatty/nextjs-supabase-template`
+**App repo:** `https://github.com/neonwatty/phone-lunk-alarm`
 **Design doc:** `docs/plans/2026-02-15-kiosk-and-widget-design.md`
 
 ---
 
-## Task 1: Add Supabase and QR Code Dependencies
+## Phase 1: Fork Template & Port Existing App
+
+### Task 1: Set Up from Template
 
 **Files:**
-- Modify: `package.json`
-- Create: `lib/supabase.ts`
-- Create: `.env.local.example`
+- All template files (fresh clone)
+- Remove: template-specific files we don't need (Stripe, Resend, subscriptions)
 
-**Step 1: Install dependencies**
+**Step 1: Create new branch from template**
 
-Run: `npm install @supabase/supabase-js qrcode.react`
-
-**Step 2: Create Supabase client**
-
-Create `lib/supabase.ts`:
-
-```typescript
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+```bash
+cd /tmp/phone-lunk-alarm
+git checkout -b feat/kiosk-template-rebuild
 ```
 
-**Step 3: Create env example file**
+**Step 2: Copy template structure**
 
-Create `.env.local.example`:
+Copy the following from the template into the phone-lunk-alarm repo, replacing existing files:
 
+- `src/` directory (entire structure)
+- `supabase/` directory
+- `next.config.ts` (replaces `next.config.mjs`)
+- `tsconfig.json`
+- `postcss.config.mjs`
+- `eslint.config.mjs`
+- `.prettierrc`
+- `vitest.config.ts`
+- `playwright.config.ts`
+- `.env.example`
+- `.github/workflows/ci.yml`
+- `src/middleware.ts`
+- `src/lib/supabase/` (client trio)
+- `src/lib/auth.ts`
+- `src/lib/utils.ts`
+- `src/app/(auth)/` (login, signup pages)
+- `src/app/auth/callback/route.ts`
+- `src/app/providers.tsx`
+- `src/app/layout.tsx` (template root layout)
+- `src/app/globals.css` (Tailwind 4)
+- `src/components/sign-out-button.tsx`
+- `src/test/` (test setup + mocks)
+
+**Step 3: Remove template features we don't need yet**
+
+Delete these template files:
+- `src/lib/stripe/` (entire directory)
+- `src/lib/subscription/` (entire directory)
+- `src/lib/email/` (entire directory)
+- `src/app/api/stripe/` (webhook)
+- `src/app/api/cron/` (reminders)
+- `src/app/api/email/` (webhook)
+- `src/hooks/useSubscription.ts`
+- `src/store/useStore.ts`
+- `src/lib/validation.ts` (bring back if needed)
+- `src/types/index.ts` (will rewrite for our types)
+- `supabase/migrations/00002_subscriptions.sql`
+
+**Step 4: Update package.json**
+
+Merge dependencies — keep template's core deps, add phone-lunk-alarm specific ones:
+
+Keep from template:
+- `next`, `react`, `react-dom` (16/19)
+- `@supabase/ssr`, `@supabase/supabase-js`
+- `tailwindcss` (v4), `@tailwindcss/postcss`
+- `clsx`, `tailwind-merge`, `lucide-react`
+- `zod`
+- `vitest`, `@playwright/test`, `@testing-library/*`
+- `typescript`, `eslint`, `prettier`
+- `@vercel/analytics`
+
+Add from phone-lunk-alarm:
+- `@tensorflow/tfjs`
+- `@tensorflow-models/coco-ssd`
+- `react-webcam`
+- `react-hot-toast`
+- `date-fns`
+- `@heroicons/react`
+- `@vercel/speed-insights`
+- `qrcode.react` (new)
+
+Remove (no longer needed):
+- `@capacitor/*` (skip iOS for now)
+- `stripe`, `resend`, `react-email`
+- `zustand` (not needed unless state grows)
+
+**Step 5: Install and verify build**
+
+```bash
+npm install
+npm run build
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+
+Fix any build errors.
+
+**Step 6: Commit**
+
+```bash
+git add -A
+git commit -m "feat: bootstrap from nextjs-supabase-template with auth and Supabase infra"
 ```
 
-**Step 4: Add `.env.local` to `.gitignore`**
+---
 
-Check `.gitignore` — if `.env.local` isn't already listed, add it.
+### Task 2: Port Phone Detection Components
+
+**Files:**
+- Create: `src/components/PhoneDetector.tsx` (from `components/PhoneDetector.tsx`)
+- Create: `src/components/AlarmEffect.tsx` (from `components/AlarmEffect.tsx`)
+- Create: `src/components/SoundSelector.tsx`
+- Create: `src/components/ThemeSelector.tsx`
+- Create: `src/components/RecordingPreviewModal.tsx`
+- Create: `src/hooks/useAlarmSound.ts`
+- Create: `src/lib/alarm-themes.ts`
+- Create: `src/lib/video-utils.ts`
+- Copy: `public/sounds/` (all 4 alarm sound files)
+- Copy: `public/manifest.json`
+
+**Step 1: Copy core component files**
+
+Copy from the old repo structure into `src/`:
+
+| Old path | New path |
+|----------|----------|
+| `components/PhoneDetector.tsx` | `src/components/PhoneDetector.tsx` |
+| `components/AlarmEffect.tsx` | `src/components/AlarmEffect.tsx` |
+| `components/SoundSelector.tsx` | `src/components/SoundSelector.tsx` |
+| `components/ThemeSelector.tsx` | `src/components/ThemeSelector.tsx` |
+| `components/RecordingPreviewModal.tsx` | `src/components/RecordingPreviewModal.tsx` |
+| `hooks/useAlarmSound.ts` | `src/hooks/useAlarmSound.ts` |
+| `lib/alarm-themes.ts` | `src/lib/alarm-themes.ts` |
+| `lib/video-utils.ts` | `src/lib/video-utils.ts` |
+| `public/sounds/*` | `public/sounds/*` |
+
+**Step 2: Fix imports**
+
+All imports in the ported files that use `@/` should already work since tsconfig maps `@/*` to `./src/*`. Verify and fix any broken imports.
+
+Key changes:
+- `import { ALARM_THEMES } from '@/lib/alarm-themes'` (unchanged)
+- `import { useAlarmSound } from '@/hooks/useAlarmSound'` (unchanged)
+- Any Tailwind class changes needed for v3→v4 migration
+
+**Step 3: Adapt Tailwind classes**
+
+Tailwind 4 has breaking changes from v3. Key things to check in ported components:
+- CSS variable references: the template uses `--background`, `--foreground`, etc. The old app uses `--bg-primary`, `--text-primary`, etc.
+- Decision: map the old CSS variables to the template's oklch color system in `globals.css`, OR update the component classes to use the template's variable names.
+- Simpler approach: add the old app's CSS variables to `globals.css` alongside the template's, then migrate component-by-component later.
+
+**Step 4: Verify PhoneDetector renders**
+
+```bash
+npm run dev
+```
+
+Navigate to the demo page, verify the PhoneDetector component loads and shows the camera UI.
 
 **Step 5: Commit**
 
 ```bash
-git add lib/supabase.ts .env.local.example package.json package-lock.json .gitignore
-git commit -m "feat: add Supabase client and QR code dependencies"
+git add src/components/ src/hooks/ src/lib/alarm-themes.ts src/lib/video-utils.ts public/sounds/
+git commit -m "feat: port phone detection components from existing app"
 ```
 
 ---
 
-## Task 2: Remove Static Export, Enable Dynamic Routes
+### Task 3: Port Landing Page Components
 
 **Files:**
-- Modify: `next.config.mjs`
+- Create: `src/components/Hero.tsx`
+- Create: `src/components/HowItWorks.tsx`
+- Create: `src/components/Features.tsx`
+- Create: `src/components/Header.tsx`
+- Create: `src/components/Footer.tsx`
+- Create: `src/components/VideoMockup.tsx`
+- Modify: `src/app/page.tsx` (landing page)
+- Port: `site.config.mjs` → `src/lib/site-config.ts`
 
-The app currently uses `output: 'export'` which prevents dynamic routes. We need dynamic routes for `/kiosk/[roomId]`, `/join/[roomId]`, and `/badge/[roomId]`.
+**Step 1: Copy landing page components**
 
-**Step 1: Remove static export**
+Copy all remaining components from the old app to `src/components/`.
 
-In `next.config.mjs`, remove the `output: 'export'` line. Keep everything else (trailingSlash, basePath, images).
+**Step 2: Update the landing page route**
 
-```javascript
-/** @type {import('next').NextConfig} */
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+Replace `src/app/page.tsx` with the old app's landing page layout — Hero, HowItWorks, Features, PhoneDetector demo section.
 
-const nextConfig = {
-  trailingSlash: true,
-  basePath: basePath,
-  assetPrefix: basePath,
-  images: {
-    unoptimized: true,
-  },
-}
+The template's landing page redirects authenticated users to `/dashboard`. Keep this behavior but change the redirect target to `/kiosk/create` (or a future dashboard).
 
-export default nextConfig
+**Step 3: Fix Tailwind classes and CSS variables**
+
+Same approach as Task 2 — bridge old CSS variables into the template's `globals.css`.
+
+**Step 4: Port site.config**
+
+Copy `site.config.mjs` to `src/lib/site-config.ts` (convert to TypeScript). Update components that reference it.
+
+**Step 5: Verify full landing page renders**
+
+```bash
+npm run dev
 ```
 
-**Step 2: Verify build still works**
+Navigate to `/`, verify the full landing page renders with Hero, Features, HowItWorks, and PhoneDetector demo.
 
-Run: `npm run build`
-Expected: Build succeeds. Warning about no static export is fine.
+**Step 6: Commit**
+
+```bash
+git add src/components/ src/app/page.tsx src/lib/site-config.ts
+git commit -m "feat: port landing page components and site config"
+```
+
+---
+
+### Task 4: Port and Adapt Tests
+
+**Files:**
+- Create: `src/test/components/PhoneDetector.test.tsx`
+- Create: `src/test/lib/alarm-themes.test.ts`
+- Adapt: existing `__tests__/` Jest tests to Vitest syntax
+
+**Step 1: Convert key tests from Jest to Vitest**
+
+The main differences:
+- Replace `jest.fn()` → `vi.fn()`
+- Replace `jest.mock()` → `vi.mock()`
+- Replace `jest.spyOn()` → `vi.spyOn()`
+- Import `describe, it, expect, vi` from `vitest`
+- `beforeEach(() => jest.clearAllMocks())` → `beforeEach(() => vi.clearAllMocks())`
+
+Port the most important tests first:
+1. PhoneDetector render/interaction tests
+2. Alarm themes unit tests
+3. useAlarmSound hook tests
+
+**Step 2: Run tests**
+
+```bash
+npm run test
+```
+
+Fix any failures.
 
 **Step 3: Commit**
 
 ```bash
-git add next.config.mjs
-git commit -m "feat: remove static export to enable dynamic routes"
+git add src/test/
+git commit -m "test: port and convert existing tests to Vitest"
 ```
-
-**Note:** This breaks GitHub Pages deployment (which requires static files). The app is primarily on Vercel, which handles dynamic routes natively. If GitHub Pages fallback is needed later, it can be re-added as a separate build target.
 
 ---
 
-## Task 3: Supabase Database Schema
+### Task 5: Update Middleware for Public Routes
 
 **Files:**
-- Create: `supabase/schema.sql`
+- Modify: `src/lib/supabase/middleware.ts`
 
-This task creates the SQL schema. The actual Supabase project must be created manually at supabase.com before running migrations.
+**Step 1: Add phone-lunk-alarm public routes**
 
-**Step 1: Create schema file**
+The template's middleware redirects unauthenticated users to `/login` for non-public routes. We need several routes to be public:
 
-Create `supabase/schema.sql`:
+```typescript
+const PUBLIC_ROUTES = [
+  '/login',
+  '/signup',
+  '/auth/callback',
+  '/api/health',
+  '/join',          // members join via QR code — no auth required
+  '/badge',         // embeddable badge — no auth
+  '/kiosk',         // kiosk display — no auth (runs on gym TV)
+]
+```
+
+The kiosk display (`/kiosk/[roomId]`) and join page (`/join/[roomId]`) must be public — gym members scan a QR code without logging in. Only kiosk *creation* (`/kiosk/create`) should require auth.
+
+**Step 2: Update the middleware to handle kiosk/create auth**
+
+The route protection logic: `/kiosk/create` requires auth. `/kiosk/[anything-else]` is public.
+
+Update `isPublicRoute`:
+
+```typescript
+function isPublicRoute(pathname: string): boolean {
+  // /kiosk/create requires auth, but /kiosk/* (display) is public
+  if (pathname === '/kiosk/create') return false
+
+  return PUBLIC_ROUTES.some(
+    (route) => pathname === route || pathname.startsWith(route + '/'),
+  )
+}
+```
+
+**Step 3: Update Permissions-Policy for camera**
+
+The template's security headers block camera access: `camera=()`. Phone detection needs the camera. Update in both `middleware.ts` and `next.config.ts`:
+
+```typescript
+// Change from:
+'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
+// To:
+'Permissions-Policy': 'camera=(self), microphone=(), geolocation=()'
+```
+
+**Step 4: Verify middleware works**
+
+```bash
+npm run dev
+```
+
+- Visit `/` — landing page loads (public)
+- Visit `/kiosk/create` — redirects to `/login` (protected)
+- Visit `/login` — login page loads
+- Visit `/kiosk/TEST01` — would load kiosk display (public, 404 for now is fine)
+
+**Step 5: Commit**
+
+```bash
+git add src/lib/supabase/middleware.ts next.config.ts
+git commit -m "feat: configure public routes for kiosk, join, and badge pages"
+```
+
+---
+
+## Phase 2: Database & Room Infrastructure
+
+### Task 6: Database Migrations for Rooms
+
+**Files:**
+- Modify: `supabase/migrations/00001_initial_schema.sql` (already has profiles)
+- Create: `supabase/migrations/00002_rooms.sql`
+
+**Step 1: Create rooms migration**
+
+Create `supabase/migrations/00002_rooms.sql`:
 
 ```sql
--- Rooms table
-create table rooms (
-  id text primary key,
-  name text not null,
-  owner_token text not null,
-  created_at timestamptz default now() not null
+-- Kiosk rooms
+CREATE TABLE public.rooms (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  owner_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- Daily detection counts
-create table daily_counts (
-  room_id text references rooms(id) on delete cascade,
-  date date not null,
-  count integer default 0 not null,
-  primary key (room_id, date)
+-- Daily detection counts per room
+CREATE TABLE public.daily_counts (
+  room_id TEXT NOT NULL REFERENCES public.rooms(id) ON DELETE CASCADE,
+  date DATE NOT NULL,
+  count INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (room_id, date)
 );
 
--- RLS policies: rooms are publicly readable, writable with no auth (anon key)
-alter table rooms enable row level security;
-alter table daily_counts enable row level security;
+-- RLS for rooms
+ALTER TABLE public.rooms ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.daily_counts ENABLE ROW LEVEL SECURITY;
 
-create policy "Rooms are publicly readable"
-  on rooms for select using (true);
+-- Anyone can read rooms (needed for join page and badge)
+CREATE POLICY "Rooms are publicly readable"
+  ON public.rooms FOR SELECT USING (true);
 
-create policy "Anyone can create rooms"
-  on rooms for insert with check (true);
+-- Authenticated users can create rooms
+CREATE POLICY "Authenticated users can create rooms"
+  ON public.rooms FOR INSERT
+  WITH CHECK (auth.uid() = owner_id);
 
-create policy "Daily counts are publicly readable"
-  on daily_counts for select using (true);
+-- Owners can delete their rooms
+CREATE POLICY "Owners can delete their rooms"
+  ON public.rooms FOR DELETE
+  USING (auth.uid() = owner_id);
 
-create policy "Anyone can insert daily counts"
-  on daily_counts for insert with check (true);
+-- Anyone can read daily counts (needed for badge)
+CREATE POLICY "Daily counts are publicly readable"
+  ON public.daily_counts FOR SELECT USING (true);
 
-create policy "Anyone can update daily counts"
-  on daily_counts for update using (true);
+-- Anyone can upsert daily counts (members increment via anon key)
+CREATE POLICY "Anyone can insert daily counts"
+  ON public.daily_counts FOR INSERT WITH CHECK (true);
 
--- Function to atomically increment daily count (upsert)
-create or replace function increment_daily_count(p_room_id text, p_date date)
-returns void as $$
-begin
-  insert into daily_counts (room_id, date, count)
-  values (p_room_id, p_date, 1)
-  on conflict (room_id, date)
-  do update set count = daily_counts.count + 1;
-end;
-$$ language plpgsql;
+CREATE POLICY "Anyone can update daily counts"
+  ON public.daily_counts FOR UPDATE USING (true);
+
+-- Atomic increment function
+CREATE OR REPLACE FUNCTION public.increment_daily_count(p_room_id TEXT, p_date DATE)
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER SET search_path = ''
+AS $$
+BEGIN
+  INSERT INTO public.daily_counts (room_id, date, count)
+  VALUES (p_room_id, p_date, 1)
+  ON CONFLICT (room_id, date)
+  DO UPDATE SET count = public.daily_counts.count + 1;
+END;
+$$;
 ```
 
 **Step 2: Commit**
 
 ```bash
-git add supabase/schema.sql
-git commit -m "feat: add Supabase schema for rooms and daily counts"
+git add supabase/migrations/00002_rooms.sql
+git commit -m "feat: add database migration for rooms and daily counts"
 ```
 
-**Step 3: Apply schema manually**
-
-Run the SQL in the Supabase dashboard SQL editor after creating the project. (This is a manual step — document it in the README later.)
+**Note:** Run via Supabase dashboard SQL editor or `supabase db push` after setting up the Supabase project.
 
 ---
 
-## Task 4: Room Management Library
+### Task 7: Room Management Library
 
 **Files:**
-- Create: `lib/rooms.ts`
-- Create: `__tests__/rooms.test.ts`
+- Create: `src/lib/rooms.ts`
+- Create: `src/test/lib/rooms.test.ts`
 
 **Step 1: Write the failing tests**
 
-Create `__tests__/rooms.test.ts`:
+Create `src/test/lib/rooms.test.ts`:
 
 ```typescript
+import { describe, it, expect } from 'vitest'
 import { generateRoomCode } from '@/lib/rooms'
 
-// Mock Supabase — we test the pure functions here, not the DB calls
 describe('generateRoomCode', () => {
   it('returns a 6-character string', () => {
     const code = generateRoomCode()
@@ -194,7 +442,6 @@ describe('generateRoomCode', () => {
   })
 
   it('only contains unambiguous characters (no I/O/0/1)', () => {
-    // Run multiple times to catch randomness issues
     for (let i = 0; i < 100; i++) {
       const code = generateRoomCode()
       expect(code).toMatch(/^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{6}$/)
@@ -203,7 +450,6 @@ describe('generateRoomCode', () => {
 
   it('generates unique codes', () => {
     const codes = new Set(Array.from({ length: 50 }, () => generateRoomCode()))
-    // With 6 chars from 32-char alphabet, collisions in 50 codes are near-impossible
     expect(codes.size).toBe(50)
   })
 })
@@ -211,15 +457,15 @@ describe('generateRoomCode', () => {
 
 **Step 2: Run tests to verify they fail**
 
-Run: `npm test -- --testPathPattern=rooms`
+Run: `npm test -- rooms`
 Expected: FAIL — module not found
 
 **Step 3: Write the room management library**
 
-Create `lib/rooms.ts`:
+Create `src/lib/rooms.ts`:
 
 ```typescript
-import { supabase } from './supabase'
+import { createClient } from '@/lib/supabase/client'
 
 const ROOM_CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
 
@@ -234,28 +480,31 @@ export function generateRoomCode(): string {
 export interface Room {
   id: string
   name: string
-  owner_token: string
+  owner_id: string
   created_at: string
 }
 
-export async function createRoom(name: string): Promise<{ room: Room; ownerToken: string }> {
+/** Create a room (client-side, requires authenticated user) */
+export async function createRoom(name: string, ownerId: string): Promise<Room> {
+  const supabase = createClient()
   const id = generateRoomCode()
-  const ownerToken = crypto.randomUUID()
 
   const { data, error } = await supabase
     .from('rooms')
-    .insert({ id, name, owner_token: ownerToken })
+    .insert({ id, name, owner_id: ownerId })
     .select()
     .single()
 
   if (error) throw error
-  return { room: data as Room, ownerToken }
+  return data as Room
 }
 
+/** Get room by ID (public, no auth needed) */
 export async function getRoom(roomId: string): Promise<Room | null> {
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('rooms')
-    .select('id, name, created_at')
+    .select('id, name, owner_id, created_at')
     .eq('id', roomId.toUpperCase())
     .single()
 
@@ -263,7 +512,9 @@ export async function getRoom(roomId: string): Promise<Room | null> {
   return data as Room
 }
 
+/** Get today's detection count for a room (public) */
 export async function getDailyCount(roomId: string): Promise<number> {
+  const supabase = createClient()
   const today = new Date().toISOString().split('T')[0]
   const { data } = await supabase
     .from('daily_counts')
@@ -275,7 +526,9 @@ export async function getDailyCount(roomId: string): Promise<number> {
   return data?.count ?? 0
 }
 
+/** Increment today's detection count (called by members on detection) */
 export async function incrementDailyCount(roomId: string): Promise<void> {
+  const supabase = createClient()
   const today = new Date().toISOString().split('T')[0]
   const { error } = await supabase.rpc('increment_daily_count', {
     p_room_id: roomId,
@@ -285,64 +538,62 @@ export async function incrementDailyCount(roomId: string): Promise<void> {
 }
 ```
 
-**Step 4: Run tests to verify they pass**
+**Step 4: Run tests**
 
-Run: `npm test -- --testPathPattern=rooms`
-Expected: PASS (3 tests)
+Run: `npm test -- rooms`
+Expected: PASS (3 tests for generateRoomCode)
 
 **Step 5: Commit**
 
 ```bash
-git add lib/rooms.ts __tests__/rooms.test.ts
+git add src/lib/rooms.ts src/test/lib/rooms.test.ts
 git commit -m "feat: add room management library with code generation"
 ```
 
 ---
 
-## Task 5: Real-Time Detection Channel Hook
+### Task 8: Real-Time Detection Channel Hook
 
 **Files:**
-- Create: `hooks/useKioskChannel.ts`
-- Create: `__tests__/useKioskChannel.test.ts`
+- Create: `src/hooks/useKioskChannel.ts`
+- Create: `src/test/hooks/useKioskChannel.test.ts`
 
 **Step 1: Write the failing test**
 
-Create `__tests__/useKioskChannel.test.ts`:
+Create `src/test/hooks/useKioskChannel.test.ts`:
 
 ```typescript
 import { renderHook, act } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useKioskChannel } from '@/hooks/useKioskChannel'
 
-// Mock Supabase
-const mockSend = jest.fn()
-const mockSubscribe = jest.fn((cb) => { cb('SUBSCRIBED'); return mockChannel })
-const mockUnsubscribe = jest.fn()
-const mockOn = jest.fn(() => mockChannel)
+const mockSend = vi.fn()
+const mockSubscribe = vi.fn((cb) => {
+  cb('SUBSCRIBED')
+  return mockChannel
+})
+const mockUnsubscribe = vi.fn()
+const mockOn = vi.fn(() => mockChannel)
 const mockChannel = {
   on: mockOn,
   subscribe: mockSubscribe,
   unsubscribe: mockUnsubscribe,
   send: mockSend,
-  presenceState: jest.fn(() => ({})),
+  presenceState: vi.fn(() => ({})),
 }
 
-jest.mock('@/lib/supabase', () => ({
-  supabase: {
-    channel: jest.fn(() => mockChannel),
-  },
+vi.mock('@/lib/supabase/client', () => ({
+  createClient: () => ({
+    channel: vi.fn(() => mockChannel),
+  }),
 }))
 
 describe('useKioskChannel', () => {
-  beforeEach(() => jest.clearAllMocks())
+  beforeEach(() => vi.clearAllMocks())
 
   it('subscribes to the room channel on mount', () => {
     const { unmount } = renderHook(() =>
       useKioskChannel({ roomId: 'TEST01' })
-    )
-    const { supabase } = require('@/lib/supabase')
-    expect(supabase.channel).toHaveBeenCalledWith(
-      'room:TEST01',
-      expect.any(Object)
     )
     expect(mockSubscribe).toHaveBeenCalled()
     unmount()
@@ -367,18 +618,18 @@ describe('useKioskChannel', () => {
 })
 ```
 
-**Step 2: Run tests to verify they fail**
+**Step 2: Run tests to verify failure**
 
-Run: `npm test -- --testPathPattern=useKioskChannel`
-Expected: FAIL — module not found
+Run: `npm test -- useKioskChannel`
+Expected: FAIL
 
 **Step 3: Write the hook**
 
-Create `hooks/useKioskChannel.ts`:
+Create `src/hooks/useKioskChannel.ts`:
 
 ```typescript
 import { useEffect, useRef, useCallback, useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 
 export interface DetectionEvent {
@@ -397,12 +648,12 @@ export function useKioskChannel({ roomId, onDetection }: UseKioskChannelOptions)
   const [isConnected, setIsConnected] = useState(false)
   const [memberCount, setMemberCount] = useState(0)
 
-  // Keep callback ref fresh without re-subscribing
   useEffect(() => {
     onDetectionRef.current = onDetection
   }, [onDetection])
 
   useEffect(() => {
+    const supabase = createClient()
     const channel = supabase.channel(`room:${roomId}`, {
       config: { presence: { key: crypto.randomUUID() } },
     })
@@ -419,10 +670,7 @@ export function useKioskChannel({ roomId, onDetection }: UseKioskChannelOptions)
       })
 
     channelRef.current = channel
-
-    return () => {
-      channel.unsubscribe()
-    }
+    return () => { channel.unsubscribe() }
   }, [roomId])
 
   const broadcastDetection = useCallback(() => {
@@ -440,310 +688,102 @@ export function useKioskChannel({ roomId, onDetection }: UseKioskChannelOptions)
 }
 ```
 
-**Step 4: Run tests to verify they pass**
-
-Run: `npm test -- --testPathPattern=useKioskChannel`
-Expected: PASS (2 tests)
-
-**Step 5: Commit**
-
-```bash
-git add hooks/useKioskChannel.ts __tests__/useKioskChannel.test.ts
-git commit -m "feat: add useKioskChannel hook for real-time detection relay"
-```
-
----
-
-## Task 6: Add `onDetection` Callback to PhoneDetector
-
-**Files:**
-- Modify: `components/PhoneDetector.tsx`
-- Modify: `__tests__/PhoneDetector.test.tsx`
-
-This is a small refactor — add an optional `onDetection` prop so the join page can hook into detection events without duplicating logic.
-
-**Step 1: Add failing test**
-
-In `__tests__/PhoneDetector.test.tsx`, add a test case:
-
-```typescript
-it('calls onDetection callback when phone is detected', async () => {
-  const onDetection = jest.fn()
-  render(<PhoneDetector onDetection={onDetection} />)
-  // Simulate detection by triggering the existing detection flow
-  // (This test follows the same pattern as existing detection tests in the file)
-})
-```
-
-Look at the existing detection test pattern (around line 406-461) and follow the same mock setup for triggering a detection.
-
-**Step 2: Run tests to verify the new test fails**
-
-Run: `npm test -- --testPathPattern=PhoneDetector`
-Expected: FAIL — onDetection prop not recognized (or not called)
-
-**Step 3: Modify PhoneDetector**
-
-In `components/PhoneDetector.tsx`:
-
-1. Add prop type at the top of the component:
-
-```typescript
-interface PhoneDetectorProps {
-  onDetection?: () => void
-}
-
-export default function PhoneDetector({ onDetection }: PhoneDetectorProps) {
-```
-
-2. In the detection handler (around line 211-230, where `setPhoneDetected(true)` is called), add:
-
-```typescript
-onDetection?.()
-```
-
-Right after the `playSound()` call.
-
-3. Store the callback in a ref to avoid stale closures in the detection interval:
-
-```typescript
-const onDetectionRef = useRef(onDetection)
-useEffect(() => { onDetectionRef.current = onDetection }, [onDetection])
-```
-
-Then call `onDetectionRef.current?.()` instead of `onDetection?.()` in the detection handler.
-
-**Step 4: Run full test suite**
-
-Run: `npm test`
-Expected: All existing tests still pass + new test passes
-
-**Step 5: Commit**
-
-```bash
-git add components/PhoneDetector.tsx __tests__/PhoneDetector.test.tsx
-git commit -m "feat: add onDetection callback prop to PhoneDetector"
-```
-
----
-
-## Task 7: Kiosk Create Page
-
-**Files:**
-- Create: `app/kiosk/create/page.tsx`
-- Create: `__tests__/kiosk-create.test.tsx`
-
-**Step 1: Write the failing test**
-
-Create `__tests__/kiosk-create.test.tsx`:
-
-```typescript
-import { render, screen } from '@testing-library/react'
-import KioskCreatePage from '@/app/kiosk/create/page'
-
-// Mock next/navigation
-jest.mock('next/navigation', () => ({
-  useRouter: () => ({ push: jest.fn() }),
-}))
-
-// Mock Supabase
-jest.mock('@/lib/supabase', () => ({
-  supabase: { from: jest.fn() },
-}))
-
-jest.mock('@/lib/rooms', () => ({
-  createRoom: jest.fn().mockResolvedValue({
-    room: { id: 'TEST01', name: 'Test Gym' },
-    ownerToken: 'token-123',
-  }),
-}))
-
-describe('Kiosk Create Page', () => {
-  it('renders a form with gym name input and create button', () => {
-    render(<KioskCreatePage />)
-    expect(screen.getByPlaceholderText(/gym name/i)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /create/i })).toBeInTheDocument()
-  })
-})
-```
-
-**Step 2: Run tests to verify failure**
-
-Run: `npm test -- --testPathPattern=kiosk-create`
-Expected: FAIL — module not found
-
-**Step 3: Build the page**
-
-Create `app/kiosk/create/page.tsx`:
-
-```tsx
-'use client'
-
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { createRoom } from '@/lib/rooms'
-
-export default function KioskCreatePage() {
-  const router = useRouter()
-  const [gymName, setGymName] = useState('')
-  const [isCreating, setIsCreating] = useState(false)
-  const [error, setError] = useState('')
-
-  async function handleCreate(e: React.FormEvent) {
-    e.preventDefault()
-    if (!gymName.trim()) return
-
-    setIsCreating(true)
-    setError('')
-
-    try {
-      const { room, ownerToken } = await createRoom(gymName.trim())
-      // Store owner token in localStorage so they can manage the room later
-      localStorage.setItem(`kiosk-owner-${room.id}`, ownerToken)
-      router.push(`/kiosk/${room.id}`)
-    } catch {
-      setError('Failed to create room. Please try again.')
-    } finally {
-      setIsCreating(false)
-    }
-  }
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)] p-4">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
-            Create a Kiosk
-          </h1>
-          <p className="mt-2 text-[var(--text-secondary)]">
-            Set up a live phone lunk display for your gym
-          </p>
-        </div>
-
-        <form onSubmit={handleCreate} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Gym name"
-            value={gymName}
-            onChange={(e) => setGymName(e.target.value)}
-            maxLength={50}
-            className="w-full px-4 py-3 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[var(--text-primary)] text-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
-          />
-
-          {error && (
-            <p className="text-red-500 text-sm">{error}</p>
-          )}
-
-          <button
-            type="submit"
-            disabled={!gymName.trim() || isCreating}
-            className="w-full py-3 rounded-lg bg-[var(--accent-primary)] text-white font-semibold text-lg disabled:opacity-50 hover:opacity-90 transition-opacity"
-          >
-            {isCreating ? 'Creating...' : 'Create Kiosk'}
-          </button>
-        </form>
-      </div>
-    </div>
-  )
-}
-```
-
 **Step 4: Run tests**
 
-Run: `npm test -- --testPathPattern=kiosk-create`
+Run: `npm test -- useKioskChannel`
 Expected: PASS
 
 **Step 5: Commit**
 
 ```bash
-git add app/kiosk/create/page.tsx __tests__/kiosk-create.test.tsx
-git commit -m "feat: add kiosk create page with room setup form"
+git add src/hooks/useKioskChannel.ts src/test/hooks/useKioskChannel.test.ts
+git commit -m "feat: add useKioskChannel hook for real-time detection relay"
 ```
 
 ---
 
-## Task 8: Kiosk Display Page
+## Phase 3: Feature Pages
+
+### Task 9: Add `onDetection` Callback to PhoneDetector
 
 **Files:**
-- Create: `app/kiosk/[roomId]/page.tsx`
-- Create: `components/KioskDisplay.tsx`
-- Create: `__tests__/KioskDisplay.test.tsx`
+- Modify: `src/components/PhoneDetector.tsx`
 
-This is the largest task — the full-screen display that runs on a gym TV.
+**Step 1: Add optional prop**
 
-**Step 1: Write the failing test**
+Add an `onDetection?: () => void` prop to the component. Store in a ref. Call `onDetectionRef.current?.()` in the detection handler right after `playSound()`.
 
-Create `__tests__/KioskDisplay.test.tsx`:
+**Step 2: Verify existing tests still pass**
 
-```typescript
-import { render, screen } from '@testing-library/react'
-import KioskDisplay from '@/components/KioskDisplay'
+Run: `npm test`
+Expected: All pass
 
-jest.mock('@/lib/supabase', () => ({
-  supabase: { channel: jest.fn(() => ({
-    on: jest.fn().mockReturnThis(),
-    subscribe: jest.fn((cb) => { cb('SUBSCRIBED'); return { unsubscribe: jest.fn(), presenceState: jest.fn(() => ({})) } }),
-    unsubscribe: jest.fn(),
-    presenceState: jest.fn(() => ({})),
-  }))},
-}))
+**Step 3: Commit**
 
-jest.mock('@/lib/rooms', () => ({
-  getRoom: jest.fn().mockResolvedValue({ id: 'TEST01', name: 'Iron Temple' }),
-  getDailyCount: jest.fn().mockResolvedValue(5),
-}))
-
-jest.mock('qrcode.react', () => ({
-  QRCodeSVG: ({ value }: { value: string }) => <div data-testid="qr-code">{value}</div>,
-}))
-
-describe('KioskDisplay', () => {
-  it('renders gym name and QR code', async () => {
-    render(<KioskDisplay roomId="TEST01" />)
-    expect(await screen.findByText('Iron Temple')).toBeInTheDocument()
-    expect(screen.getByTestId('qr-code')).toBeInTheDocument()
-  })
-
-  it('shows the session detection count', async () => {
-    render(<KioskDisplay roomId="TEST01" />)
-    // Initial count from getDailyCount mock
-    expect(await screen.findByText(/5/)).toBeInTheDocument()
-  })
-})
+```bash
+git add src/components/PhoneDetector.tsx
+git commit -m "feat: add onDetection callback prop to PhoneDetector"
 ```
 
-**Step 2: Run tests to verify failure**
+---
 
-Run: `npm test -- --testPathPattern=KioskDisplay`
-Expected: FAIL
+### Task 10: Kiosk Create Page
 
-**Step 3: Build the KioskDisplay component**
+**Files:**
+- Create: `src/app/kiosk/create/page.tsx`
 
-Create `components/KioskDisplay.tsx`. This component handles:
+**Step 1: Build the page**
 
-- Loading room info from Supabase on mount
-- Subscribing to the room's real-time channel via `useKioskChannel`
-- Displaying a QR code (using `QRCodeSVG` from `qrcode.react`)
-- Showing detection alerts with the existing `AlarmEffect` component and theme system
-- Maintaining a session counter and recent catches feed
-- Full-screen layout, no nav/footer
-- "All clear" ambient state when no detection is active
+This page requires auth (middleware handles redirect). On submit:
+1. Get current user from Supabase
+2. Call `createRoom(name, user.id)`
+3. Redirect to `/kiosk/[roomId]`
 
-Key implementation details:
-- Use `useKioskChannel` with an `onDetection` callback that:
-  - Sets `phoneDetected = true` (triggers AlarmEffect)
-  - Increments local session counter
-  - Adds to recent catches array (keep last 10)
-  - Calls `incrementDailyCount` on Supabase
-  - Auto-dismisses after 5 seconds (same as PhoneDetector)
-- QR code value: `${window.location.origin}/join/${roomId}`
-- Load the existing `AlarmEffect` component for alarm animations
-- Use the "classic" theme by default (or allow theme selection via query param)
-- Use `useAlarmSound` for audio on the kiosk itself
+Simple form: gym name input + create button. Use the template's styling conventions (oklch colors, `cn()` utility).
 
-**Step 4: Create the route page**
+**Step 2: Verify**
 
-Create `app/kiosk/[roomId]/page.tsx`:
+```bash
+npm run dev
+```
+
+- Visit `/kiosk/create` unauthenticated → redirects to `/login`
+- Log in → visit `/kiosk/create` → form renders
+- Submit → creates room → redirects to `/kiosk/<code>`
+
+**Step 3: Commit**
+
+```bash
+git add src/app/kiosk/create/page.tsx
+git commit -m "feat: add kiosk create page (auth required)"
+```
+
+---
+
+### Task 11: Kiosk Display Page
+
+**Files:**
+- Create: `src/app/kiosk/[roomId]/page.tsx`
+- Create: `src/components/KioskDisplay.tsx`
+
+This is the largest task — the full-screen display for gym TVs.
+
+**Step 1: Build KioskDisplay component**
+
+The component:
+- Loads room info via `getRoom(roomId)` on mount
+- Subscribes to real-time channel via `useKioskChannel` with `onDetection` callback
+- Shows a QR code (`QRCodeSVG` from `qrcode.react`) pointing to `/join/[roomId]`
+- Displays gym name, session counter, recent catches feed (last 10)
+- Triggers `AlarmEffect` + `useAlarmSound` on each detection
+- Auto-dismisses alarm after 5 seconds
+- Full-screen layout: no header/footer, large bold text
+- "All clear" ambient state when idle
+- Auto-reconnect on WebSocket drop (handled by Supabase client)
+
+**Step 2: Create the route page**
+
+Create `src/app/kiosk/[roomId]/page.tsx`:
 
 ```tsx
 import KioskDisplay from '@/components/KioskDisplay'
@@ -754,338 +794,177 @@ export default async function KioskPage({ params }: { params: Promise<{ roomId: 
 }
 ```
 
-**Step 5: Run tests**
+**Step 3: Create a custom layout to strip the default layout**
 
-Run: `npm test -- --testPathPattern=KioskDisplay`
-Expected: PASS
+Create `src/app/kiosk/[roomId]/layout.tsx` that provides a minimal HTML shell without the standard header/nav.
 
-**Step 6: Manual test**
+**Step 4: Manual test**
 
-Run: `npm run dev`
-Navigate to `/kiosk/create`, create a room, verify redirect to `/kiosk/<code>`.
-Verify: full-screen display, QR code visible, gym name displayed, "all clear" state.
-
-**Step 7: Commit**
-
-```bash
-git add app/kiosk/[roomId]/page.tsx components/KioskDisplay.tsx __tests__/KioskDisplay.test.tsx
-git commit -m "feat: add kiosk display page with QR code and real-time detection feed"
-```
-
----
-
-## Task 9: Join Page
-
-**Files:**
-- Create: `app/join/[roomId]/page.tsx`
-- Create: `__tests__/join-page.test.tsx`
-
-**Step 1: Write the failing test**
-
-Create `__tests__/join-page.test.tsx`:
-
-```typescript
-import { render, screen } from '@testing-library/react'
-import JoinPage from '@/app/join/[roomId]/page'
-
-jest.mock('@/lib/supabase', () => ({
-  supabase: { channel: jest.fn(() => ({
-    on: jest.fn().mockReturnThis(),
-    subscribe: jest.fn((cb) => { cb('SUBSCRIBED'); return { unsubscribe: jest.fn(), presenceState: jest.fn(() => ({})) } }),
-    unsubscribe: jest.fn(),
-    send: jest.fn(),
-    presenceState: jest.fn(() => ({})),
-  }))},
-}))
-
-jest.mock('@/lib/rooms', () => ({
-  getRoom: jest.fn().mockResolvedValue({ id: 'TEST01', name: 'Iron Temple' }),
-  incrementDailyCount: jest.fn(),
-}))
-
-jest.mock('@/components/PhoneDetector', () => {
-  return function MockPhoneDetector() {
-    return <div data-testid="phone-detector">PhoneDetector</div>
-  }
-})
-
-describe('Join Page', () => {
-  it('renders the gym name and phone detector', async () => {
-    render(await JoinPage({ params: Promise.resolve({ roomId: 'TEST01' }) }))
-    expect(await screen.findByText(/Iron Temple/i)).toBeInTheDocument()
-    expect(screen.getByTestId('phone-detector')).toBeInTheDocument()
-  })
-})
-```
-
-**Step 2: Run to verify failure**
-
-Run: `npm test -- --testPathPattern=join-page`
-Expected: FAIL
-
-**Step 3: Build the join page**
-
-Create `app/join/[roomId]/page.tsx`:
-
-```tsx
-'use client'
-
-import { useEffect, useState } from 'react'
-import { useParams } from 'next/navigation'
-import PhoneDetector from '@/components/PhoneDetector'
-import { useKioskChannel } from '@/hooks/useKioskChannel'
-import { getRoom, incrementDailyCount } from '@/lib/rooms'
-import type { Room } from '@/lib/rooms'
-
-export default function JoinPage() {
-  const { roomId } = useParams<{ roomId: string }>()
-  const [room, setRoom] = useState<Room | null>(null)
-  const [notFound, setNotFound] = useState(false)
-
-  const { isConnected, broadcastDetection } = useKioskChannel({
-    roomId: roomId ?? '',
-  })
-
-  useEffect(() => {
-    if (!roomId) return
-    getRoom(roomId).then((r) => {
-      if (r) setRoom(r)
-      else setNotFound(true)
-    })
-  }, [roomId])
-
-  function handleDetection() {
-    broadcastDetection()
-    if (roomId) incrementDailyCount(roomId)
-  }
-
-  if (notFound) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
-        <p className="text-[var(--text-secondary)] text-lg">Room not found.</p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
-      {room && (
-        <div className="text-center py-4">
-          <p className="text-[var(--text-secondary)]">
-            Connected to <span className="font-semibold text-[var(--text-primary)]">{room.name}</span>
-            {isConnected && <span className="ml-2 text-green-500 text-sm">● Live</span>}
-          </p>
-        </div>
-      )}
-      <PhoneDetector onDetection={handleDetection} />
-    </div>
-  )
-}
-```
-
-**Note:** This page uses `useParams` client-side to get the roomId, avoiding the need for a server component wrapper. Adjust the test accordingly if the component signature changes.
-
-**Step 4: Run tests**
-
-Run: `npm test -- --testPathPattern=join-page`
-Expected: PASS
+Create a room, visit the kiosk URL. Verify: full-screen, QR code, gym name, ambient state.
 
 **Step 5: Commit**
 
 ```bash
-git add app/join/[roomId]/page.tsx __tests__/join-page.test.tsx
+git add src/app/kiosk/[roomId]/ src/components/KioskDisplay.tsx
+git commit -m "feat: add kiosk display page with QR code and real-time feed"
+```
+
+---
+
+### Task 12: Join Page
+
+**Files:**
+- Create: `src/app/join/[roomId]/page.tsx`
+
+**Step 1: Build the join page**
+
+This page is public (no auth). It:
+1. Reads `roomId` from params
+2. Loads room info via `getRoom(roomId)` — shows gym name
+3. Renders `PhoneDetector` with `onDetection` callback
+4. On detection: calls `broadcastDetection()` (from `useKioskChannel`) + `incrementDailyCount(roomId)`
+5. Shows a "connected" indicator and gym name above the detector
+
+**Step 2: Create a layout that strips default nav**
+
+The join page should be clean — just the gym name, connection status, and the detector. Create `src/app/join/[roomId]/layout.tsx` with minimal chrome.
+
+**Step 3: Manual test**
+
+Open kiosk display in one browser tab. Open join page in another (or on phone via QR code). Detect a phone on the join page → verify it appears on the kiosk display.
+
+**Step 4: Commit**
+
+```bash
+git add src/app/join/[roomId]/
 git commit -m "feat: add join page for members to connect to kiosk rooms"
 ```
 
 ---
 
-## Task 10: Embeddable Badge
+### Task 13: Embeddable Badge
 
 **Files:**
-- Create: `app/badge/[roomId]/page.tsx`
+- Create: `src/app/badge/[roomId]/page.tsx`
+- Create: `src/app/badge/[roomId]/layout.tsx`
 - Create: `public/badge.js`
-- Create: `__tests__/badge.test.tsx`
 
-**Step 1: Write the failing test**
+**Step 1: Build the badge page**
 
-Create `__tests__/badge.test.tsx`:
+A minimal page designed to render inside an iframe (~240x60px):
+- Shows "Phone Lunk Protected" with a small logo
+- If room exists and has daily count data, shows "N phones caught today"
+- If no room data, shows static badge linking to the app
+- Query params: `?theme=dark|light` and `?style=horizontal|vertical`
+- Entire badge is a clickable link to `phone-lunk.app/join/[roomId]`
 
-```typescript
-import { render, screen } from '@testing-library/react'
-import BadgePage from '@/app/badge/[roomId]/page'
+**Step 2: Create badge layout**
 
-jest.mock('@/lib/supabase', () => ({
-  supabase: { from: jest.fn() },
-}))
+`src/app/badge/[roomId]/layout.tsx` — bare HTML shell, no root layout chrome. Override `X-Frame-Options` to `ALLOWALL` for this route so it can be embedded in iframes.
 
-jest.mock('@/lib/rooms', () => ({
-  getRoom: jest.fn().mockResolvedValue({ id: 'TEST01', name: 'Iron Temple' }),
-  getDailyCount: jest.fn().mockResolvedValue(23),
-}))
-
-describe('Badge Page', () => {
-  it('renders the badge with gym name and count', async () => {
-    render(await BadgePage({ params: Promise.resolve({ roomId: 'TEST01' }) }))
-    expect(await screen.findByText(/Phone Lunk Protected/i)).toBeInTheDocument()
-    expect(await screen.findByText(/23/)).toBeInTheDocument()
-  })
-})
-```
-
-**Step 2: Run to verify failure**
-
-Run: `npm test -- --testPathPattern=badge`
-Expected: FAIL
-
-**Step 3: Build the badge page**
-
-Create `app/badge/[roomId]/page.tsx`. This is a minimal page designed to be rendered inside an iframe:
-
-- No layout chrome (custom layout that strips header/footer)
-- ~200x60px content area
-- Shows "Phone Lunk Protected" with the app logo
-- Shows daily detection count if the room exists and has data
-- Two style variants controlled by query param: `?theme=dark` or `?theme=light`
-- Entire badge is a link to `phone-lunk.app/join/<roomId>`
-
-Create `app/badge/[roomId]/layout.tsx` to strip the root layout:
-
-```tsx
-export default function BadgeLayout({ children }: { children: React.ReactNode }) {
-  return <html><body>{children}</body></html>
-}
-```
-
-**Step 4: Build the embed script**
+**Step 3: Build the embed script**
 
 Create `public/badge.js`:
 
 ```javascript
-(function() {
-  var script = document.currentScript;
-  var gym = script.getAttribute('data-gym') || '';
-  var theme = script.getAttribute('data-theme') || 'dark';
-  var style = script.getAttribute('data-style') || 'horizontal';
-
-  var iframe = document.createElement('iframe');
-  iframe.src = 'https://phone-lunk.app/badge/' + gym + '?theme=' + theme + '&style=' + style;
-  iframe.style.border = 'none';
-  iframe.style.overflow = 'hidden';
-
-  if (style === 'vertical') {
-    iframe.width = '120';
-    iframe.height = '140';
-  } else {
-    iframe.width = '240';
-    iframe.height = '60';
-  }
-
-  script.parentNode.insertBefore(iframe, script);
-})();
+;(function () {
+  var s = document.currentScript
+  var gym = s.getAttribute('data-gym') || ''
+  var theme = s.getAttribute('data-theme') || 'dark'
+  var style = s.getAttribute('data-style') || 'horizontal'
+  var f = document.createElement('iframe')
+  f.src = 'https://phone-lunk.app/badge/' + gym + '?theme=' + theme + '&style=' + style
+  f.style.border = 'none'
+  f.style.overflow = 'hidden'
+  f.width = style === 'vertical' ? '120' : '240'
+  f.height = style === 'vertical' ? '140' : '60'
+  s.parentNode.insertBefore(f, s)
+})()
 ```
 
-**Step 5: Run tests**
-
-Run: `npm test -- --testPathPattern=badge`
-Expected: PASS
-
-**Step 6: Commit**
+**Step 4: Commit**
 
 ```bash
-git add app/badge/[roomId]/page.tsx app/badge/[roomId]/layout.tsx public/badge.js __tests__/badge.test.tsx
+git add src/app/badge/ public/badge.js
 git commit -m "feat: add embeddable badge widget for gym websites"
 ```
 
 ---
 
-## Task 11: Integration Smoke Test
+## Phase 4: Polish & Ship
+
+### Task 14: Update Navigation
 
 **Files:**
-- Modify: `tests/phone-detector.spec.ts` (add kiosk/join route tests)
+- Modify: `src/components/Header.tsx` (or equivalent nav component)
 
-**Step 1: Add E2E tests**
+**Step 1: Add kiosk link**
 
-Add to the Playwright spec:
+Add a "Create Kiosk" link to the main navigation pointing to `/kiosk/create`.
 
-```typescript
-test.describe('Kiosk Create', () => {
-  test('renders create form', async ({ page }) => {
-    await page.goto('/kiosk/create')
-    await expect(page.getByPlaceholder(/gym name/i)).toBeVisible()
-    await expect(page.getByRole('button', { name: /create/i })).toBeVisible()
-  })
-})
-
-test.describe('Badge', () => {
-  test('renders badge for unknown room', async ({ page }) => {
-    await page.goto('/badge/FAKE99')
-    await expect(page.getByText(/Phone Lunk/i)).toBeVisible()
-  })
-})
-```
-
-**Step 2: Run E2E**
-
-Run: `npm run test:e2e`
-Expected: New tests pass (existing tests still pass)
-
-**Step 3: Run full validation**
-
-Run all checks:
-```bash
-npm run lint
-npm run type-check
-npm test
-```
-Expected: All pass
-
-**Step 4: Commit**
+**Step 2: Commit**
 
 ```bash
-git add tests/phone-detector.spec.ts
-git commit -m "test: add E2E smoke tests for kiosk and badge routes"
+git add src/components/Header.tsx
+git commit -m "feat: add kiosk link to site navigation"
 ```
 
 ---
 
-## Task 12: Update README and Navigation
+### Task 15: Full Validation & CI Fix
 
-**Files:**
-- Modify: `site.config.mjs` (add kiosk nav item)
-- Modify: `components/Header.tsx` (if nav is hardcoded)
-
-**Step 1: Add kiosk link to navigation**
-
-In `site.config.mjs`, add a "Kiosk" item to the navigation array so gym owners can discover it.
-
-**Step 2: Verify navigation renders**
-
-Run: `npm run dev`, check header shows new nav item.
-
-**Step 3: Commit**
+**Step 1: Run all checks**
 
 ```bash
-git add site.config.mjs
-git commit -m "feat: add kiosk link to site navigation"
+npm run lint
+npm run typecheck
+npm run test
+npm run build
+```
+
+**Step 2: Fix any errors**
+
+Address lint errors, type errors, test failures, and build issues.
+
+**Step 3: Run E2E tests**
+
+```bash
+npm run test:e2e
+```
+
+Add basic smoke tests for new routes if needed.
+
+**Step 4: Commit**
+
+```bash
+git add -A
+git commit -m "fix: resolve lint, type, and test issues from integration"
 ```
 
 ---
 
 ## Summary
 
-| Task | What | Effort |
-|------|------|--------|
-| 1 | Supabase + QR deps | Small |
-| 2 | Remove static export | Small |
-| 3 | DB schema | Small |
-| 4 | Room management lib | Medium |
-| 5 | Real-time channel hook | Medium |
-| 6 | PhoneDetector onDetection prop | Small |
-| 7 | Kiosk create page | Medium |
-| 8 | Kiosk display page | Large |
-| 9 | Join page | Medium |
-| 10 | Embeddable badge | Medium |
-| 11 | Integration tests | Small |
-| 12 | Nav + README update | Small |
+| Phase | Task | What | Effort |
+|-------|------|------|--------|
+| 1 | 1 | Bootstrap from template | Large |
+| 1 | 2 | Port phone detection components | Medium |
+| 1 | 3 | Port landing page components | Medium |
+| 1 | 4 | Port and convert tests to Vitest | Medium |
+| 1 | 5 | Update middleware for public routes | Small |
+| 2 | 6 | Database migrations for rooms | Small |
+| 2 | 7 | Room management library | Medium |
+| 2 | 8 | Real-time channel hook | Medium |
+| 3 | 9 | PhoneDetector onDetection callback | Small |
+| 3 | 10 | Kiosk create page | Medium |
+| 3 | 11 | Kiosk display page | Large |
+| 3 | 12 | Join page | Medium |
+| 3 | 13 | Embeddable badge | Medium |
+| 4 | 14 | Update navigation | Small |
+| 4 | 15 | Full validation & CI fix | Medium |
 
-**Dependencies:** Tasks 1-3 are infrastructure (do first). Task 4-5 are shared libraries. Task 6 modifies existing code. Tasks 7-10 are the feature pages (can be parallelized after 1-6). Tasks 11-12 are cleanup.
+**Dependencies:**
+- Phase 1 (Tasks 1-5) must complete before Phase 2
+- Phase 2 (Tasks 6-8) must complete before Phase 3
+- Tasks within each phase can be done sequentially
+- Phase 4 is cleanup after features work

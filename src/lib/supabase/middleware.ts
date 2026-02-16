@@ -19,8 +19,11 @@ function isPublicRoute(pathname: string): boolean {
   )
 }
 
-function addSecurityHeaders(response: NextResponse): void {
-  response.headers.set('X-Frame-Options', 'DENY')
+function addSecurityHeaders(response: NextResponse, pathname: string): void {
+  // Badge pages are designed to be embedded in iframes on gym websites
+  if (!pathname.startsWith('/badge')) {
+    response.headers.set('X-Frame-Options', 'DENY')
+  }
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set(
     'Referrer-Policy',
@@ -72,7 +75,7 @@ export async function updateSession(request: NextRequest) {
     response = NextResponse.redirect(redirectUrl)
   }
 
-  addSecurityHeaders(response)
+  addSecurityHeaders(response, pathname)
 
   return response
 }

@@ -6,9 +6,14 @@ const PUBLIC_ROUTES = [
   '/signup',
   '/auth/callback',
   '/api/health',
+  '/join',          // members join via QR code — no auth required
+  '/badge',         // embeddable badge — no auth
+  '/kiosk',         // kiosk display — no auth (runs on gym TV)
 ]
 
 function isPublicRoute(pathname: string): boolean {
+  if (pathname === '/kiosk/create') return false
+
   return PUBLIC_ROUTES.some(
     (route) => pathname === route || pathname.startsWith(route + '/'),
   )
@@ -23,7 +28,7 @@ function addSecurityHeaders(response: NextResponse): void {
   )
   response.headers.set(
     'Permissions-Policy',
-    'camera=(), microphone=(), geolocation=()',
+    'camera=(self), microphone=(), geolocation=()',
   )
 }
 

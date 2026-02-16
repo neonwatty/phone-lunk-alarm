@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 
-import { getRoom, getDailyCount, incrementDailyCount } from '@/lib/rooms'
+import { getRoom, getDailyCount } from '@/lib/rooms'
 import { useKioskChannel } from '@/hooks/useKioskChannel'
 import { useAlarmSound } from '@/hooks/useAlarmSound'
 import AlarmEffect from '@/components/AlarmEffect'
@@ -38,8 +38,6 @@ export default function KioskDisplay({ roomId }: { roomId: string }) {
         timestamp: new Date(),
       }
       setRecentCatches((prev) => [newCatch, ...prev].slice(0, 10))
-
-      incrementDailyCount(roomId).catch(console.error)
 
       playSound()
 

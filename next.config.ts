@@ -37,7 +37,11 @@ const nextConfig: NextConfig = {
         output: 'standalone',
         headers: async () => [
           {
-            source: '/(.*)',
+            source: '/badge/:path*',
+            headers: securityHeaders.filter(h => h.key !== 'X-Frame-Options'),
+          },
+          {
+            source: '/((?!badge).*)',
             headers: securityHeaders,
           },
         ],

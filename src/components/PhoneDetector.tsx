@@ -22,13 +22,21 @@ let cocoSsd: any = null
 
 const MAX_RECORDING_DURATION = 30 // seconds
 
-export default function PhoneDetector() {
+interface PhoneDetectorProps {
+  onDetection?: () => void
+}
+
+export default function PhoneDetector({ onDetection }: PhoneDetectorProps) {
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const recordingCanvasRef = useRef<HTMLCanvasElement>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const recordedChunksRef = useRef<Blob[]>([])
   const recordingTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Keep onDetection callback fresh in a ref to avoid stale closures
+  const onDetectionRef = useRef(onDetection)
+  useEffect(() => { onDetectionRef.current = onDetection }, [onDetection])
 
   // Alarm sound hook
   const {
@@ -215,6 +223,9 @@ export default function PhoneDetector() {
 
         // Play alarm sound
         playSound()
+
+        // Notify parent of detection
+        onDetectionRef.current?.()
 
         // Clear any existing alarm timeout to prevent overlapping alarms
         if (alarmTimeoutRef.current) {

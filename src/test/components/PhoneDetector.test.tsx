@@ -72,19 +72,36 @@ vi.mock('@/hooks/useAlarmSound', () => ({
 // Import after mocks
 import PhoneDetector from '@/components/PhoneDetector'
 
+// Minimal WebGL context stub that satisfies TF.js backend probing
+const webglStub = {
+  isContextLost: () => false,
+  getExtension: () => null,
+  getParameter: () => 0,
+  createBuffer: () => ({}),
+  bindBuffer: () => undefined,
+  bufferData: () => undefined,
+  createShader: () => ({}),
+  shaderSource: () => undefined,
+  compileShader: () => undefined,
+  getShaderParameter: () => true,
+  createProgram: () => ({}),
+  attachShader: () => undefined,
+  linkProgram: () => undefined,
+  getProgramParameter: () => true,
+  useProgram: () => undefined,
+  deleteShader: () => undefined,
+} as unknown as WebGLRenderingContext
+
 // Helper to set up browser environment for PhoneDetector
 function setupBrowserMocks() {
   // Mock WebGL support at the prototype level (avoids intercepting all createElement calls)
   const origGetContext = HTMLCanvasElement.prototype.getContext
-  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(function (
-    this: HTMLCanvasElement,
-    type: string,
-    ...args: unknown[]
-  ) {
-    if (type === 'webgl' || type === 'experimental-webgl') {
-      return {} as WebGLRenderingContext // truthy => WebGL supported
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(function (this: HTMLCanvasElement, ...args: any[]) {
+    if (args[0] === 'webgl' || args[0] === 'experimental-webgl') {
+      return webglStub
     }
-    return origGetContext.call(this, type as '2d', ...(args as []))
+    return (origGetContext as Function).apply(this, args) // eslint-disable-line @typescript-eslint/no-unsafe-function-type
   } as typeof HTMLCanvasElement.prototype.getContext)
 
   // Ensure navigator.mediaDevices.getUserMedia exists

@@ -181,6 +181,7 @@ const siteConfig: SiteConfig = {
     { name: 'See Demo', href: '#demo' },
     { name: 'Pricing', href: '/waitlist?utm_source=pricing' },
     { name: 'Request Demo', href: '/waitlist?utm_source=waitlist' },
+    { name: 'Create Kiosk', href: '/kiosk/create' },
   ],
 
   // Hero section configuration

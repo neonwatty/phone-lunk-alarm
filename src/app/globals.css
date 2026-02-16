@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 
+/* ===== Template Design System (Tailwind 4 / oklch) ===== */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -24,6 +25,88 @@
   --destructive-foreground: oklch(0.985 0 0);
 }
 
+/* ===== Phone Lunk Design System (ported from old app) ===== */
+/* These CSS variables are used by the phone detection components.
+   TODO: Migrate components to the template design system and remove these. */
+
+:root {
+  /* Professional Dark UI Design System - Default */
+  --color-background-primary: #111827;
+  --color-background-secondary: #1f2937;
+  --color-background-tertiary: #374151;
+  --color-background-elevated: #1f2937;
+
+  /* Dark text hierarchy */
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #111827;
+
+  /* Accent system (Planet Fitness purple/yellow) */
+  --color-accent-primary: #A4278D;
+  --color-accent-hover: #8B1F75;
+  --color-accent-light: #F3E5F5;
+  --color-accent-yellow: #F9F72E;
+  --color-alarm-blue: #0066FF;
+
+  /* Professional borders */
+  --color-border-primary: #e5e7eb;
+  --color-border-secondary: #475569;
+  --color-border-subtle: #1f2937;
+  --color-border-accent: #A4278D;
+
+  /* Professional dark gradients */
+  --gradient-subtle: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  --gradient-elevated: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+  --gradient-professional: linear-gradient(135deg, #A4278D 0%, #8B1F75 100%);
+  --gradient-hero: linear-gradient(135deg, #A4278D 0%, #F9F72E 100%);
+
+  /* Clean professional shadows */
+  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-professional: 0 20px 25px -5px rgba(164, 39, 141, 0.25), 0 10px 10px -5px rgba(164, 39, 141, 0.1);
+}
+
+.light {
+  /* Professional Light UI Design System */
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f8fafc;
+  --color-background-tertiary: #f1f5f9;
+  --color-background-elevated: #ffffff;
+
+  /* Light text hierarchy */
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #6b7280;
+  --color-text-inverse: #ffffff;
+
+  /* Light mode accents */
+  --color-accent-primary: #A4278D;
+  --color-accent-hover: #8B1F75;
+  --color-accent-light: #F3E5F5;
+  --color-accent-yellow: #F9F72E;
+  --color-alarm-blue: #0066FF;
+
+  /* Light mode borders */
+  --color-border-primary: #1f2937;
+  --color-border-secondary: #d1d5db;
+  --color-border-subtle: #f3f4f6;
+  --color-border-accent: #A4278D;
+
+  /* Light gradients */
+  --gradient-subtle: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  --gradient-elevated: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  --gradient-professional: linear-gradient(135deg, #A4278D 0%, #8B1F75 100%);
+  --gradient-hero: linear-gradient(135deg, #A4278D 0%, #F9F72E 100%);
+
+  /* Light shadows */
+  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-professional: 0 20px 25px -5px rgba(164, 39, 141, 0.1), 0 10px 10px -5px rgba(164, 39, 141, 0.04);
+}
+
 @layer base {
   * {
     border-color: var(--border);
@@ -33,4 +116,86 @@
     background-color: var(--background);
     color: var(--foreground);
   }
+}
+
+/* ===== Phone Lunk Component Styles ===== */
+/* Utility classes used by the ported phone detection components.
+   TODO: Migrate to Tailwind 4 utility-first approach and remove these. */
+
+@layer components {
+  /* Button Base Styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: var(--gradient-professional);
+    color: white;
+    box-shadow: var(--shadow-medium);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-large);
+    color: white;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-accent-primary);
+    border: 2px solid var(--color-accent-primary);
+    font-weight: 600;
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-accent-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-large);
+  }
+
+  /* Card Styles */
+  .card {
+    background: var(--gradient-elevated);
+    border: 1px solid var(--color-border-primary);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: var(--shadow-medium);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-large);
+    border-color: var(--color-border-accent);
+    transform: translateY(-4px);
+  }
+}
+
+/* Typography utilities */
+.heading-xl {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.heading-lg {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.heading-md {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
 }

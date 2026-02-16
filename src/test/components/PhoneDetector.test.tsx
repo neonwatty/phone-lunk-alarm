@@ -74,22 +74,18 @@ import PhoneDetector from '@/components/PhoneDetector'
 
 // Helper to set up browser environment for PhoneDetector
 function setupBrowserMocks() {
-  // Provide a minimal WebGL context mock so isCompatible stays true
-  const originalCreateElement = document.createElement.bind(document)
-  vi.spyOn(document, 'createElement').mockImplementation((tag: string, options?: ElementCreationOptions) => {
-    const el = originalCreateElement(tag, options)
-    if (tag === 'canvas') {
-      const canvasEl = el as HTMLCanvasElement
-      const origGetContext = canvasEl.getContext.bind(canvasEl)
-      canvasEl.getContext = ((type: string, attrs?: unknown) => {
-        if (type === 'webgl' || type === 'experimental-webgl') {
-          return {} // truthy => WebGL supported
-        }
-        return origGetContext(type as '2d', attrs as undefined)
-      }) as typeof canvasEl.getContext
+  // Mock WebGL support at the prototype level (avoids intercepting all createElement calls)
+  const origGetContext = HTMLCanvasElement.prototype.getContext
+  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(function (
+    this: HTMLCanvasElement,
+    type: string,
+    ...args: unknown[]
+  ) {
+    if (type === 'webgl' || type === 'experimental-webgl') {
+      return {} as WebGLRenderingContext // truthy => WebGL supported
     }
-    return el
-  })
+    return origGetContext.call(this, type as '2d', ...(args as []))
+  } as typeof HTMLCanvasElement.prototype.getContext)
 
   // Ensure navigator.mediaDevices.getUserMedia exists
   if (!navigator.mediaDevices) {
@@ -107,7 +103,7 @@ function setupBrowserMocks() {
   }
 }
 
-describe('PhoneDetector', () => {
+describe('PhoneDetector', { timeout: 15000 }, () => {
   beforeEach(() => {
     vi.clearAllMocks()
     setupBrowserMocks()

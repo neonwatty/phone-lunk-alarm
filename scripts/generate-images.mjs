@@ -12,7 +12,7 @@ const imagesDir = path.join(publicDir, 'images');
 // Brand colors
 const PRIMARY_COLOR = '#A4278D';
 const ACCENT_COLOR = '#F9F72E';
-const BACKGROUND_COLOR = '#111827';
+const _BACKGROUND_COLOR = '#111827';
 
 // Ensure images directory exists
 await fs.mkdir(imagesDir, { recursive: true });

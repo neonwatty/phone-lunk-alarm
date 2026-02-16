@@ -1,76 +1,121 @@
 name: CI
 
 on:
-  pull_request:
-    branches: ['main']
   push:
-    branches: ['main']
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  quality:
+  lint-and-typecheck:
+    name: Lint & Typecheck
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: 22
+          cache: npm
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
       - name: Lint
-        run: npm run lint
+        run: npx eslint .
 
-      - name: Type check
-        run: npm run type-check
+      - name: Typecheck
+        run: npx tsc --noEmit
 
-      - name: Run tests
-        run: npm run test:ci
-
-      - name: Build
-        run: npm run build
-        env:
-          NEXT_PUBLIC_SITE_URL: http://localhost:3000
-
-  e2e-watermark:
+  unit-tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: 22
+          cache: npm
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
+
+      - name: Run unit tests
+        run: npx vitest run --coverage
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 7
+
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, unit-tests]
+    strategy:
+      matrix:
+        shard: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start local Supabase
+        run: supabase start
+
+      - name: Push migrations
+        run: supabase db push
 
       - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
+        run: npx playwright install --with-deps chromium
 
-      - name: Install ffmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Set E2E environment variables
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$(supabase status -o json | jq -r '.ANON_KEY')" >> $GITHUB_ENV
+          echo "SUPABASE_SERVICE_ROLE_KEY=$(supabase status -o json | jq -r '.SERVICE_ROLE_KEY')" >> $GITHUB_ENV
 
-      - name: Generate test video for fake webcam
-        run: bash ./tests/fixtures/generate-test-video.sh
+      - name: Build app
+        run: npx next build
 
-      - name: Run watermark E2E tests
-        run: npx playwright test watermark.spec.ts --project=chromium-fake-camera
-        env:
-          CI: true
+      - name: Run Playwright tests
+        run: npx playwright test --shard=${{ matrix.shard }}/2
 
-      - name: Upload test results
+      - name: Upload Playwright report
+        if: failure()
         uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: watermark-test-results
-          path: |
-            test-results/
-            playwright-report/
+          name: playwright-report-shard-${{ matrix.shard }}
+          path: playwright-report/
           retention-days: 7
+
+  knip:
+    name: Dead Code Detection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run knip
+        run: npx knip

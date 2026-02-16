@@ -1,0 +1,26 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "src/**/*.{ts,tsx}",
+    "next-sitemap.config.js",
+    "scripts/*.mjs"
+  ],
+  "project": [
+    "src/**/*.{ts,tsx}",
+    "scripts/*.mjs"
+  ],
+  "ignore": [
+    "public/badge.js",
+    "src/lib/supabase/admin.ts"
+  ],
+  "ignoreDependencies": [
+    "next-sitemap",
+    "puppeteer",
+    "sharp",
+    "tailwindcss"
+  ],
+  "ignoreExportsUsedInFile": true,
+  "rules": {
+    "enumMembers": "off"
+  }
+}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useMemo } from 'react'
 import toast from 'react-hot-toast'
 import { getShareCaption, getTikTokShareUrl, copyToClipboard } from '@/lib/video-utils'
 
@@ -11,13 +11,12 @@ interface RecordingPreviewModalProps {
 
 export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingPreviewModalProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [videoUrl, setVideoUrl] = useState<string>('')
 
+  // Derive video URL from blob; revoke on cleanup
+  const videoUrl = useMemo(() => URL.createObjectURL(videoBlob), [videoBlob])
   useEffect(() => {
-    const url = URL.createObjectURL(videoBlob)
-    setVideoUrl(url)
-    return () => URL.revokeObjectURL(url)
-  }, [videoBlob])
+    return () => URL.revokeObjectURL(videoUrl)
+  }, [videoUrl])
 
   const handleDownload = () => {
     const a = document.createElement('a')

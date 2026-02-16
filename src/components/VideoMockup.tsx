@@ -55,7 +55,6 @@ export default function VideoMockup() {
         {/* Simulated camera feed with GIF */}
         <div className="relative aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
           {/* Rotating gym phone GIFs - automatically cycles through examples */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={EXAMPLE_GIFS[currentGifIndex]}
             alt={`Phone Lunk example ${currentGifIndex + 1} - Person on phone in gym`}

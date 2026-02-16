@@ -18,6 +18,7 @@ import {
 } from '@/lib/alarm-themes'
 
 // We'll load TensorFlow dynamically to avoid SSR issues
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let cocoSsd: any = null
 
 const MAX_RECORDING_DURATION = 30 // seconds
@@ -48,15 +49,9 @@ export default function PhoneDetector({ onDetection }: PhoneDetectorProps) {
     changeVolume,
   } = useAlarmSound()
 
-  // Theme state
-  const [selectedTheme, setSelectedTheme] = useState<ThemeKey>('classic')
-  const [selectedIntensity, setSelectedIntensity] = useState<IntensityLevel>('medium')
-
-  // Load theme preferences on mount
-  useEffect(() => {
-    setSelectedTheme(loadThemePreference())
-    setSelectedIntensity(loadIntensityPreference())
-  }, [])
+  // Theme state (lazy-initialized from localStorage)
+  const [selectedTheme, setSelectedTheme] = useState<ThemeKey>(loadThemePreference)
+  const [selectedIntensity, setSelectedIntensity] = useState<IntensityLevel>(loadIntensityPreference)
 
   const handleThemeChange = useCallback((theme: ThemeKey) => {
     setSelectedTheme(theme)
@@ -89,22 +84,11 @@ export default function PhoneDetector({ onDetection }: PhoneDetectorProps) {
   const phoneDetectedRef = useRef(false) // For recording canvas access
   const watermarkEnabledRef = useRef(true) // For recording canvas access
 
-  // Watermark state
-  const [watermarkEnabled, setWatermarkEnabled] = useState(true)
-
   // Load watermark preference on mount
   useEffect(() => {
     const saved = localStorage.getItem('phoneLunkWatermarkEnabled')
-    const enabled = saved !== 'false' // Default to true
-    setWatermarkEnabled(enabled)
-    watermarkEnabledRef.current = enabled
+    watermarkEnabledRef.current = saved !== 'false' // Default to true
   }, [])
-
-  // Sync ref when state changes
-  useEffect(() => {
-    watermarkEnabledRef.current = watermarkEnabled
-    localStorage.setItem('phoneLunkWatermarkEnabled', String(watermarkEnabled))
-  }, [watermarkEnabled])
 
   // Check browser compatibility
   useEffect(() => {
@@ -114,7 +98,7 @@ export default function PhoneDetector({ onDetection }: PhoneDetectorProps) {
         try {
           const canvas = document.createElement('canvas')
           return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-        } catch (e) {
+        } catch {
           return false
         }
       })()
@@ -184,6 +168,7 @@ export default function PhoneDetector({ onDetection }: PhoneDetectorProps) {
       // Check for cell phone detection
       let phoneFound = false
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       predictions.forEach((prediction: any) => {
         if (prediction.class === 'cell phone' && prediction.score > 0.35) {
           phoneFound = true
@@ -675,19 +660,20 @@ export default function PhoneDetector({ onDetection }: PhoneDetectorProps) {
                 width: 1280,
                 height: 720,
               }}
-              onUserMediaError={(err: any) => {
+              onUserMediaError={(err: string | DOMException) => {
                 console.error('Camera error:', err)
 
                 // Parse specific error types
                 let errorMessage = 'Camera access failed. Please try again.'
+                const errName = typeof err === 'string' ? err : err.name
 
-                if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+                if (errName === 'NotFoundError' || errName === 'DevicesNotFoundError') {
                   errorMessage = 'No camera detected. This demo requires a webcam.'
-                } else if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+                } else if (errName === 'NotAllowedError' || errName === 'PermissionDeniedError') {
                   errorMessage = 'Camera access denied. Please allow camera access in your browser settings.'
-                } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+                } else if (errName === 'NotReadableError' || errName === 'TrackStartError') {
                   errorMessage = 'Camera is being used by another application. Please close other apps using the camera.'
-                } else if (err.name === 'OverconstrainedError' || err.name === 'ConstraintNotSatisfiedError') {
+                } else if (errName === 'OverconstrainedError' || errName === 'ConstraintNotSatisfiedError') {
                   errorMessage = 'Selected camera mode not available. Try switching cameras.'
                 }
 

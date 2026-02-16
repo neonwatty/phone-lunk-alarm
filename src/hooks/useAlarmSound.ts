@@ -17,25 +17,17 @@ const VOLUME_KEY = 'phoneLunkAlarmVolume'
 
 export function useAlarmSound() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const [selectedSound, setSelectedSound] = useState<AlarmSoundType>('airhorn')
-  const [volume, setVolume] = useState(0.7)
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  // Load preferences from localStorage on mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedSound = localStorage.getItem(STORAGE_KEY) as AlarmSoundType | null
-      const savedVolume = localStorage.getItem(VOLUME_KEY)
-
-      if (savedSound && ALARM_SOUNDS[savedSound]) {
-        setSelectedSound(savedSound)
-      }
-      if (savedVolume) {
-        setVolume(parseFloat(savedVolume))
-      }
-      setIsLoaded(true)
-    }
-  }, [])
+  const [selectedSound, setSelectedSound] = useState<AlarmSoundType>(() => {
+    if (typeof window === 'undefined') return 'airhorn'
+    const saved = localStorage.getItem(STORAGE_KEY) as AlarmSoundType | null
+    return saved && ALARM_SOUNDS[saved] ? saved : 'airhorn'
+  })
+  const [volume, setVolume] = useState(() => {
+    if (typeof window === 'undefined') return 0.7
+    const saved = localStorage.getItem(VOLUME_KEY)
+    return saved ? parseFloat(saved) : 0.7
+  })
+  const isLoaded = typeof window !== 'undefined'
 
   // Preload audio when sound selection changes
   useEffect(() => {

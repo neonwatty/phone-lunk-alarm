@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 
 import { getRoom, getDailyCount, incrementDailyCount } from '@/lib/rooms'
-import { useKioskChannel, DetectionEvent } from '@/hooks/useKioskChannel'
+import { useKioskChannel } from '@/hooks/useKioskChannel'
 import { useAlarmSound } from '@/hooks/useAlarmSound'
 import AlarmEffect from '@/components/AlarmEffect'
 import { ALARM_THEMES } from '@/lib/alarm-themes'
@@ -20,7 +20,6 @@ export default function KioskDisplay({ roomId }: { roomId: string }) {
   const [sessionCount, setSessionCount] = useState(0)
   const [phoneDetected, setPhoneDetected] = useState(false)
   const [recentCatches, setRecentCatches] = useState<RecentCatch[]>([])
-  const [qrUrl, setQrUrl] = useState('')
   const [loading, setLoading] = useState(true)
 
   const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -29,7 +28,7 @@ export default function KioskDisplay({ roomId }: { roomId: string }) {
 
   // Handle detection event
   const handleDetection = useCallback(
-    (_event: DetectionEvent) => {
+    () => {
       setPhoneDetected(true)
       setSessionCount((prev) => prev + 1)
       setDailyCount((prev) => prev + 1)
@@ -80,11 +79,12 @@ export default function KioskDisplay({ roomId }: { roomId: string }) {
     loadRoom()
   }, [roomId])
 
-  // Set QR URL on client mount
-  useEffect(() => {
+  // Derive QR URL from window.location (safe in 'use client' component)
+  const qrUrl = useMemo(() => {
     if (typeof window !== 'undefined') {
-      setQrUrl(`${window.location.origin}/join/${roomId}`)
+      return `${window.location.origin}/join/${roomId}`
     }
+    return ''
   }, [roomId])
 
   // Cleanup dismiss timer

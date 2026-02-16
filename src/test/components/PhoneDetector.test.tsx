@@ -4,9 +4,7 @@ import userEvent from '@testing-library/user-event'
 
 // Declare global mocks for webcam callback access
 declare global {
-  // eslint-disable-next-line no-var
   var mockWebcamErrorCallback: ((err: any) => void) | undefined
-  // eslint-disable-next-line no-var
   var mockWebcamConstraints: { facingMode?: string } | undefined
 }
 
@@ -78,16 +76,17 @@ import PhoneDetector from '@/components/PhoneDetector'
 function setupBrowserMocks() {
   // Provide a minimal WebGL context mock so isCompatible stays true
   const originalCreateElement = document.createElement.bind(document)
-  vi.spyOn(document, 'createElement').mockImplementation((tag: string, options?: any) => {
+  vi.spyOn(document, 'createElement').mockImplementation((tag: string, options?: ElementCreationOptions) => {
     const el = originalCreateElement(tag, options)
     if (tag === 'canvas') {
-      const origGetContext = el.getContext.bind(el)
-      ;(el as any).getContext = (type: string, attrs?: any) => {
+      const canvasEl = el as HTMLCanvasElement
+      const origGetContext = canvasEl.getContext.bind(canvasEl)
+      canvasEl.getContext = ((type: string, attrs?: unknown) => {
         if (type === 'webgl' || type === 'experimental-webgl') {
           return {} // truthy => WebGL supported
         }
-        return origGetContext(type, attrs)
-      }
+        return origGetContext(type as '2d', attrs as undefined)
+      }) as typeof canvasEl.getContext
     }
     return el
   })

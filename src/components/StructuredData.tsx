@@ -1,8 +1,4 @@
-interface StructuredDataProps {
-  type?: 'website' | 'article' | 'blog'
-}
-
-export default function StructuredData({ type: _type = 'website' }: StructuredDataProps) {
+export default function StructuredData() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3000'
 
   const websiteStructuredData = {

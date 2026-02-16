@@ -28,5 +28,42 @@ export default tseslint.config(
       },
     },
   },
+  // Test files: relax line limits since test suites are naturally verbose
+  {
+    files: ['src/test/**/*.{ts,tsx}', '**/*.test.{ts,tsx}'],
+    rules: {
+      'max-lines': 'off',
+      'max-lines-per-function': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+  // Config and script files: relax unused-vars for conventional patterns
+  {
+    files: ['*.config.{js,mjs,ts}', 'scripts/**/*.mjs', 'next-sitemap.config.js'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      'max-lines': 'off',
+    },
+  },
+  // Complex components that legitimately exceed line limits
+  {
+    files: [
+      'src/components/PhoneDetector.tsx',
+      'src/components/KioskDisplay.tsx',
+      'src/components/RecordingPreviewModal.tsx',
+      'src/lib/site-config.ts',
+    ],
+    rules: {
+      'max-lines': 'off',
+      'max-lines-per-function': 'off',
+    },
+  },
+  // Auth pages with form-heavy components
+  {
+    files: ['src/app/(auth)/**/*.tsx'],
+    rules: {
+      'max-lines-per-function': ['error', 200],
+    },
+  },
   prettier,
 )

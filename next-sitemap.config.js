@@ -56,7 +56,7 @@ module.exports = {
   },
 
   // Additional paths to include (if needed for future expansion)
-  additionalPaths: async (config) => {
+  additionalPaths: async (_config) => {
     const result = []
 
     // Add any additional static pages or routes here if needed in the future

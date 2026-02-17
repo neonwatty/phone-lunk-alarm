@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -76,8 +77,15 @@ export default function RevealPage() {
               className="text-base"
               style={{ color: 'var(--color-text-secondary)' }}
             >
-              The detection already works — try it yourself at the top of this page.
-              The kiosk part is what I&apos;d build next.
+              The detection already works —{' '}
+              <Link
+                href="/demo"
+                className="font-medium underline transition-colors"
+                style={{ color: 'var(--color-accent-primary)' }}
+              >
+                try it yourself
+              </Link>
+              . The kiosk part is what I&apos;d build next.
             </p>
           </div>
 

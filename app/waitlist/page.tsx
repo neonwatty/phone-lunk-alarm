@@ -1,8 +1,5 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import ShareButtons from '@/components/ShareButtons'
-
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdrAJe0M7T6RhIQTu70es-5UOPqICZi_epAlw5x8PRCSvhJRQ/viewform'
 
 export default function RevealPage() {
   return (
@@ -47,81 +44,78 @@ export default function RevealPage() {
             </p>
           </div>
 
-          {/* Build It For Real Section */}
+          {/* Card 1 — The Vision */}
           <div
-            className="rounded-xl p-6 md:p-8 mb-10 stagger-animation stagger-delay-4"
+            className="rounded-xl p-6 md:p-8 mb-6 stagger-animation stagger-delay-4"
             style={{
               background: 'var(--gradient-elevated)',
               border: '1px solid var(--color-border-primary)',
             }}
           >
             <p
-              className="text-lg font-medium mb-6 text-center"
+              className="text-lg font-medium mb-4"
               style={{ color: 'var(--color-text-primary)' }}
             >
-              If you actually want this for your gym:
+              Here&apos;s what I&apos;m thinking:
             </p>
-
-            <div className="text-center">
-              <a
-                href={GOOGLE_FORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary inline-flex items-center gap-2 text-lg"
-              >
-                Yes, actually build this
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </a>
-            </div>
-
             <p
-              className="text-sm mt-6 text-center"
-              style={{ color: 'var(--color-text-tertiary)' }}
-            >
-              I&apos;ll let you know if it becomes real. No promises, no spam.
-            </p>
-          </div>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4 mb-10 stagger-animation stagger-delay-5">
-            <div
-              className="flex-1 h-px"
-              style={{ background: 'var(--color-border-secondary)' }}
-            />
-            <span
-              className="text-sm font-medium"
-              style={{ color: 'var(--color-text-tertiary)' }}
-            >
-              or
-            </span>
-            <div
-              className="flex-1 h-px"
-              style={{ background: 'var(--color-border-secondary)' }}
-            />
-          </div>
-
-          {/* Share Your L Section */}
-          <div className="text-center stagger-animation stagger-delay-6">
-            <p
-              className="text-lg mb-6"
+              className="text-base mb-4"
               style={{ color: 'var(--color-text-secondary)' }}
             >
-              Just here for the meme? Share your L:
+              A gym mounts a TV running this AI. Members scan a QR code on the screen to join.
+              Point your phone at anyone hogging equipment while scrolling — the AI detects the
+              phone and the catch shows up on the gym&apos;s TV scoreboard in real-time.
             </p>
+            <p
+              className="text-lg font-semibold mb-4 text-center"
+              style={{ color: 'var(--color-text-primary)' }}
+            >
+              &ldquo;34 phones caught today.&rdquo;
+            </p>
+            <p
+              className="text-base"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
+              The detection already works — try it yourself at the top of this page.
+              The kiosk part is what I&apos;d build next.
+            </p>
+          </div>
 
-            <ShareButtons />
+          {/* Card 2 — Privacy & Control */}
+          <div
+            className="rounded-xl p-6 md:p-8 mb-10 stagger-animation stagger-delay-5"
+            style={{
+              background: 'var(--gradient-elevated)',
+              border: '1px solid var(--color-border-primary)',
+            }}
+          >
+            <p
+              className="text-lg font-medium mb-4"
+              style={{ color: 'var(--color-text-primary)' }}
+            >
+              Built for gym owners, not chaos:
+            </p>
+            <ul
+              className="space-y-3 text-base"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
+              <li className="flex gap-2">
+                <span className="shrink-0">—</span>
+                <span>No faces, no photos — detection only counts phones, nothing identifiable is shown or stored</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="shrink-0">—</span>
+                <span>Gym owner approves everything before it hits the TV — full moderation queue</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="shrink-0">—</span>
+                <span>Members are anonymous — no accounts required, no personal data collected</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="shrink-0">—</span>
+                <span>The gym owner controls all settings: what shows up, sensitivity, and can kill the feed instantly</span>
+              </li>
+            </ul>
           </div>
 
           {/* @neonwatty Branding */}

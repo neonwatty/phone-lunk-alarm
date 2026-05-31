@@ -50,13 +50,6 @@ export default function Hero() {
               {hero.secondaryCTA.text}
             </Link>
           )}
-
-          <Link
-            href="/demo"
-            className="btn btn-secondary w-full sm:w-auto"
-          >
-            See Detection Demo
-          </Link>
         </div>
 
         {/* Video Mockup Demo */}

@@ -1,7 +1,9 @@
 import {
   CANONICAL_SITE_URL,
+  buildSoftwareApplicationJsonLd,
   buildCanonicalUrl,
   buildPageMetadata,
+  buildWebsiteJsonLd,
   pageMetadata,
 } from '@/lib/seo'
 import { readFileSync } from 'fs'
@@ -183,5 +185,26 @@ describe('seo helpers', () => {
       }
       jest.resetModules()
     }
+  })
+})
+
+describe('structured data helpers', () => {
+  it('builds website JSON-LD for the canonical domain', () => {
+    expect(buildWebsiteJsonLd()).toMatchObject({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Phone Lunk',
+      url: 'https://www.phone-lunk.app/',
+    })
+  })
+
+  it('builds software application JSON-LD for the demo', () => {
+    expect(buildSoftwareApplicationJsonLd()).toMatchObject({
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'Phone Lunk',
+      applicationCategory: 'BrowserApplication',
+      operatingSystem: 'Web',
+    })
   })
 })

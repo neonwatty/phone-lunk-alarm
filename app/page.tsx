@@ -4,11 +4,15 @@ import Hero from '@/components/Hero'
 import HowItWorks from '@/components/HowItWorks'
 import Features from '@/components/Features'
 import PhoneDetector from '@/components/PhoneDetector'
+import JsonLd from '@/components/JsonLd'
+import { buildSoftwareApplicationJsonLd, buildWebsiteJsonLd } from '@/lib/seo'
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col transition-all duration-300"
          style={{ backgroundColor: 'transparent' }}>
+      <JsonLd data={buildWebsiteJsonLd()} />
+      <JsonLd data={buildSoftwareApplicationJsonLd()} />
       <Header />
 
       <main className="flex-grow">

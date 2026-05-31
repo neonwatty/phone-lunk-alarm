@@ -101,3 +101,46 @@ export function buildPageMetadata(path: PagePath): Metadata {
     },
   }
 }
+
+export function buildWebsiteJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Phone Lunk',
+    url: buildCanonicalUrl('/'),
+    description: pageMetadata['/'].description,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Phone Lunk',
+      url: buildCanonicalUrl('/'),
+    },
+    creator: {
+      '@type': 'Person',
+      name: 'Jeremy Watt',
+      url: 'https://neonwatty.com/',
+    },
+  }
+}
+
+export function buildSoftwareApplicationJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Phone Lunk',
+    applicationCategory: 'BrowserApplication',
+    operatingSystem: 'Web',
+    url: buildCanonicalUrl('/demo'),
+    description: pageMetadata['/demo'].description,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    creator: {
+      '@type': 'Person',
+      name: 'Jeremy Watt',
+      url: 'https://neonwatty.com/',
+    },
+  }
+}

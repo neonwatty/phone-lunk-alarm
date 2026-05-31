@@ -19,11 +19,6 @@ export default function About() {
           <div className="max-w-4xl mx-auto px-4 py-12">
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <div className="mb-4 text-center">
-                <img
-                  src={`${basePath}/images/jeremy-watt-headshot.jpg`}
-                  alt="Jeremy Watt"
-                  className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-indigo-200 dark:border-indigo-700 shadow-xl mb-6"
-                />
                 <h1 className="text-4xl font-bold mb-4">Hi, I'm Jeremy!</h1>
               </div>
 
@@ -106,14 +101,7 @@ export default function About() {
                     Book
                   </h2>
                   <div className="max-w-3xl mx-auto glass-card rounded-xl overflow-hidden p-6">
-                    <div className="flex flex-col md:flex-row gap-6">
-                      <div className="flex-shrink-0 mx-auto md:mx-0">
-                        <img
-                          src={`${basePath}/images/ml-refined-cover.png`}
-                          alt="Machine Learning Refined Book Cover"
-                          className="w-48 h-auto rounded-lg shadow-lg"
-                        />
-                      </div>
+                    <div>
                       <div className="flex-1">
                         <h3 className="text-2xl font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>
                           Machine Learning Refined: Foundations, Algorithms, and Applications

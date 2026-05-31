@@ -4,6 +4,8 @@ import {
   buildPageMetadata,
   pageMetadata,
 } from '@/lib/seo'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 import siteConfig from '@/site.config.mjs'
 import type { PagePath } from '@/lib/seo'
 import { metadata as aboutMetadata } from '@/app/about/page'
@@ -60,6 +62,12 @@ describe('seo helpers', () => {
     expect(demoMetadata).toMatchObject(buildPageMetadata('/demo'))
     expect(waitlistMetadata).toMatchObject(buildPageMetadata('/waitlist'))
     expect(aboutMetadata).toMatchObject(buildPageMetadata('/about'))
+  })
+
+  it('does not reference missing local images on the About page', () => {
+    const aboutPage = readFileSync(join(process.cwd(), 'app/about/page.tsx'), 'utf8')
+
+    expect(aboutPage).not.toMatch(/jeremy-watt-headshot|ml-refined-cover/)
   })
 
   it('uses canonical site config values and navigation', () => {

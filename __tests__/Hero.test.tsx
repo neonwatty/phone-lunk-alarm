@@ -35,4 +35,20 @@ describe('Hero', () => {
       expect(secondaryCTA).toBeInTheDocument()
     }
   })
+
+  it('renders refreshed phone lunk definition', () => {
+    render(<Hero />)
+
+    expect(
+      screen.getByText(/Someone camping on gym equipment while scrolling/)
+    ).toBeInTheDocument()
+  })
+
+  it('renders phone policy guide CTA', () => {
+    render(<Hero />)
+
+    const phonePolicyCTA = screen.getByText('Read the Phone Policy Guide')
+    expect(phonePolicyCTA).toBeInTheDocument()
+    expect(phonePolicyCTA.closest('a')).toHaveAttribute('href', '/gym-phone-policy')
+  })
 })

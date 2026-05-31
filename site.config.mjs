@@ -60,14 +60,14 @@ const siteConfig = {
   // Hero section configuration
   hero: {
     headline: 'Put Phone Lunks On Blast',
-    subheadline: 'Phone lunks kill the vibe of your gym, piss off members, and slow throughput.\nWe catch them automatically and put them on blast with AI-powered justice.',
+    subheadline: 'A playful AI phone detection demo for gyms tired of equipment hogging. Try the browser demo, then see how a privacy-first gym kiosk could make phone scrolling between sets impossible to ignore.',
     primaryCTA: {
-      text: 'See It In Action',
-      href: '#demo',
+      text: 'Try the Demo',
+      href: '/demo',
     },
     secondaryCTA: {
-      text: 'How It Works',
-      href: '#how-it-works',
+      text: 'Gym Pilot Concept',
+      href: '/waitlist',
     },
     // Optional: Add image path like '/images/hero-image.png'
     image: null,
@@ -76,25 +76,25 @@ const siteConfig = {
   // How It Works section
   howItWorks: {
     sectionTitle: 'How It Works',
-    sectionSubtitle: 'Enterprise-grade phone detection in three simple steps',
+    sectionSubtitle: 'A browser demo today, a privacy-first gym kiosk concept next',
     steps: [
       {
         number: 1,
-        emoji: '💻',
-        title: 'Zero Hardware Required',
-        description: 'Plug-n-play with your existing cameras.'
+        emoji: '📷',
+        title: 'Run the Demo',
+        description: 'Open the browser demo and allow camera access. The current prototype processes frames locally on your device.'
       },
       {
         number: 2,
         emoji: '🧠',
-        title: 'Real-Time Detection',
-        description: 'AI never blinks. Finds doom-scrolling hogs wherever they lurk.'
+        title: 'Detect Phone Use',
+        description: 'The AI model looks for phones in view and overlays a visible alert when it finds one. It is a demo, not a perfect enforcement system.'
       },
       {
         number: 3,
-        emoji: '🚨',
-        title: 'Automated Enforcement',
-        description: 'Sinners shamed publicly. Let the lunk alarm ring.'
+        emoji: '📺',
+        title: 'Imagine the Kiosk',
+        description: 'A real gym pilot would use anonymous detection events, owner moderation, and a TV scoreboard instead of storing personal camera feeds.'
       }
     ]
   },

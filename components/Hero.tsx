@@ -18,7 +18,7 @@ export default function Hero() {
         <div className="max-w-3xl mx-auto mb-6 stagger-animation stagger-delay-2">
           <div className="bg-[#F9F72E] text-[#A4278D] px-6 py-4 rounded-lg">
             <p className="text-sm md:text-base font-medium">
-              <span className="italic">Phone Lunk (n.)</span> - Doom-scrolling equipment hog
+              <span className="italic">Phone Lunk (n.)</span> - Someone camping on gym equipment while scrolling
             </p>
           </div>
         </div>
@@ -52,10 +52,10 @@ export default function Hero() {
           )}
 
           <Link
-            href="/waitlist?utm_source=waitlist"
-            className="btn btn-primary w-full sm:w-auto"
+            href="/gym-phone-policy"
+            className="btn btn-secondary w-full sm:w-auto"
           >
-            Join the Waitlist
+            Read the Phone Policy Guide
           </Link>
         </div>
 

@@ -160,6 +160,12 @@ describe('seo helpers', () => {
     expect(robotsTxt).not.toContain('Sitemap: https://phone-lunk.app/sitemap.xml')
   })
 
+  it('keeps the static export CNAME aligned with the canonical host', () => {
+    const cname = readFileSync(join(process.cwd(), 'public/CNAME'), 'utf8').trim()
+
+    expect(cname).toBe('www.phone-lunk.app')
+  })
+
   it('keeps the canonical sitemap domain when deployment env uses the apex host', () => {
     const originalSiteUrl = process.env.NEXT_PUBLIC_SITE_URL
     process.env.NEXT_PUBLIC_SITE_URL = 'https://phone-lunk.app'

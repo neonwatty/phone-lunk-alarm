@@ -195,6 +195,17 @@ describe('structured data helpers', () => {
       '@type': 'WebSite',
       name: 'Phone Lunk',
       url: 'https://www.phone-lunk.app/',
+      description: pageMetadata['/'].description,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Phone Lunk',
+        url: 'https://www.phone-lunk.app/',
+      },
+      creator: {
+        '@type': 'Person',
+        name: 'Jeremy Watt',
+        url: 'https://neonwatty.com/',
+      },
     })
   })
 
@@ -205,6 +216,18 @@ describe('structured data helpers', () => {
       name: 'Phone Lunk',
       applicationCategory: 'BrowserApplication',
       operatingSystem: 'Web',
+      url: 'https://www.phone-lunk.app/demo/',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+      },
+      creator: {
+        '@type': 'Person',
+        name: 'Jeremy Watt',
+        url: 'https://neonwatty.com/',
+      },
     })
   })
 })

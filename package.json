@@ -7,7 +7,7 @@
     "dev:https": "NODE_ENV=development node server.mjs",
     "prebuild": "node scripts/generate-images.mjs",
     "build": "next build",
-    "postbuild": "node scripts/normalize-jsonld-export.mjs && next-sitemap",
+    "postbuild": "next-sitemap",
     "generate:images": "node scripts/generate-images.mjs",
     "test:deployment": "node scripts/test-deployment.mjs",
     "start": "next start",

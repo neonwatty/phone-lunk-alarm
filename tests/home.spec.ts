@@ -31,11 +31,14 @@ test.describe('Home Page', () => {
     await page.goto('/')
 
     // Find and click theme toggle button
-    const themeToggle = page.locator('button[aria-label*="Switch to"]').first()
+    const themeToggle = page.getByRole('button', { name: /Switch to/ }).filter({ visible: true }).first()
     await expect(themeToggle).toBeVisible()
+
+    const initialThemeLabel = await themeToggle.getAttribute('aria-label')
 
     // Click it
     await themeToggle.click()
+    await expect(themeToggle).not.toHaveAttribute('aria-label', initialThemeLabel || '')
 
     // Theme should change (check for class on html element)
     const html = page.locator('html')

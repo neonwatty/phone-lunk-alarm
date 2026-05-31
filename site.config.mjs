@@ -135,10 +135,10 @@ const siteConfig = {
 
   // Call-to-action section
   cta: {
-    headline: 'Ready to Make Your Gym Phone Lunk Free?',
-    description: 'See the technology in action. Test our AI detection with your own phone and experience real-time alerts.',
-    buttonText: 'See the Demo',
-    buttonHref: '#demo',
+    headline: 'Want to Test the Gym Pilot Concept?',
+    description: 'Try the browser demo, then see how a privacy-first kiosk pilot could make equipment hogging visible without storing personal camera feeds.',
+    buttonText: 'Explore the Gym Pilot',
+    buttonHref: '/waitlist',
   },
 
   // SEO defaults

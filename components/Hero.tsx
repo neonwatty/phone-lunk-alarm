@@ -52,10 +52,10 @@ export default function Hero() {
           )}
 
           <Link
-            href="/gym-phone-policy"
+            href="/waitlist"
             className="btn btn-secondary w-full sm:w-auto"
           >
-            Read the Phone Policy Guide
+            Explore the Gym Pilot
           </Link>
         </div>
 

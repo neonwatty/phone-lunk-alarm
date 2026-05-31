@@ -44,11 +44,11 @@ describe('Hero', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders phone policy guide CTA', () => {
+  it('renders gym pilot CTA', () => {
     render(<Hero />)
 
-    const phonePolicyCTA = screen.getByText('Read the Phone Policy Guide')
-    expect(phonePolicyCTA).toBeInTheDocument()
-    expect(phonePolicyCTA.closest('a')).toHaveAttribute('href', '/gym-phone-policy')
+    const gymPilotCTA = screen.getByText('Explore the Gym Pilot')
+    expect(gymPilotCTA).toBeInTheDocument()
+    expect(gymPilotCTA.closest('a')).toHaveAttribute('href', '/waitlist')
   })
 })

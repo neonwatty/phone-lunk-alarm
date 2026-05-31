@@ -17,6 +17,7 @@ import {
   loadIntensityPreference,
   saveIntensityPreference,
 } from '@/lib/alarm-themes'
+import { trackFunnelEvent } from '@/lib/funnel-events'
 
 // We'll load TensorFlow dynamically to avoid SSR issues
 let cocoSsd: any = null
@@ -95,6 +96,7 @@ export default function PhoneDetector({
 
   // Watermark state
   const [watermarkEnabled, setWatermarkEnabled] = useState(true)
+  const trackingLocation = showIntroLinks ? 'demo_page' : 'homepage_demo'
 
   // Load watermark preference on mount
   useEffect(() => {
@@ -222,7 +224,14 @@ export default function PhoneDetector({
       if (phoneFound && !phoneDetected && timeSinceLastAlarm >= COOLDOWN_PERIOD) {
         setPhoneDetected(true)
         phoneDetectedRef.current = true
-        setDetectionCount((prev) => prev + 1)
+        setDetectionCount((prev) => {
+          const next = prev + 1
+          trackFunnelEvent('demo_phone_detected', {
+            location: trackingLocation,
+            detection_count: next,
+          })
+          return next
+        })
         lastAlarmTimeRef.current = now
 
         // Play alarm sound
@@ -387,17 +396,27 @@ export default function PhoneDetector({
   const stopRecording = useCallback(() => {
     if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
       mediaRecorderRef.current.stop()
+      trackFunnelEvent('demo_recording_stop', {
+        location: trackingLocation,
+        seconds_recorded: recordingTime,
+      })
     }
     if (recordingTimerRef.current) {
       clearInterval(recordingTimerRef.current)
       recordingTimerRef.current = null
     }
     setIsRecording(false)
-  }, [])
+  }, [recordingTime, trackingLocation])
 
   const startRecording = useCallback(() => {
     const recordingCanvas = recordingCanvasRef.current
-    if (!recordingCanvas || !isCameraActive) return
+    if (!recordingCanvas || !isCameraActive) {
+      trackFunnelEvent('demo_recording_blocked', {
+        location: trackingLocation,
+        reason: isCameraActive ? 'missing_canvas' : 'camera_inactive',
+      })
+      return
+    }
 
     // Initialize canvas size
     const video = webcamRef.current?.video
@@ -432,12 +451,21 @@ export default function PhoneDetector({
       const blob = new Blob(recordedChunksRef.current, { type: mimeType })
       setRecordedBlob(blob)
       setShowPreview(true)
+      trackFunnelEvent('demo_recording_complete', {
+        location: trackingLocation,
+        mime_type: mimeType,
+        blob_size: blob.size,
+      })
     }
 
     // Start recording
     mediaRecorder.start(100) // Collect data every 100ms
     setIsRecording(true)
     setRecordingTime(0)
+    trackFunnelEvent('demo_recording_start', {
+      location: trackingLocation,
+      mime_type: mimeType,
+    })
 
     // Start timer
     recordingTimerRef.current = setInterval(() => {
@@ -458,11 +486,14 @@ export default function PhoneDetector({
       }
     }
     requestAnimationFrame(drawLoop)
-  }, [isCameraActive, drawRecordingFrame, stopRecording])
+  }, [isCameraActive, drawRecordingFrame, stopRecording, trackingLocation])
 
   const handleClosePreview = () => {
     setShowPreview(false)
     setRecordedBlob(null)
+    trackFunnelEvent('demo_recording_preview_close', {
+      location: trackingLocation,
+    })
   }
 
   // Start detection loop when model is loaded AND camera is active
@@ -513,10 +544,17 @@ export default function PhoneDetector({
         const stream = webcamRef.current.video.srcObject as MediaStream
         stream.getTracks().forEach(track => track.stop())
       }
+      trackFunnelEvent('demo_camera_stop', {
+        location: trackingLocation,
+      })
     } else {
       // Start camera
       setError(null) // Clear any previous errors
       setIsCameraActive(true)
+      trackFunnelEvent('demo_camera_start', {
+        location: trackingLocation,
+        facing_mode: facingMode,
+      })
     }
   }
 
@@ -524,6 +562,9 @@ export default function PhoneDetector({
   const handleRetry = () => {
     setError(null)
     setIsCameraActive(true)
+    trackFunnelEvent('demo_camera_retry', {
+      location: trackingLocation,
+    })
   }
 
   // Switch between front and back camera
@@ -536,6 +577,11 @@ export default function PhoneDetector({
 
     // Toggle facing mode
     setFacingMode(prev => prev === 'user' ? 'environment' : 'user')
+    trackFunnelEvent('demo_camera_switch', {
+      location: trackingLocation,
+      from: facingMode,
+      to: facingMode === 'user' ? 'environment' : 'user',
+    })
 
     // Clear detection state during switch
     setPhoneDetected(false)
@@ -701,6 +747,10 @@ export default function PhoneDetector({
 
                 setError(errorMessage)
                 setIsCameraActive(false)
+                trackFunnelEvent('demo_camera_error', {
+                  location: trackingLocation,
+                  error_name: err.name || 'unknown',
+                })
               }}
             />
 

@@ -4,6 +4,7 @@ import Hero from '@/components/Hero'
 import HowItWorks from '@/components/HowItWorks'
 import Features from '@/components/Features'
 import PhoneDetector from '@/components/PhoneDetector'
+import CTA from '@/components/CTA'
 import JsonLd from '@/components/JsonLd'
 import { buildSoftwareApplicationJsonLd, buildWebsiteJsonLd } from '@/lib/seo'
 
@@ -20,6 +21,7 @@ export default function Home() {
         <HowItWorks />
         <Features />
         <PhoneDetector />
+        <CTA location="homepage_post_demo" />
       </main>
 
       <Footer />

@@ -8,6 +8,7 @@ const EXAMPLE_GIFS = [
   '/images/examples/phone-lunk-2.gif',
   '/images/examples/phone-lunk-3.gif'
 ] as const
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 const GIF_DISPLAY_DURATION = 5000 // 5 seconds per GIF
 const TRANSITION_DURATION = 300 // 300ms crossfade
@@ -37,7 +38,7 @@ export default function VideoMockup() {
     // Preload all GIFs for smooth transitions
     EXAMPLE_GIFS.forEach(gif => {
       const img = new Image()
-      img.src = gif
+      img.src = `${basePath}${gif}`
     })
 
     // Set up rotation interval
@@ -60,7 +61,7 @@ export default function VideoMockup() {
         <div className="relative aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
           {/* Rotating gym phone GIFs - automatically cycles through examples */}
           <img
-            src={EXAMPLE_GIFS[currentGifIndex]}
+            src={`${basePath}${EXAMPLE_GIFS[currentGifIndex]}`}
             alt={`Phone Lunk example ${currentGifIndex + 1} - Person on phone in gym`}
             className={`w-full h-full object-contain pointer-events-none transition-opacity duration-300 ${
               isTransitioning ? 'opacity-0' : 'opacity-100'

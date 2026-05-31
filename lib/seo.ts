@@ -40,6 +40,11 @@ export const pageMetadata = {
     description: 'A practical guide for gyms writing phone-use policies for equipment areas, member etiquette, filming, privacy, and enforcement.',
     path: '/gym-phone-policy',
   },
+  '/phone-use-at-gym': {
+    title: 'Phone Use at the Gym: Etiquette Guide | Phone Lunk',
+    description: 'A practical guide to phone use at the gym: workout tracking, texting, scrolling, filming, equipment sharing, and staff-friendly reminders.',
+    path: '/phone-use-at-gym',
+  },
   '/gym-equipment-hogging': {
     title: 'Gym Equipment Hogging: Causes and Fixes | Phone Lunk',
     description: 'Why gym equipment hogging frustrates members, how phone use makes it worse, and what gyms can do to improve equipment flow.',

@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { getShareCaption, getTikTokShareUrl, copyToClipboard } from '@/lib/video-utils'
+import { trackFunnelEvent } from '@/lib/funnel-events'
 
 const CANONICAL_SITE_URL = 'https://www.phone-lunk.app'
 
@@ -13,7 +14,7 @@ interface RecordingPreviewModalProps {
 
 export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingPreviewModalProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [videoUrl, setVideoUrl] = useState<string>('')
+  const [videoUrl, setVideoUrl] = useState<string | null>(null)
 
   useEffect(() => {
     const url = URL.createObjectURL(videoBlob)
@@ -23,11 +24,17 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
 
   const handleDownload = () => {
     const a = document.createElement('a')
+    if (!videoUrl) return
+
     a.href = videoUrl
     a.download = `phone-lunk-${Date.now()}.webm`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
+    trackFunnelEvent('demo_download', {
+      location: 'recording_preview',
+      blob_size: videoBlob.size,
+    })
     toast.success('Video downloaded!', { icon: '📥' })
   }
 
@@ -36,12 +43,18 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
     const twitterUrl = new URL('https://twitter.com/intent/tweet')
     twitterUrl.searchParams.set('text', text)
     twitterUrl.searchParams.set('url', CANONICAL_SITE_URL)
+    trackFunnelEvent('demo_share_x', {
+      location: 'recording_preview',
+    })
     window.open(twitterUrl.toString(), '_blank', 'noopener,noreferrer,width=550,height=420')
   }
 
   const shareToLinkedIn = () => {
     const linkedInUrl = new URL('https://www.linkedin.com/sharing/share-offsite/')
     linkedInUrl.searchParams.set('url', CANONICAL_SITE_URL)
+    trackFunnelEvent('demo_share_linkedin', {
+      location: 'recording_preview',
+    })
     window.open(linkedInUrl.toString(), '_blank', 'noopener,noreferrer,width=550,height=730')
   }
 
@@ -52,6 +65,10 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
     if (copied) {
       toast.success('Hashtags copied! Paste in TikTok caption', { icon: '📋', duration: 3000 })
     }
+    trackFunnelEvent('demo_share_tiktok', {
+      location: 'recording_preview',
+      caption_copied: copied,
+    })
     // Open TikTok upload
     window.open(getTikTokShareUrl(), '_blank', 'noopener,noreferrer')
   }
@@ -59,6 +76,10 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
   const copyCaption = async () => {
     const caption = `I just got put on blast by @phonelunk 🚨 ${getShareCaption()}`
     const copied = await copyToClipboard(caption)
+    trackFunnelEvent('demo_copy_caption', {
+      location: 'recording_preview',
+      copied,
+    })
     if (copied) {
       toast.success('Caption & hashtags copied!', { icon: '📋' })
     } else {
@@ -69,8 +90,16 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(CANONICAL_SITE_URL)
+      trackFunnelEvent('demo_copy_link', {
+        location: 'recording_preview',
+        copied: true,
+      })
       toast.success('Link copied!', { icon: '📋' })
     } catch {
+      trackFunnelEvent('demo_copy_link', {
+        location: 'recording_preview',
+        copied: false,
+      })
       toast.error('Failed to copy')
     }
   }
@@ -85,6 +114,10 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
           url: CANONICAL_SITE_URL,
           files: [file],
         })
+        trackFunnelEvent('demo_share_native', {
+          location: 'recording_preview',
+          with_file: true,
+        })
       } catch (err) {
         if ((err as Error).name !== 'AbortError') {
           // Fallback to just sharing URL if file sharing not supported
@@ -93,6 +126,9 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
               title: 'Phone Lunk Detection',
               text: 'I just got put on blast 🚨',
               url: CANONICAL_SITE_URL,
+            })
+            trackFunnelEvent('demo_share_native_fallback', {
+              location: 'recording_preview',
             })
           } catch {
             toast.error('Share failed')
@@ -127,15 +163,17 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
 
         {/* Video Preview */}
         <div className="p-4">
-          <video
-            ref={videoRef}
-            src={videoUrl}
-            controls
-            autoPlay
-            loop
-            className="w-full rounded-lg"
-            style={{ maxHeight: '400px' }}
-          />
+          {videoUrl && (
+            <video
+              ref={videoRef}
+              src={videoUrl}
+              controls
+              autoPlay
+              loop
+              className="w-full rounded-lg"
+              style={{ maxHeight: '400px' }}
+            />
+          )}
         </div>
 
         {/* Share Buttons */}

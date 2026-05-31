@@ -12,6 +12,7 @@ import siteConfig from '@/site.config.mjs'
 import type { PagePath } from '@/lib/seo'
 import { metadata as aboutMetadata } from '@/app/about/page'
 import { metadata as demoMetadata } from '@/app/demo/page'
+import { metadata as phoneUseAtGymMetadata } from '@/app/phone-use-at-gym/page'
 import { metadata as waitlistMetadata } from '@/app/waitlist/page'
 
 const sitemapConfig = require('../next-sitemap.config.js')
@@ -28,7 +29,7 @@ describe('seo helpers', () => {
   })
 
   it('defines unique metadata for core public routes', () => {
-    const routes = ['/', '/demo', '/waitlist', '/privacy', '/gym-phone-policy', '/gym-equipment-hogging'] satisfies PagePath[]
+    const routes = ['/', '/demo', '/waitlist', '/privacy', '/gym-phone-policy', '/phone-use-at-gym', '/gym-equipment-hogging'] satisfies PagePath[]
     const titles = routes.map((route) => pageMetadata[route].title)
     const descriptions = routes.map((route) => pageMetadata[route].description)
 
@@ -63,6 +64,7 @@ describe('seo helpers', () => {
   it('exports route-level metadata for current public pages to prevent root metadata inheritance', () => {
     expect(demoMetadata).toMatchObject(buildPageMetadata('/demo'))
     expect(waitlistMetadata).toMatchObject(buildPageMetadata('/waitlist'))
+    expect(phoneUseAtGymMetadata).toMatchObject(buildPageMetadata('/phone-use-at-gym'))
     expect(aboutMetadata).toMatchObject(buildPageMetadata('/about'))
   })
 
@@ -147,7 +149,7 @@ describe('seo helpers', () => {
       priority: 0.6,
     })
 
-    for (const route of ['/gym-phone-policy', '/gym-equipment-hogging', '/lunk-alarm-app', '/gym-tv-kiosk']) {
+    for (const route of ['/gym-phone-policy', '/phone-use-at-gym', '/gym-equipment-hogging', '/lunk-alarm-app', '/gym-tv-kiosk']) {
       await expect(sitemapConfig.transform(sitemapConfig, route)).resolves.toMatchObject({
         changefreq: 'monthly',
         priority: 0.75,
@@ -166,6 +168,25 @@ describe('seo helpers', () => {
     const cname = readFileSync(join(process.cwd(), 'public/CNAME'), 'utf8').trim()
 
     expect(cname).toBe('www.phone-lunk.app')
+  })
+
+  it('keeps the web manifest basePath-safe', () => {
+    const manifest = JSON.parse(readFileSync(join(process.cwd(), 'public/manifest.json'), 'utf8'))
+
+    expect(manifest.start_url).toBe('.')
+    expect(manifest.icons.every((icon: { src: string }) => !icon.src.startsWith('/'))).toBe(true)
+  })
+
+  it('wires post-deploy SEO checks to the canonical deployment URL', () => {
+    const deployWorkflow = readFileSync(join(process.cwd(), '.github/workflows/deploy.yml'), 'utf8')
+    const deploymentScript = readFileSync(join(process.cwd(), 'scripts/test-deployment.mjs'), 'utf8')
+
+    expect(deployWorkflow).toContain('test-deployment:')
+    expect(deployWorkflow).toContain('node scripts/test-deployment.mjs')
+    expect(deployWorkflow).toContain("DEPLOYMENT_TEST_URL: 'https://www.phone-lunk.app'")
+    expect(deployWorkflow).toContain("DEPLOYMENT_TEST_CANONICAL_URL: 'https://www.phone-lunk.app'")
+    expect(deploymentScript).toContain('process.env.DEPLOYMENT_TEST_URL')
+    expect(deploymentScript).toContain('process.env.DEPLOYMENT_TEST_CANONICAL_URL')
   })
 
   it('keeps the canonical sitemap domain when deployment env uses the apex host', () => {

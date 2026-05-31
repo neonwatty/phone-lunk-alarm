@@ -58,6 +58,8 @@ module.exports = {
     if (
       path === '/gym-phone-policy/' ||
       path === '/gym-phone-policy' ||
+      path === '/phone-use-at-gym/' ||
+      path === '/phone-use-at-gym' ||
       path === '/gym-equipment-hogging/' ||
       path === '/gym-equipment-hogging' ||
       path === '/lunk-alarm-app/' ||

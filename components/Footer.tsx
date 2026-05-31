@@ -40,6 +40,7 @@ export default function Footer() {
           >
             <Link href="/demo" className="hover:opacity-70 transition-opacity">Demo</Link>
             <Link href="/privacy" className="hover:opacity-70 transition-opacity">Privacy</Link>
+            <Link href="/phone-use-at-gym" className="hover:opacity-70 transition-opacity">Phone Etiquette</Link>
             <Link href="/gym-phone-policy" className="hover:opacity-70 transition-opacity">Phone Policy</Link>
             <Link href="/gym-tv-kiosk" className="hover:opacity-70 transition-opacity">Kiosk Concept</Link>
           </nav>

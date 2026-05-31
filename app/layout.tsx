@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -29,6 +29,10 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
+export const viewport: Viewport = {
+  themeColor: '#A4278D',
+}
 
 export const metadata: Metadata = {
   title: {

@@ -37,4 +37,11 @@ describe('Footer', () => {
     expect(authorLink).toHaveAttribute('target', '_blank')
     expect(authorLink).toHaveAttribute('rel', 'noopener noreferrer')
   })
+
+  it('links to the phone etiquette guide cluster', () => {
+    render(<Footer />)
+
+    expect(screen.getByRole('link', { name: 'Phone Etiquette' })).toHaveAttribute('href', '/phone-use-at-gym')
+    expect(screen.getByRole('link', { name: 'Phone Policy' })).toHaveAttribute('href', '/gym-phone-policy')
+  })
 })

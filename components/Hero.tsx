@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import siteConfig from '@/site.config.mjs'
 import VideoMockup from './VideoMockup'
+import { trackFunnelEvent } from '@/lib/funnel-events'
 
 export default function Hero() {
   const { hero } = siteConfig
@@ -38,6 +41,13 @@ export default function Hero() {
           <Link
             href={hero.primaryCTA.href}
             className="btn btn-primary w-full sm:w-auto"
+            onClick={() =>
+              trackFunnelEvent('cta_click', {
+                location: 'hero_primary',
+                href: hero.primaryCTA.href,
+                label: hero.primaryCTA.text,
+              })
+            }
           >
             {hero.primaryCTA.text}
           </Link>
@@ -46,6 +56,13 @@ export default function Hero() {
             <Link
               href={hero.secondaryCTA.href}
               className="btn btn-secondary w-full sm:w-auto"
+              onClick={() =>
+                trackFunnelEvent('cta_click', {
+                  location: 'hero_secondary',
+                  href: hero.secondaryCTA?.href,
+                  label: hero.secondaryCTA?.text,
+                })
+              }
             >
               {hero.secondaryCTA.text}
             </Link>

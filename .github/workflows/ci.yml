@@ -60,6 +60,11 @@ jobs:
       - name: Generate test video for fake webcam
         run: bash ./tests/fixtures/generate-test-video.sh
 
+      - name: Run homepage E2E tests
+        run: npx playwright test tests/home.spec.ts --project=chromium
+        env:
+          CI: true
+
       - name: Run watermark E2E tests
         run: npx playwright test watermark.spec.ts --project=chromium-fake-camera
         env:

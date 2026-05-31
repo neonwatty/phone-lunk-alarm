@@ -31,7 +31,7 @@ test.describe('Home Page', () => {
     await page.goto('/')
 
     // Find and click theme toggle button
-    const themeToggle = page.locator('button[aria-label*="Switch to"]')
+    const themeToggle = page.locator('button[aria-label*="Switch to"]').first()
     await expect(themeToggle).toBeVisible()
 
     // Click it

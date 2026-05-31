@@ -383,6 +383,17 @@ export default function PhoneDetector({
     }
   }, [selectedTheme])
 
+  const stopRecording = useCallback(() => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop()
+    }
+    if (recordingTimerRef.current) {
+      clearInterval(recordingTimerRef.current)
+      recordingTimerRef.current = null
+    }
+    setIsRecording(false)
+  }, [])
+
   const startRecording = useCallback(() => {
     const recordingCanvas = recordingCanvasRef.current
     if (!recordingCanvas || !isCameraActive) return
@@ -446,18 +457,7 @@ export default function PhoneDetector({
       }
     }
     requestAnimationFrame(drawLoop)
-  }, [isCameraActive, drawRecordingFrame])
-
-  const stopRecording = useCallback(() => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
-      mediaRecorderRef.current.stop()
-    }
-    if (recordingTimerRef.current) {
-      clearInterval(recordingTimerRef.current)
-      recordingTimerRef.current = null
-    }
-    setIsRecording(false)
-  }, [])
+  }, [isCameraActive, drawRecordingFrame, stopRecording])
 
   const handleClosePreview = () => {
     setShowPreview(false)

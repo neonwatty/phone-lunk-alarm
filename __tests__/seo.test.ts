@@ -85,9 +85,9 @@ describe('seo helpers', () => {
     expect(siteConfig.navigation).toEqual([
       { name: 'Demo', href: '/demo' },
       { name: 'How It Works', href: '/#how-it-works' },
-      { name: 'Phone Policy', href: '/gym-phone-policy' },
-      { name: 'Kiosk Concept', href: '/gym-tv-kiosk' },
+      { name: 'Features', href: '/#features' },
       { name: 'Gym Pilot', href: '/waitlist' },
+      { name: 'About', href: '/about' },
     ])
   })
 

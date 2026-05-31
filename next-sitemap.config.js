@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.phone-lunk.app',
+  siteUrl: 'https://www.phone-lunk.app',
   generateRobotsTxt: true,
   generateIndexSitemap: false, // Only needed for 50k+ URLs
   outDir: './out', // Must match your static export output directory

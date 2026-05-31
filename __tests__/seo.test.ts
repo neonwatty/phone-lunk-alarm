@@ -152,4 +152,23 @@ describe('seo helpers', () => {
       })
     }
   })
+
+  it('keeps the canonical sitemap domain when deployment env uses the apex host', () => {
+    const originalSiteUrl = process.env.NEXT_PUBLIC_SITE_URL
+    process.env.NEXT_PUBLIC_SITE_URL = 'https://phone-lunk.app'
+    jest.resetModules()
+
+    try {
+      const configWithDeployEnv = require('../next-sitemap.config.js')
+
+      expect(configWithDeployEnv.siteUrl).toBe('https://www.phone-lunk.app')
+    } finally {
+      if (originalSiteUrl === undefined) {
+        delete process.env.NEXT_PUBLIC_SITE_URL
+      } else {
+        process.env.NEXT_PUBLIC_SITE_URL = originalSiteUrl
+      }
+      jest.resetModules()
+    }
+  })
 })

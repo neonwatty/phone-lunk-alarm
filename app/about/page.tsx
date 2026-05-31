@@ -1,6 +1,5 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import StructuredData from '@/components/StructuredData'
 import { buildPageMetadata } from '@/lib/seo'
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
@@ -10,8 +9,6 @@ export const metadata = buildPageMetadata('/about')
 export default function About() {
   return (
     <>
-      <StructuredData type="website" />
-
       <div className="min-h-screen flex flex-col transition-colors" style={{ backgroundColor: 'transparent' }}>
         <Header />
 

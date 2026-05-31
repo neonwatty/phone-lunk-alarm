@@ -1,7 +1,7 @@
 {
-  "name": "Phone Lunk - Fuck Your Phone",
+  "name": "Phone Lunk - AI Phone Detection Demo for Gyms",
   "short_name": "Phone Lunk",
-  "description": "AI-powered phone detection for gyms. Catches idiots doom scrolling and puts them on blast.",
+  "description": "A playful AI phone detection demo and privacy-first gym kiosk concept for reducing equipment hogging.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#111827",

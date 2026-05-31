@@ -19,20 +19,32 @@ describe('Hero', () => {
     })
   })
 
-  it('renders primary CTA button', () => {
+  it('renders configured demo and gym pilot CTAs', () => {
     render(<Hero />)
 
-    const primaryCTA = screen.getByText(siteConfig.hero.primaryCTA.text)
+    const primaryCTA = screen.getByRole('link', { name: 'Try the Demo' })
     expect(primaryCTA).toBeInTheDocument()
-    expect(primaryCTA.closest('a')).toHaveAttribute('href', siteConfig.hero.primaryCTA.href)
-  })
-
-  it('renders secondary CTA button when configured', () => {
-    render(<Hero />)
+    expect(primaryCTA).toHaveAttribute('href', '/demo')
 
     if (siteConfig.hero.secondaryCTA) {
-      const secondaryCTA = screen.getByText(siteConfig.hero.secondaryCTA.text)
+      const secondaryCTA = screen.getByRole('link', { name: 'Gym Pilot Concept' })
       expect(secondaryCTA).toBeInTheDocument()
+      expect(secondaryCTA).toHaveAttribute('href', '/waitlist')
     }
+  })
+
+  it('renders refreshed phone lunk definition', () => {
+    render(<Hero />)
+
+    expect(
+      screen.getByText(/Someone camping on gym equipment while scrolling/)
+    ).toBeInTheDocument()
+  })
+
+  it('does not render unimplemented policy guide CTA', () => {
+    render(<Hero />)
+
+    const unimplementedPolicyGuideCTA = ['Read the Phone', 'Policy Guide'].join(' ')
+    expect(screen.queryByText(unimplementedPolicyGuideCTA)).not.toBeInTheDocument()
   })
 })

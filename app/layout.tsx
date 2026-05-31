@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import Script from 'next/script'
 import siteConfig from '@/site.config.mjs'
+import { CANONICAL_SITE_URL, buildCanonicalUrl, pageMetadata } from '@/lib/seo'
 import './globals.css'
 
 const inter = Inter({
@@ -31,14 +32,17 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.seo.defaultTitle,
-    template: siteConfig.seo.titleTemplate
+    default: pageMetadata['/'].title,
+    template: '%s'
   },
-  description: siteConfig.seo.description,
+  description: pageMetadata['/'].description,
   keywords: siteConfig.site.keywords,
   authors: [{ name: siteConfig.author.name }],
   creator: siteConfig.author.name,
-  metadataBase: new URL(siteConfig.site.url),
+  metadataBase: new URL(CANONICAL_SITE_URL),
+  alternates: {
+    canonical: buildCanonicalUrl('/'),
+  },
   icons: {
     icon: [
       { url: `${basePath}/favicon.svg`, type: 'image/svg+xml' },
@@ -56,16 +60,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: siteConfig.seo.openGraph.type as any,
     locale: siteConfig.seo.openGraph.locale,
-    url: siteConfig.site.url,
+    url: buildCanonicalUrl('/'),
     siteName: siteConfig.site.name,
-    title: siteConfig.site.name,
-    description: siteConfig.seo.description,
+    title: pageMetadata['/'].title,
+    description: pageMetadata['/'].description,
     images: siteConfig.seo.openGraph.images,
   },
   twitter: {
     card: siteConfig.seo.twitter.cardType as any,
-    title: siteConfig.site.name,
-    description: siteConfig.seo.description,
+    title: pageMetadata['/'].title,
+    description: pageMetadata['/'].description,
     creator: siteConfig.seo.twitter.handle,
     site: siteConfig.seo.twitter.site,
     images: siteConfig.seo.openGraph.images.map(img => img.url),
@@ -94,15 +98,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Google Tag Manager */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MKS2GNDH');`,
-          }}
-        />
+})(window,document,'script','dataLayer','GTM-MKS2GNDH');`}
+        </Script>
         {/* End Google Tag Manager */}
         <script
           dangerouslySetInnerHTML={{

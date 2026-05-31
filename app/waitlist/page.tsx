@@ -1,156 +1,57 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { buildPageMetadata } from '@/lib/seo'
 
-export default function RevealPage() {
+export const metadata: Metadata = buildPageMetadata('/waitlist')
+
+export default function WaitlistPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen flex items-center justify-center px-4 py-20">
-        <div className="max-w-2xl mx-auto">
-          {/* GOTCHA Header */}
-          <div className="text-center mb-8 stagger-animation stagger-delay-1">
-            <span className="text-6xl md:text-7xl">🚨</span>
-            <h1
-              className="text-4xl md:text-5xl font-bold mt-4"
-              style={{ color: 'var(--color-text-primary)' }}
-            >
-              GOTCHA
-            </h1>
-          </div>
-
-          {/* Punchline */}
-          <div className="text-center mb-8 stagger-animation stagger-delay-2">
-            <p
-              className="text-xl md:text-2xl font-medium mb-4"
-              style={{ color: 'var(--color-text-primary)' }}
-            >
-              OK, this isn&apos;t real.
-            </p>
-            <p
-              className="text-lg md:text-xl"
-              style={{ color: 'var(--color-text-secondary)' }}
-            >
-              I built it as a joke because I&apos;m tired of waiting for equipment at my gym.
-            </p>
-          </div>
-
-          {/* The Twist */}
-          <div className="text-center mb-10 stagger-animation stagger-delay-3">
-            <p
-              className="text-2xl md:text-3xl font-bold"
-              style={{ color: 'var(--color-accent-primary)' }}
-            >
-              But... should it be?
-            </p>
-          </div>
-
-          {/* Card 1 — The Vision */}
-          <div
-            className="rounded-xl p-6 md:p-8 mb-6 stagger-animation stagger-delay-4"
-            style={{
-              background: 'var(--gradient-elevated)',
-              border: '1px solid var(--color-border-primary)',
-            }}
-          >
-            <p
-              className="text-lg font-medium mb-4"
-              style={{ color: 'var(--color-text-primary)' }}
-            >
-              Here&apos;s what I&apos;m thinking:
-            </p>
-            <p
-              className="text-base mb-4"
-              style={{ color: 'var(--color-text-secondary)' }}
-            >
-              A gym mounts a TV running this AI. Members scan a QR code on the screen to join.
-              Point your phone at anyone hogging equipment while scrolling — the AI detects the
-              phone and the catch shows up on the gym&apos;s TV scoreboard in real-time.
-            </p>
-            <p
-              className="text-lg font-semibold mb-4 text-center"
-              style={{ color: 'var(--color-text-primary)' }}
-            >
-              &ldquo;34 phones caught today.&rdquo;
-            </p>
-            <p
-              className="text-base"
-              style={{ color: 'var(--color-text-secondary)' }}
-            >
-              The detection already works —{' '}
-              <Link
-                href="/demo"
-                className="font-medium underline transition-colors"
-                style={{ color: 'var(--color-accent-primary)' }}
-              >
-                try it yourself
-              </Link>
-              . The kiosk part is what I&apos;d build next.
-            </p>
-          </div>
-
-          {/* Card 2 — Privacy & Control */}
-          <div
-            className="rounded-xl p-6 md:p-8 mb-10 stagger-animation stagger-delay-5"
-            style={{
-              background: 'var(--gradient-elevated)',
-              border: '1px solid var(--color-border-primary)',
-            }}
-          >
-            <p
-              className="text-lg font-medium mb-4"
-              style={{ color: 'var(--color-text-primary)' }}
-            >
-              Built for gym owners, not chaos:
-            </p>
-            <ul
-              className="space-y-3 text-base"
-              style={{ color: 'var(--color-text-secondary)' }}
-            >
-              <li className="flex gap-2">
-                <span className="shrink-0">—</span>
-                <span>No faces, no photos — detection only counts phones, nothing identifiable is shown or stored</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="shrink-0">—</span>
-                <span>Gym owner approves everything before it hits the TV — full moderation queue</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="shrink-0">—</span>
-                <span>Members are anonymous — no accounts required, no personal data collected</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="shrink-0">—</span>
-                <span>The gym owner controls all settings: what shows up, sensitivity, and can kill the feed instantly</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* @neonwatty Branding */}
-          <div className="text-center mt-12 pt-8 border-t stagger-animation stagger-delay-6" style={{ borderColor: 'var(--color-border-subtle)' }}>
-            <p
-              className="text-sm mb-2"
-              style={{ color: 'var(--color-text-tertiary)' }}
-            >
-              built by
-            </p>
-            <a
-              href="https://x.com/neonwatty"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xl font-bold transition-colors hover:underline"
-              style={{ color: 'var(--color-accent-primary)' }}
-            >
-              @neonwatty
+      <main className="min-h-screen px-4 py-16">
+        <section className="max-w-4xl mx-auto text-center mb-12">
+          <h1 className="heading-xl mb-6">Bring Phone Lunk to Your Gym</h1>
+          <p className="text-lg md:text-xl max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
+            Phone Lunk is a working browser demo and a pilot concept for gyms that want a memorable,
+            privacy-first way to discourage phone scrolling on equipment.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <a className="btn btn-primary" href="mailto:hello@phone-lunk.app?subject=Phone%20Lunk%20gym%20pilot">
+              Ask About a Pilot
             </a>
-            <p
-              className="text-sm mt-2"
-              style={{ color: 'var(--color-text-tertiary)' }}
-            >
-              (follow for more dumb things)
-            </p>
+            <Link className="btn btn-secondary" href="/demo">
+              Try the Demo
+            </Link>
           </div>
-        </div>
+        </section>
+
+        <section className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6 mb-12">
+          {[
+            ['Gym TV Scoreboard', 'A kiosk display could show anonymous detection counts, recent catches, and a QR code for members to join.'],
+            ['Owner Moderation', 'A real pilot should give staff control over what appears publicly, sensitivity settings, and instant shutdown controls.'],
+            ['Privacy-First Events', 'The pilot concept is based on lightweight detection events, not uploaded camera feeds or stored face images.'],
+          ].map(([title, description]) => (
+            <article key={title} className="card">
+              <h2 className="text-xl font-bold mb-3">{title}</h2>
+              <p style={{ color: 'var(--color-text-secondary)' }}>{description}</p>
+            </article>
+          ))}
+        </section>
+
+        <section className="max-w-3xl mx-auto card">
+          <h2 className="heading-md mb-4">What exists today?</h2>
+          <p className="mb-4" style={{ color: 'var(--color-text-secondary)' }}>
+            The browser demo detects phones locally and shows the core interaction. The kiosk, badge,
+            moderation, and live gym pilot workflow are product concepts that need a real gym partner
+            before they become production features.
+          </p>
+          <p style={{ color: 'var(--color-text-secondary)' }}>
+            If you operate a gym and want to explore the idea, email the builder and include your gym type,
+            location, and what phone-use problem you are trying to solve.
+          </p>
+        </section>
       </main>
       <Footer />
     </>

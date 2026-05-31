@@ -30,7 +30,7 @@ export default function Features() {
           lineHeight: '1.6',
           display: 'inline-block'
         }}>
-          The complete solution for equipment utilization and member satisfaction
+          A browser demo and privacy-first gym kiosk concept
         </p>
       </div>
 

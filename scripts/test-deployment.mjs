@@ -8,7 +8,7 @@
 import https from 'https';
 import http from 'http';
 
-const SITE_URL = 'https://phone-lunk.app';
+const SITE_URL = 'https://www.phone-lunk.app';
 const TIMEOUT = 10000; // 10 seconds
 
 // ANSI color codes
@@ -97,7 +97,7 @@ async function testMetaTags() {
     const html = result.data;
 
     const tests = [
-      { name: 'OG Image tag', pattern: /<meta[^>]*property="og:image"[^>]*content="\/images\/og-image\.jpg"/ },
+      { name: 'OG Image tag', pattern: /<meta[^>]*property="og:image"[^>]*content="https:\/\/www\.phone-lunk\.app\/images\/og-image\.jpg"/ },
       { name: 'OG Image Alt text', pattern: /<meta[^>]*property="og:image:alt"[^>]*content="[^"]*Phone Lunk/ },
       { name: 'Twitter Card', pattern: /<meta[^>]*name="twitter:card"[^>]*content="summary_large_image"/ },
       { name: 'Twitter Handle', pattern: /<meta[^>]*name="twitter:creator"[^>]*content="@neonwatty"/ },
@@ -145,7 +145,7 @@ async function testManifest() {
       const manifest = JSON.parse(result.data);
 
       const tests = [
-        { name: 'App Name', check: () => manifest.name === 'Phone Lunk - Fuck Your Phone' },
+        { name: 'App Name', check: () => manifest.name === 'Phone Lunk - AI Phone Detection Demo for Gyms' },
         { name: 'Short Name', check: () => manifest.short_name === 'Phone Lunk' },
         { name: 'Theme Color', check: () => manifest.theme_color === '#A4278D' },
         { name: 'Background Color', check: () => manifest.background_color === '#111827' },
@@ -187,9 +187,9 @@ async function testSEOFiles() {
       console.log(`${colors.green}✓${colors.reset}  sitemap.xml exists and is valid XML`);
 
       // Check for all pages
-      const hasHome = sitemapResult.data.includes('<loc>https://phone-lunk.app/</loc>');
-      const hasWaitlist = sitemapResult.data.includes('<loc>https://phone-lunk.app/waitlist/</loc>');
-      const hasAbout = sitemapResult.data.includes('<loc>https://phone-lunk.app/about/</loc>');
+      const hasHome = sitemapResult.data.includes(`<loc>${SITE_URL}/</loc>`);
+      const hasWaitlist = sitemapResult.data.includes(`<loc>${SITE_URL}/waitlist/</loc>`);
+      const hasAbout = sitemapResult.data.includes(`<loc>${SITE_URL}/about/</loc>`);
 
       if (hasHome && hasWaitlist && hasAbout) {
         console.log(`${colors.green}✓${colors.reset}  All pages in sitemap`);
@@ -207,7 +207,7 @@ async function testSEOFiles() {
     // Test robots.txt
     const robotsResult = await fetchUrl(`${SITE_URL}/robots.txt`);
     if (robotsResult.status === 200) {
-      const hasCorrectSitemap = robotsResult.data.includes('Sitemap: https://phone-lunk.app/sitemap.xml');
+      const hasCorrectSitemap = robotsResult.data.includes(`Sitemap: ${SITE_URL}/sitemap.xml`);
       if (hasCorrectSitemap) {
         console.log(`${colors.green}✓${colors.reset}  robots.txt has correct sitemap URL`);
         passed++;

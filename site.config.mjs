@@ -9,10 +9,18 @@ const siteConfig = {
   // Basic site information
   site: {
     name: 'Phone Lunk',
-    tagline: 'AI-Powered Phone Detection for Gyms',
-    description: 'Enterprise phone detection solution that identifies equipment hogs, reduces wait times, and improves member retention. The complete AI platform for gym equipment utilization.',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://phone-lunk.app',
-    keywords: ['gym management software', 'phone detection', 'ai', 'fitness technology', 'equipment monitoring', 'member retention', 'gym saas'],
+    tagline: 'AI Phone Detection Demo for Gyms',
+    description: 'A playful AI phone detector demo for gyms exploring how privacy-first kiosk alerts could reduce equipment hogging and improve gym etiquette.',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.phone-lunk.app',
+    keywords: [
+      'gym phone detection',
+      'AI phone detector demo',
+      'lunk alarm app',
+      'gym phone policy',
+      'gym equipment hogging',
+      'gym etiquette',
+      'fitness technology'
+    ],
   },
 
   // Author/company information
@@ -43,24 +51,23 @@ const siteConfig = {
 
   // Navigation menu items
   navigation: [
-    { name: 'How It Works', href: '#how-it-works' },
-    { name: 'Features', href: '#features' },
-    { name: 'See Demo', href: '#demo' },
-    { name: 'Pricing', href: '/waitlist?utm_source=pricing' },
-    { name: 'Request Demo', href: '/waitlist?utm_source=waitlist' },
+    { name: 'Demo', href: '/demo' },
+    { name: 'How It Works', href: '/#how-it-works' },
+    { name: 'Features', href: '/#features' },
+    { name: 'Gym Pilot', href: '/waitlist' },
   ],
 
   // Hero section configuration
   hero: {
     headline: 'Put Phone Lunks On Blast',
-    subheadline: 'Phone lunks kill the vibe of your gym, piss off members, and slow throughput.\nWe catch them automatically and put them on blast with AI-powered justice.',
+    subheadline: 'A playful AI phone detection demo for gyms tired of equipment hogging. Try the browser demo, then see how a privacy-first gym kiosk could make phone scrolling between sets impossible to ignore.',
     primaryCTA: {
-      text: 'See It In Action',
-      href: '#demo',
+      text: 'Try the Demo',
+      href: '/demo',
     },
     secondaryCTA: {
-      text: 'How It Works',
-      href: '#how-it-works',
+      text: 'Gym Pilot Concept',
+      href: '/waitlist',
     },
     // Optional: Add image path like '/images/hero-image.png'
     image: null,
@@ -69,25 +76,25 @@ const siteConfig = {
   // How It Works section
   howItWorks: {
     sectionTitle: 'How It Works',
-    sectionSubtitle: 'Enterprise-grade phone detection in three simple steps',
+    sectionSubtitle: 'A browser demo today, a privacy-first gym kiosk concept next',
     steps: [
       {
         number: 1,
-        emoji: '💻',
-        title: 'Zero Hardware Required',
-        description: 'Plug-n-play with your existing cameras.'
+        emoji: '📷',
+        title: 'Run the Demo',
+        description: 'Open the browser demo and allow camera access. The current prototype processes frames locally on your device.'
       },
       {
         number: 2,
         emoji: '🧠',
-        title: 'Real-Time Detection',
-        description: 'AI never blinks. Finds doom-scrolling hogs wherever they lurk.'
+        title: 'Detect Phone Use',
+        description: 'The AI model looks for phones in view and overlays a visible alert when it finds one. It is a demo, not a perfect enforcement system.'
       },
       {
         number: 3,
-        emoji: '🚨',
-        title: 'Automated Enforcement',
-        description: 'Sinners shamed publicly. Let the lunk alarm ring.'
+        emoji: '📺',
+        title: 'Imagine the Kiosk',
+        description: 'A real gym pilot would use anonymous detection events, owner moderation, and a TV scoreboard instead of storing personal camera feeds.'
       }
     ]
   },
@@ -95,50 +102,50 @@ const siteConfig = {
   // Features section
   features: [
     {
-      title: 'AI-Powered Detection',
-      description: 'Real-time object detection powered by [TensorFlow.js]. Identifies phone usage on equipment with industry-leading accuracy. No false positives.',
+      title: 'AI-Powered Detection Demo',
+      description: 'Runs object detection in the browser to show how phone-use alerts could work. The demo is playful, experimental, and transparent about its limits.',
       icon: 'camera',
     },
     {
-      title: 'Instant Staff Alerts',
-      description: 'Push notifications to your team the moment a phone lunk is detected. [Real-time dashboards] show hotspots and repeat offenders.',
+      title: 'Gym Owner Pilot Concept',
+      description: 'Imagine a moderated gym TV kiosk where anonymous detection events become a lightweight scoreboard instead of a confrontation.',
       icon: 'bell-alert',
     },
     {
-      title: 'Boost Equipment ROI',
-      description: 'Reduce [equipment hoarding] by up to 40%. Free up benches and machines from doom scrollers. Increase member throughput without buying more equipment.',
+      title: 'Equipment Flow Focus',
+      description: 'Phone scrolling between sets can slow down benches, racks, and machines. Phone Lunk turns that everyday frustration into a measurable behavior.',
       icon: 'shield-check',
     },
     {
-      title: 'Proven Technology',
-      description: 'Built on [COCO-SSD model] trained on millions of images. The same AI that powers self-driving cars, now protecting your squat racks.',
+      title: 'Browser-Only Demo',
+      description: 'The current demo processes camera frames locally in your browser. No live camera feed is uploaded by the demo.',
       icon: 'light-bulb',
     },
     {
-      title: 'Member Retention',
-      description: 'Members stay longer when they can actually [use the equipment]. Drive NPS scores up by eliminating the #1 gym complaint.',
+      title: 'Member Etiquette Angle',
+      description: 'Useful phone policies work best when they are clear, fair, and easy to explain. The demo gives gyms a memorable way to start that conversation.',
       icon: 'check-badge',
     },
     {
-      title: 'Planet Fitness Approved™',
-      description: 'Inspired by the legendary [lunk alarm]. Franchise-ready, corporate-tested. Scales from boutique studios to 24-hour chains.',
+      title: 'Built for Shareability',
+      description: 'The joke is the hook, but the product idea is serious: a privacy-first way to make equipment hogging visible without storing personal media.',
       icon: 'fire',
     },
   ],
 
   // Call-to-action section
   cta: {
-    headline: 'Ready to Make Your Gym Phone Lunk Free?',
-    description: 'See the technology in action. Test our AI detection with your own phone and experience real-time alerts.',
-    buttonText: 'See the Demo',
-    buttonHref: '#demo',
+    headline: 'Want to Test the Gym Pilot Concept?',
+    description: 'Try the browser demo, then see how a privacy-first kiosk pilot could make equipment hogging visible without storing personal camera feeds.',
+    buttonText: 'Explore the Gym Pilot',
+    buttonHref: '/waitlist',
   },
 
   // SEO defaults
   seo: {
     titleTemplate: '%s | Phone Lunk',
-    defaultTitle: 'Phone Lunk - AI-Powered Phone Detection for Gyms',
-    description: 'Enterprise AI solution that identifies equipment hogs, reduces wait times, and improves member retention. Smart phone detection for modern gym management.',
+    defaultTitle: 'Phone Lunk - AI Phone Detection Demo for Gyms',
+    description: 'Try a playful AI phone detector demo for gyms, then see how a privacy-first kiosk concept could help reduce equipment hogging.',
     openGraph: {
       type: 'website',
       locale: 'en_US',

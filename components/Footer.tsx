@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import siteConfig from '@/site.config.mjs'
 
 export default function Footer() {
@@ -37,10 +38,10 @@ export default function Footer() {
             aria-label="Footer"
             style={{ color: 'var(--color-text-tertiary)' }}
           >
-            <a href="/demo" className="hover:opacity-70 transition-opacity">Demo</a>
-            <a href="/privacy" className="hover:opacity-70 transition-opacity">Privacy</a>
-            <a href="/gym-phone-policy" className="hover:opacity-70 transition-opacity">Phone Policy</a>
-            <a href="/gym-tv-kiosk" className="hover:opacity-70 transition-opacity">Kiosk Concept</a>
+            <Link href="/demo" className="hover:opacity-70 transition-opacity">Demo</Link>
+            <Link href="/privacy" className="hover:opacity-70 transition-opacity">Privacy</Link>
+            <Link href="/gym-phone-policy" className="hover:opacity-70 transition-opacity">Phone Policy</Link>
+            <Link href="/gym-tv-kiosk" className="hover:opacity-70 transition-opacity">Kiosk Concept</Link>
           </nav>
 
           {/* Social links */}

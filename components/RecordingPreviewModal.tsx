@@ -4,6 +4,8 @@ import { useRef, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { getShareCaption, getTikTokShareUrl, copyToClipboard } from '@/lib/video-utils'
 
+const CANONICAL_SITE_URL = 'https://www.phone-lunk.app'
+
 interface RecordingPreviewModalProps {
   videoBlob: Blob
   onClose: () => void
@@ -31,17 +33,15 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
 
   const shareToTwitter = () => {
     const text = "I just got put on blast by Phone Lunk 🚨 AI-powered gym justice is real"
-    const url = 'https://phone-lunk.app'
     const twitterUrl = new URL('https://twitter.com/intent/tweet')
     twitterUrl.searchParams.set('text', text)
-    twitterUrl.searchParams.set('url', url)
+    twitterUrl.searchParams.set('url', CANONICAL_SITE_URL)
     window.open(twitterUrl.toString(), '_blank', 'noopener,noreferrer,width=550,height=420')
   }
 
   const shareToLinkedIn = () => {
-    const url = 'https://phone-lunk.app'
     const linkedInUrl = new URL('https://www.linkedin.com/sharing/share-offsite/')
-    linkedInUrl.searchParams.set('url', url)
+    linkedInUrl.searchParams.set('url', CANONICAL_SITE_URL)
     window.open(linkedInUrl.toString(), '_blank', 'noopener,noreferrer,width=550,height=730')
   }
 
@@ -68,7 +68,7 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText('https://phone-lunk.app')
+      await navigator.clipboard.writeText(CANONICAL_SITE_URL)
       toast.success('Link copied!', { icon: '📋' })
     } catch {
       toast.error('Failed to copy')
@@ -82,7 +82,7 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
         await navigator.share({
           title: 'Phone Lunk Detection',
           text: 'I just got put on blast 🚨',
-          url: 'https://phone-lunk.app',
+          url: CANONICAL_SITE_URL,
           files: [file],
         })
       } catch (err) {
@@ -92,7 +92,7 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
             await navigator.share({
               title: 'Phone Lunk Detection',
               text: 'I just got put on blast 🚨',
-              url: 'https://phone-lunk.app',
+              url: CANONICAL_SITE_URL,
             })
           } catch {
             toast.error('Share failed')

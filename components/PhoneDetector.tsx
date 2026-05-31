@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect, useCallback } from 'react'
+import Link from 'next/link'
 import Webcam from 'react-webcam'
 import AlarmEffect from './AlarmEffect'
 import RecordingPreviewModal from './RecordingPreviewModal'
@@ -586,8 +587,8 @@ export default function PhoneDetector({
 
         {showIntroLinks && (
           <div className="mt-4 flex flex-col sm:flex-row justify-center gap-3 text-sm">
-            <a className="underline" href="/privacy">How camera privacy works</a>
-            <a className="underline" href="/waitlist">Gym owner pilot concept</a>
+            <Link className="underline" href="/privacy">How camera privacy works</Link>
+            <Link className="underline" href="/waitlist">Gym owner pilot concept</Link>
           </div>
         )}
 

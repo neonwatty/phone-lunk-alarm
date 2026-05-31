@@ -1,7 +1,7 @@
 {
-  "name": "nextjs-landing-template",
+  "name": "phone-lunk",
   "version": "1.0.0",
-  "description": "A minimal, reusable static Next.js template for product landing pages with GitHub Pages deployment",
+  "description": "A playful AI phone detection demo and gym kiosk concept for reducing equipment hogging",
   "scripts": {
     "dev": "next dev",
     "dev:https": "NODE_ENV=development node server.mjs",
@@ -20,11 +20,12 @@
     "dev:clean": "rm -rf .next && npm run dev"
   },
   "keywords": [
-    "nextjs",
-    "template",
-    "landing-page",
-    "static-site",
-    "github-pages"
+    "gym",
+    "phone-detection",
+    "ai-demo",
+    "fitness-technology",
+    "gym-etiquette",
+    "nextjs"
   ],
   "author": "",
   "license": "MIT",

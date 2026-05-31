@@ -32,6 +32,17 @@ export default function Footer() {
             </p>
           </div>
 
+          <nav
+            className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-6 sm:mb-0"
+            aria-label="Footer"
+            style={{ color: 'var(--color-text-tertiary)' }}
+          >
+            <a href="/demo" className="hover:opacity-70 transition-opacity">Demo</a>
+            <a href="/privacy" className="hover:opacity-70 transition-opacity">Privacy</a>
+            <a href="/gym-phone-policy" className="hover:opacity-70 transition-opacity">Phone Policy</a>
+            <a href="/gym-tv-kiosk" className="hover:opacity-70 transition-opacity">Kiosk Concept</a>
+          </nav>
+
           {/* Social links */}
           <div className="flex space-x-6"
                style={{ color: 'var(--color-text-tertiary)' }}>

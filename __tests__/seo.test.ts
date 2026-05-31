@@ -217,6 +217,7 @@ describe('structured data helpers', () => {
       applicationCategory: 'BrowserApplication',
       operatingSystem: 'Web',
       url: 'https://www.phone-lunk.app/demo/',
+      description: pageMetadata['/demo'].description,
       offers: {
         '@type': 'Offer',
         price: '0',

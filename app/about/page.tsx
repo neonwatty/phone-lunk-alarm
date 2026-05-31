@@ -1,14 +1,11 @@
-import { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import StructuredData from '@/components/StructuredData'
+import { buildPageMetadata } from '@/lib/seo'
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
-export const metadata: Metadata = {
-  title: 'About Jeremy',
-  description: 'AI Engineer, HVAC certified technician, and Religious Studies BA passionate about building intelligent systems.',
-}
+export const metadata = buildPageMetadata('/about')
 
 export default function About() {
   return (

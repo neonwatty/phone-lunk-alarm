@@ -1,6 +1,9 @@
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { buildPageMetadata } from '@/lib/seo'
+
+export const metadata = buildPageMetadata('/waitlist')
 
 export default function RevealPage() {
   return (

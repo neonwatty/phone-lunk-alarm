@@ -145,8 +145,8 @@ const siteConfig = {
   // SEO defaults
   seo: {
     titleTemplate: '%s | Phone Lunk',
-    defaultTitle: 'Phone Lunk - AI-Powered Phone Detection for Gyms',
-    description: 'Enterprise AI solution that identifies equipment hogs, reduces wait times, and improves member retention. Smart phone detection for modern gym management.',
+    defaultTitle: 'Phone Lunk - AI Phone Detection Demo for Gyms',
+    description: 'Try a playful AI phone detector demo for gyms, then see how a privacy-first kiosk concept could help reduce equipment hogging.',
     openGraph: {
       type: 'website',
       locale: 'en_US',

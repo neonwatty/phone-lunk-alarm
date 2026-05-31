@@ -6,6 +6,9 @@ import {
 } from '@/lib/seo'
 import siteConfig from '@/site.config.mjs'
 import type { PagePath } from '@/lib/seo'
+import { metadata as aboutMetadata } from '@/app/about/page'
+import { metadata as demoMetadata } from '@/app/demo/page'
+import { metadata as waitlistMetadata } from '@/app/waitlist/page'
 
 const sitemapConfig = require('../next-sitemap.config.js')
 
@@ -53,6 +56,12 @@ describe('seo helpers', () => {
     expect(metadata.twitter?.images).toEqual(['/images/og-image.jpg'])
   })
 
+  it('exports route-level metadata for current public pages to prevent root metadata inheritance', () => {
+    expect(demoMetadata).toMatchObject(buildPageMetadata('/demo'))
+    expect(waitlistMetadata).toMatchObject(buildPageMetadata('/waitlist'))
+    expect(aboutMetadata).toMatchObject(buildPageMetadata('/about'))
+  })
+
   it('uses canonical site config values and navigation', () => {
     expect(siteConfig.site).toMatchObject({
       name: 'Phone Lunk',
@@ -68,6 +77,10 @@ describe('seo helpers', () => {
         'gym etiquette',
         'fitness technology',
       ],
+    })
+    expect(siteConfig.seo).toMatchObject({
+      defaultTitle: pageMetadata['/'].title,
+      description: pageMetadata['/'].description,
     })
     expect(siteConfig.navigation).toEqual([
       { name: 'Demo', href: '/demo' },

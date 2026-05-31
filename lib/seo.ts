@@ -9,7 +9,7 @@ export type PageMetadata = {
   image?: string
 }
 
-export const pageMetadata: Record<string, PageMetadata> = {
+export const pageMetadata = {
   '/': {
     title: 'Phone Lunk - AI Phone Detection Demo for Gyms',
     description: 'Try a playful AI phone detector demo for gyms, then see how a privacy-first kiosk concept could help reduce equipment hogging.',
@@ -55,7 +55,9 @@ export const pageMetadata: Record<string, PageMetadata> = {
     description: 'See the Phone Lunk Protected kiosk concept: QR joining, anonymous detection events, moderation, and a gym TV scoreboard.',
     path: '/gym-tv-kiosk',
   },
-}
+} satisfies Record<string, PageMetadata>
+
+export type PagePath = keyof typeof pageMetadata
 
 export function buildCanonicalUrl(path: string) {
   const normalized = path.startsWith('/') ? path : `/${path}`
@@ -63,8 +65,8 @@ export function buildCanonicalUrl(path: string) {
   return `${CANONICAL_SITE_URL}${withSlash}`
 }
 
-export function buildPageMetadata(path: keyof typeof pageMetadata): Metadata {
-  const meta = pageMetadata[path]
+export function buildPageMetadata(path: PagePath): Metadata {
+  const meta: PageMetadata = pageMetadata[path]
   const image = meta.image ?? '/images/og-image.jpg'
   const canonical = buildCanonicalUrl(meta.path)
 

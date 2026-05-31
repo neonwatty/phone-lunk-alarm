@@ -153,6 +153,13 @@ describe('seo helpers', () => {
     }
   })
 
+  it('keeps robots.txt pointed at the www sitemap host', () => {
+    const robotsTxt = readFileSync(join(process.cwd(), 'public/robots.txt'), 'utf8')
+
+    expect(robotsTxt).toContain('Sitemap: https://www.phone-lunk.app/sitemap.xml')
+    expect(robotsTxt).not.toContain('Sitemap: https://phone-lunk.app/sitemap.xml')
+  })
+
   it('keeps the canonical sitemap domain when deployment env uses the apex host', () => {
     const originalSiteUrl = process.env.NEXT_PUBLIC_SITE_URL
     process.env.NEXT_PUBLIC_SITE_URL = 'https://phone-lunk.app'

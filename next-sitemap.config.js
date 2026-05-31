@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://phone-lunk.app',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.phone-lunk.app',
   generateRobotsTxt: true,
   generateIndexSitemap: false, // Only needed for 50k+ URLs
   outDir: './out', // Must match your static export output directory
@@ -40,9 +40,33 @@ module.exports = {
       changefreq = 'daily'
     }
 
+    if (path === '/demo/' || path === '/demo') {
+      priority = 0.9
+      changefreq = 'weekly'
+    }
+
     if (path === '/about/' || path === '/about') {
       priority = 0.8
       changefreq = 'weekly'
+    }
+
+    if (path === '/privacy/' || path === '/privacy') {
+      priority = 0.6
+      changefreq = 'monthly'
+    }
+
+    if (
+      path === '/gym-phone-policy/' ||
+      path === '/gym-phone-policy' ||
+      path === '/gym-equipment-hogging/' ||
+      path === '/gym-equipment-hogging' ||
+      path === '/lunk-alarm-app/' ||
+      path === '/lunk-alarm-app' ||
+      path === '/gym-tv-kiosk/' ||
+      path === '/gym-tv-kiosk'
+    ) {
+      priority = 0.75
+      changefreq = 'monthly'
     }
 
     // Return the transformed URL object

@@ -9,10 +9,18 @@ const siteConfig = {
   // Basic site information
   site: {
     name: 'Phone Lunk',
-    tagline: 'AI-Powered Phone Detection for Gyms',
-    description: 'Enterprise phone detection solution that identifies equipment hogs, reduces wait times, and improves member retention. The complete AI platform for gym equipment utilization.',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://phone-lunk.app',
-    keywords: ['gym management software', 'phone detection', 'ai', 'fitness technology', 'equipment monitoring', 'member retention', 'gym saas'],
+    tagline: 'AI Phone Detection Demo for Gyms',
+    description: 'A playful AI phone detector demo for gyms exploring how privacy-first kiosk alerts could reduce equipment hogging and improve gym etiquette.',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.phone-lunk.app',
+    keywords: [
+      'gym phone detection',
+      'AI phone detector demo',
+      'lunk alarm app',
+      'gym phone policy',
+      'gym equipment hogging',
+      'gym etiquette',
+      'fitness technology'
+    ],
   },
 
   // Author/company information
@@ -43,11 +51,11 @@ const siteConfig = {
 
   // Navigation menu items
   navigation: [
-    { name: 'How It Works', href: '#how-it-works' },
-    { name: 'Features', href: '#features' },
-    { name: 'See Demo', href: '#demo' },
-    { name: 'Pricing', href: '/waitlist?utm_source=pricing' },
-    { name: 'Request Demo', href: '/waitlist?utm_source=waitlist' },
+    { name: 'Demo', href: '/demo' },
+    { name: 'How It Works', href: '/#how-it-works' },
+    { name: 'Phone Policy', href: '/gym-phone-policy' },
+    { name: 'Kiosk Concept', href: '/gym-tv-kiosk' },
+    { name: 'Gym Pilot', href: '/waitlist' },
   ],
 
   // Hero section configuration
@@ -95,33 +103,33 @@ const siteConfig = {
   // Features section
   features: [
     {
-      title: 'AI-Powered Detection',
-      description: 'Real-time object detection powered by [TensorFlow.js]. Identifies phone usage on equipment with industry-leading accuracy. No false positives.',
+      title: 'AI-Powered Detection Demo',
+      description: 'Runs object detection in the browser to show how phone-use alerts could work. The demo is playful, experimental, and transparent about its limits.',
       icon: 'camera',
     },
     {
-      title: 'Instant Staff Alerts',
-      description: 'Push notifications to your team the moment a phone lunk is detected. [Real-time dashboards] show hotspots and repeat offenders.',
+      title: 'Gym Owner Pilot Concept',
+      description: 'Imagine a moderated gym TV kiosk where anonymous detection events become a lightweight scoreboard instead of a confrontation.',
       icon: 'bell-alert',
     },
     {
-      title: 'Boost Equipment ROI',
-      description: 'Reduce [equipment hoarding] by up to 40%. Free up benches and machines from doom scrollers. Increase member throughput without buying more equipment.',
+      title: 'Equipment Flow Focus',
+      description: 'Phone scrolling between sets can slow down benches, racks, and machines. Phone Lunk turns that everyday frustration into a measurable behavior.',
       icon: 'shield-check',
     },
     {
-      title: 'Proven Technology',
-      description: 'Built on [COCO-SSD model] trained on millions of images. The same AI that powers self-driving cars, now protecting your squat racks.',
+      title: 'Browser-Only Demo',
+      description: 'The current demo processes camera frames locally in your browser. No live camera feed is uploaded by the demo.',
       icon: 'light-bulb',
     },
     {
-      title: 'Member Retention',
-      description: 'Members stay longer when they can actually [use the equipment]. Drive NPS scores up by eliminating the #1 gym complaint.',
+      title: 'Member Etiquette Angle',
+      description: 'Useful phone policies work best when they are clear, fair, and easy to explain. The demo gives gyms a memorable way to start that conversation.',
       icon: 'check-badge',
     },
     {
-      title: 'Planet Fitness Approved™',
-      description: 'Inspired by the legendary [lunk alarm]. Franchise-ready, corporate-tested. Scales from boutique studios to 24-hour chains.',
+      title: 'Built for Shareability',
+      description: 'The joke is the hook, but the product idea is serious: a privacy-first way to make equipment hogging visible without storing personal media.',
       icon: 'fire',
     },
   ],

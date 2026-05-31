@@ -4,7 +4,10 @@ import {
   buildPageMetadata,
   pageMetadata,
 } from '@/lib/seo'
+import siteConfig from '@/site.config.mjs'
 import type { PagePath } from '@/lib/seo'
+
+const sitemapConfig = require('../next-sitemap.config.js')
 
 describe('seo helpers', () => {
   it('uses the www canonical domain', () => {
@@ -48,5 +51,85 @@ describe('seo helpers', () => {
       },
     ])
     expect(metadata.twitter?.images).toEqual(['/images/og-image.jpg'])
+  })
+
+  it('uses canonical site config values and navigation', () => {
+    expect(siteConfig.site).toMatchObject({
+      name: 'Phone Lunk',
+      tagline: 'AI Phone Detection Demo for Gyms',
+      description: 'A playful AI phone detector demo for gyms exploring how privacy-first kiosk alerts could reduce equipment hogging and improve gym etiquette.',
+      url: 'https://www.phone-lunk.app',
+      keywords: [
+        'gym phone detection',
+        'AI phone detector demo',
+        'lunk alarm app',
+        'gym phone policy',
+        'gym equipment hogging',
+        'gym etiquette',
+        'fitness technology',
+      ],
+    })
+    expect(siteConfig.navigation).toEqual([
+      { name: 'Demo', href: '/demo' },
+      { name: 'How It Works', href: '/#how-it-works' },
+      { name: 'Phone Policy', href: '/gym-phone-policy' },
+      { name: 'Kiosk Concept', href: '/gym-tv-kiosk' },
+      { name: 'Gym Pilot', href: '/waitlist' },
+    ])
+  })
+
+  it('uses privacy-first feature descriptions', () => {
+    expect(siteConfig.features).toEqual([
+      {
+        title: 'AI-Powered Detection Demo',
+        description: 'Runs object detection in the browser to show how phone-use alerts could work. The demo is playful, experimental, and transparent about its limits.',
+        icon: 'camera',
+      },
+      {
+        title: 'Gym Owner Pilot Concept',
+        description: 'Imagine a moderated gym TV kiosk where anonymous detection events become a lightweight scoreboard instead of a confrontation.',
+        icon: 'bell-alert',
+      },
+      {
+        title: 'Equipment Flow Focus',
+        description: 'Phone scrolling between sets can slow down benches, racks, and machines. Phone Lunk turns that everyday frustration into a measurable behavior.',
+        icon: 'shield-check',
+      },
+      {
+        title: 'Browser-Only Demo',
+        description: 'The current demo processes camera frames locally in your browser. No live camera feed is uploaded by the demo.',
+        icon: 'light-bulb',
+      },
+      {
+        title: 'Member Etiquette Angle',
+        description: 'Useful phone policies work best when they are clear, fair, and easy to explain. The demo gives gyms a memorable way to start that conversation.',
+        icon: 'check-badge',
+      },
+      {
+        title: 'Built for Shareability',
+        description: 'The joke is the hook, but the product idea is serious: a privacy-first way to make equipment hogging visible without storing personal media.',
+        icon: 'fire',
+      },
+    ])
+  })
+
+  it('uses canonical sitemap domain and route priorities', async () => {
+    expect(sitemapConfig.siteUrl).toBe('https://www.phone-lunk.app')
+
+    await expect(sitemapConfig.transform(sitemapConfig, '/demo')).resolves.toMatchObject({
+      changefreq: 'weekly',
+      priority: 0.9,
+    })
+    await expect(sitemapConfig.transform(sitemapConfig, '/privacy')).resolves.toMatchObject({
+      changefreq: 'monthly',
+      priority: 0.6,
+    })
+
+    for (const route of ['/gym-phone-policy', '/gym-equipment-hogging', '/lunk-alarm-app', '/gym-tv-kiosk']) {
+      await expect(sitemapConfig.transform(sitemapConfig, route)).resolves.toMatchObject({
+        changefreq: 'monthly',
+        priority: 0.75,
+      })
+    }
   })
 })

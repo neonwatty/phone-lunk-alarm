@@ -52,10 +52,10 @@ export default function Hero() {
           )}
 
           <Link
-            href="/waitlist"
+            href="/demo"
             className="btn btn-secondary w-full sm:w-auto"
           >
-            Explore the Gym Pilot
+            See Detection Demo
           </Link>
         </div>
 

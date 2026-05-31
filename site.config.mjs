@@ -55,7 +55,6 @@ const siteConfig = {
     { name: 'How It Works', href: '/#how-it-works' },
     { name: 'Features', href: '/#features' },
     { name: 'Gym Pilot', href: '/waitlist' },
-    { name: 'About', href: '/about' },
   ],
 
   // Hero section configuration

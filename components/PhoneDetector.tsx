@@ -23,7 +23,17 @@ let tf: any = null
 
 const MAX_RECORDING_DURATION = 30 // seconds
 
-export default function PhoneDetector() {
+type PhoneDetectorProps = {
+  heading?: string
+  intro?: string
+  showIntroLinks?: boolean
+}
+
+export default function PhoneDetector({
+  heading = 'Be The Alarm',
+  intro = "Gym doesn't have Phone-Lunk yet? Take matters into your own hands",
+  showIntroLinks = false,
+}: PhoneDetectorProps) {
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const recordingCanvasRef = useRef<HTMLCanvasElement>(null)
@@ -546,13 +556,13 @@ export default function PhoneDetector() {
     <section id="demo" className="max-w-5xl mx-auto px-4 py-20">
       <div className="text-center mb-12">
         <h2 className="heading-lg mb-4" style={{ color: 'var(--color-text-primary)' }}>
-          Be The Alarm
+          {heading}
         </h2>
 
         {/* Instructions */}
         <div className="max-w-2xl mx-auto mb-6">
           <p className="text-base md:text-lg mb-4" style={{ color: 'var(--color-text-secondary)' }}>
-            Gym doesn't have Phone-Lunk yet? Take matters into your own hands
+            {intro}
           </p>
           <ol className="text-left space-y-3 text-base md:text-lg" style={{ color: 'var(--color-text-secondary)' }}>
             <li className="flex items-start gap-3">
@@ -573,6 +583,13 @@ export default function PhoneDetector() {
         <div className="inline-block bg-yellow-500 bg-opacity-20 border border-yellow-500 rounded-lg px-4 py-2 text-sm text-yellow-600 dark:text-yellow-400 mb-4">
           ⚠️ Your camera feed stays private - all processing happens in your browser
         </div>
+
+        {showIntroLinks && (
+          <div className="mt-4 flex flex-col sm:flex-row justify-center gap-3 text-sm">
+            <a className="underline" href="/privacy">How camera privacy works</a>
+            <a className="underline" href="/waitlist">Gym owner pilot concept</a>
+          </div>
+        )}
 
         {/* Camera Toggle Button */}
         {!isLoading && !error && isCompatible && (

@@ -57,6 +57,12 @@ describe('PhoneDetector', () => {
       expect(screen.getByText(/Be The Alarm/i)).toBeInTheDocument()
     })
 
+    it('renders a custom heading when provided', async () => {
+      render(<PhoneDetector heading="Try the Phone Lunk Demo" />)
+
+      expect(screen.getByText('Try the Phone Lunk Demo')).toBeInTheDocument()
+    })
+
     it('shows loading state while model loads', () => {
       render(<PhoneDetector />)
       expect(screen.getByText(/Loading AI model/i)).toBeInTheDocument()

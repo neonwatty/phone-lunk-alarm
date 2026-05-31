@@ -30,17 +30,17 @@ export default function SeoContentPage({ title, intro, sections, cta }: SeoConte
         </header>
 
         <div className="space-y-8">
-          {sections.map((section) => (
-            <section key={section.heading} className="card">
+          {sections.map((section, sectionIndex) => (
+            <section key={`${section.heading}-${sectionIndex}`} className="card">
               <h2 className="heading-md mb-4">{section.heading}</h2>
               <div className="space-y-4" style={{ color: 'var(--color-text-secondary)' }}>
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+                {section.paragraphs.map((paragraph, paragraphIndex) => (
+                  <p key={`${section.heading}-paragraph-${paragraphIndex}`}>{paragraph}</p>
                 ))}
                 {section.bullets && (
                   <ul className="list-disc pl-6 space-y-2">
-                    {section.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
+                    {section.bullets.map((bullet, bulletIndex) => (
+                      <li key={`${section.heading}-bullet-${bulletIndex}`}>{bullet}</li>
                     ))}
                   </ul>
                 )}

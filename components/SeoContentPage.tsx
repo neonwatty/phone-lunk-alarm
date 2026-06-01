@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { trackFunnelEvent } from '@/lib/funnel-events'
 
 type ContentSection = {
   heading: string
@@ -10,6 +13,12 @@ type SeoContentPageProps = {
   title: string
   intro: string
   sections: ContentSection[]
+  trackingLocation?: string
+  relatedLinks?: Array<{
+    href: string
+    label: string
+    description: string
+  }>
   cta: {
     title: string
     body: string
@@ -18,7 +27,14 @@ type SeoContentPageProps = {
   }
 }
 
-export default function SeoContentPage({ title, intro, sections, cta }: SeoContentPageProps) {
+export default function SeoContentPage({
+  title,
+  intro,
+  sections,
+  trackingLocation = 'seo_content_page',
+  relatedLinks = [],
+  cta,
+}: SeoContentPageProps) {
   return (
     <main className="min-h-screen px-4 py-16">
       <article className="max-w-4xl mx-auto">
@@ -49,12 +65,36 @@ export default function SeoContentPage({ title, intro, sections, cta }: SeoConte
           ))}
         </div>
 
+        {relatedLinks.length > 0 && (
+          <section className="mt-10">
+            <h2 className="heading-md mb-4">Related guides</h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              {relatedLinks.map((link) => (
+                <Link key={link.href} href={link.href} className="card block hover:opacity-80 transition-opacity">
+                  <h3 className="text-lg font-bold mb-2">{link.label}</h3>
+                  <p style={{ color: 'var(--color-text-secondary)' }}>{link.description}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
         <aside className="mt-10 card text-center">
           <h2 className="heading-md mb-3">{cta.title}</h2>
           <p className="mb-6" style={{ color: 'var(--color-text-secondary)' }}>
             {cta.body}
           </p>
-          <Link className="btn btn-primary" href={cta.href}>
+          <Link
+            className="btn btn-primary"
+            href={cta.href}
+            onClick={() =>
+              trackFunnelEvent('guide_cta_click', {
+                location: trackingLocation,
+                href: cta.href,
+                label: cta.label,
+              })
+            }
+          >
             {cta.label}
           </Link>
         </aside>

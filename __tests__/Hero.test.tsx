@@ -1,8 +1,18 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Hero from '@/components/Hero'
 import siteConfig from '@/site.config.mjs'
+import { trackFunnelEvent } from '@/lib/funnel-events'
+
+jest.mock('@/lib/funnel-events', () => ({
+  trackFunnelEvent: jest.fn(),
+}))
 
 describe('Hero', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('renders headline', () => {
     render(<Hero />)
 
@@ -31,6 +41,19 @@ describe('Hero', () => {
       expect(secondaryCTA).toBeInTheDocument()
       expect(secondaryCTA).toHaveAttribute('href', '/waitlist')
     }
+  })
+
+  it('tracks hero CTA clicks', async () => {
+    const user = userEvent.setup()
+    render(<Hero />)
+
+    await user.click(screen.getByRole('link', { name: 'Try the Demo' }))
+
+    expect(trackFunnelEvent).toHaveBeenCalledWith('cta_click', {
+      location: 'hero_primary',
+      href: '/demo',
+      label: 'Try the Demo',
+    })
   })
 
   it('renders refreshed phone lunk definition', () => {

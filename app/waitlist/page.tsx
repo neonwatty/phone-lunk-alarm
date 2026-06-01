@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import PilotInterestForm from '@/components/PilotInterestForm'
 import { buildPageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = buildPageMetadata('/waitlist')
@@ -17,14 +17,6 @@ export default function WaitlistPage() {
             Phone Lunk is a working browser demo and a pilot concept for gyms that want a memorable,
             privacy-first way to discourage phone scrolling on equipment.
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <a className="btn btn-primary" href="mailto:hello@phone-lunk.app?subject=Phone%20Lunk%20gym%20pilot">
-              Ask About a Pilot
-            </a>
-            <Link className="btn btn-secondary" href="/demo">
-              Try the Demo
-            </Link>
-          </div>
         </section>
 
         <section className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6 mb-12">
@@ -40,7 +32,9 @@ export default function WaitlistPage() {
           ))}
         </section>
 
-        <section className="max-w-3xl mx-auto card">
+        <PilotInterestForm />
+
+        <section className="max-w-3xl mx-auto card mt-12">
           <h2 className="heading-md mb-4">What exists today?</h2>
           <p className="mb-4" style={{ color: 'var(--color-text-secondary)' }}>
             The browser demo detects phones locally and shows the core interaction. The kiosk, badge,

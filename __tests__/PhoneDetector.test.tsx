@@ -1,6 +1,11 @@
 import { render, screen, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import PhoneDetector from '@/components/PhoneDetector'
+import { trackFunnelEvent } from '@/lib/funnel-events'
+
+jest.mock('@/lib/funnel-events', () => ({
+  trackFunnelEvent: jest.fn(),
+}))
 
 // Mock react-webcam
 jest.mock('react-webcam', () => ({
@@ -159,6 +164,10 @@ describe('PhoneDetector', () => {
 
       // Webcam should render
       expect(screen.getByTestId('webcam-mock')).toBeInTheDocument()
+      expect(trackFunnelEvent).toHaveBeenCalledWith('demo_camera_start', {
+        location: 'homepage_demo',
+        facing_mode: 'environment',
+      })
     })
 
     it('deactivates camera when stop button is clicked', async () => {

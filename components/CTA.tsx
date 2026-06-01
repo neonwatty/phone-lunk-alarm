@@ -1,7 +1,14 @@
+'use client'
+
 import Link from 'next/link'
 import siteConfig from '@/site.config.mjs'
+import { trackFunnelEvent } from '@/lib/funnel-events'
 
-export default function CTA() {
+type CTAProps = {
+  location?: string
+}
+
+export default function CTA({ location = 'site_cta' }: CTAProps) {
   const { cta } = siteConfig
 
   return (
@@ -27,6 +34,13 @@ export default function CTA() {
         <Link
           href={cta.buttonHref}
           className="inline-flex items-center justify-center px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105"
+          onClick={() =>
+            trackFunnelEvent('cta_click', {
+              location,
+              href: cta.buttonHref,
+              label: cta.buttonText,
+            })
+          }
           style={{
             background: 'var(--color-background-primary)',
             color: 'var(--color-accent-primary)',

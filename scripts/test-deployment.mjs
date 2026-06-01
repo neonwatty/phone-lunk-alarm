@@ -8,8 +8,28 @@
 import https from 'https';
 import http from 'http';
 
-const SITE_URL = 'https://www.phone-lunk.app';
+const SITE_URL = (
+  process.env.DEPLOYMENT_TEST_URL ||
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  'https://www.phone-lunk.app'
+).replace(/\/$/, '');
+const CANONICAL_SITE_URL = (
+  process.env.DEPLOYMENT_TEST_CANONICAL_URL ||
+  'https://www.phone-lunk.app'
+).replace(/\/$/, '');
 const TIMEOUT = 10000; // 10 seconds
+const EXPECTED_SITEMAP_PATHS = [
+  '/',
+  '/demo/',
+  '/waitlist/',
+  '/about/',
+  '/privacy/',
+  '/gym-phone-policy/',
+  '/phone-use-at-gym/',
+  '/gym-equipment-hogging/',
+  '/lunk-alarm-app/',
+  '/gym-tv-kiosk/',
+];
 
 // ANSI color codes
 const colors = {
@@ -149,10 +169,12 @@ async function testManifest() {
         { name: 'Short Name', check: () => manifest.short_name === 'Phone Lunk' },
         { name: 'Theme Color', check: () => manifest.theme_color === '#A4278D' },
         { name: 'Background Color', check: () => manifest.background_color === '#111827' },
+        { name: 'Relative Start URL', check: () => manifest.start_url === '.' },
         { name: 'Has Icons', check: () => manifest.icons && manifest.icons.length >= 6 },
         { name: 'Has 192x192 icon', check: () => manifest.icons.some(i => i.sizes === '192x192') },
         { name: 'Has 512x512 icon', check: () => manifest.icons.some(i => i.sizes === '512x512') },
         { name: 'Has maskable icons', check: () => manifest.icons.some(i => i.purpose === 'maskable') },
+        { name: 'Icons are basePath-safe', check: () => manifest.icons.every(i => !i.src.startsWith('/')) },
       ];
 
       for (const test of tests) {
@@ -186,16 +208,16 @@ async function testSEOFiles() {
     if (sitemapResult.status === 200 && sitemapResult.data.includes('<?xml')) {
       console.log(`${colors.green}✓${colors.reset}  sitemap.xml exists and is valid XML`);
 
-      // Check for all pages
-      const hasHome = sitemapResult.data.includes(`<loc>${SITE_URL}/</loc>`);
-      const hasWaitlist = sitemapResult.data.includes(`<loc>${SITE_URL}/waitlist/</loc>`);
-      const hasAbout = sitemapResult.data.includes(`<loc>${SITE_URL}/about/</loc>`);
+      const missingPages = EXPECTED_SITEMAP_PATHS.filter((path) => {
+        const expectedUrl = path === '/' ? `${CANONICAL_SITE_URL}/` : `${CANONICAL_SITE_URL}${path}`;
+        return !sitemapResult.data.includes(`<loc>${expectedUrl}</loc>`);
+      });
 
-      if (hasHome && hasWaitlist && hasAbout) {
+      if (missingPages.length === 0) {
         console.log(`${colors.green}✓${colors.reset}  All pages in sitemap`);
         passed += 2;
       } else {
-        console.log(`${colors.red}✗${colors.reset}  Missing pages in sitemap`);
+        console.log(`${colors.red}✗${colors.reset}  Missing pages in sitemap: ${missingPages.join(', ')}`);
         passed++;
         failed++;
       }
@@ -207,7 +229,7 @@ async function testSEOFiles() {
     // Test robots.txt
     const robotsResult = await fetchUrl(`${SITE_URL}/robots.txt`);
     if (robotsResult.status === 200) {
-      const hasCorrectSitemap = robotsResult.data.includes(`Sitemap: ${SITE_URL}/sitemap.xml`);
+      const hasCorrectSitemap = robotsResult.data.includes(`Sitemap: ${CANONICAL_SITE_URL}/sitemap.xml`);
       if (hasCorrectSitemap) {
         console.log(`${colors.green}✓${colors.reset}  robots.txt has correct sitemap URL`);
         passed++;

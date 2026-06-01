@@ -1,0 +1,552 @@
+# GoalBuddy v2 state.yaml
+version: 2
+
+goal:
+  title: "Phone Lunk SEO Conversion Round 2"
+  slug: "seo-conversion-round-2"
+  kind: existing_plan
+  tranche: "Complete successive safe verified slices that turn the merged SEO foundation into a measurable, conversion-oriented, content-deeper site."
+  status: done
+  oracle:
+    signal: "A final receipt-backed audit shows the site has measurable funnel events, a real pilot-lead capture path, stronger CTAs/internal links, deeper gym-phone SEO content, and passing local verification from the agreed command set."
+    cadence: "after each Worker package and at final audit"
+    final_proof: "Done receipts for implementation slices plus passing lint, type-check, tests/build as applicable, sitemap/metadata checks for affected pages, and a final Judge/PM audit with full_outcome_complete: true."
+  intake:
+    original_request: "Plan out another SEO/spiff-up round and prepare it with GoalBuddy."
+    interpreted_outcome: "Prepare a GoalBuddy board for the second Phone Lunk organic growth pass focused on measurement, conversion, content depth, and deploy/SEO hygiene."
+    input_shape: existing_plan
+    audience: "Gym owners/operators, gym members searching phone etiquette topics, and the project owner."
+    authority: approved
+    proof_type: review
+    completion_proof: "A reviewed PR or equivalent local branch implements the prioritized round-2 tranche, passes verification, and maps back to the audit findings."
+    likely_misfire: "Spending the round only adding more SEO pages or copy while leaving leads unmeasured, CTAs weak, CI/deploy checks stale, or local main divergence unmanaged."
+    blind_spots_considered:
+      - "Local main is currently divergent from origin/main; implementation should start from origin/main or an isolated worktree/branch."
+      - "Static export and GitHub Pages basePath behavior can regress if hardcoded root assets remain."
+      - "Lead capture may require provider credentials; local fallback must still be measurable or clearly blocked."
+      - "Content expansion should stay useful and specific, not become thin SEO filler."
+      - "Analytics should respect current privacy posture and avoid brittle direct vendor coupling."
+    existing_plan_facts:
+      - "Round 1 merged as PR #20 at origin/main c02243b."
+      - "Recommended Round 2 theme: Measurement, Leads, and Content Depth."
+      - "Prioritized work: funnel event tracking, real pilot form, post-demo/post-guide CTAs, expand gym phone policy and equipment hogging content, add a phone-use-at-gym hub, fix deployment checks/theme-color and broaden CI coverage."
+      - "Technical audit found basePath/manifest/image hardcoding, deploy workflow apex/www mismatch, incomplete SEO deployment tests, missing theme-color, and limited schema coverage."
+      - "Conversion audit found mailto-only waitlist, no custom funnel events, unused reusable CTA, harsh demo copy, and hidden recording/share growth loop."
+      - "Engineering audit found passing local verification before merge, noisy tests, incomplete CI e2e scope, dependency audit risk, and repeated site URL configuration."
+
+rules:
+  pm_owns_state: true
+  one_active_task: true
+  max_write_workers: 1
+  no_implementation_without_worker_or_pm_task: true
+  no_completion_without_judge_or_pm_audit: true
+  planning_is_not_completion: true
+  queued_required_worker_blocks_completion: true
+  continuous_until_full_outcome: true
+  missing_input_or_credentials_do_not_stop_goal: true
+  preserve_and_validate_existing_plan: true
+  intake_misfire_must_be_audited: true
+  goal_pressure_requires_oracle: true
+  no_completion_on_weak_proof: true
+  slice_policy:
+    max_consecutive_tiny_tasks: 2
+    prefer_vertical_slices: true
+    judge_picks_largest_safe_slice: true
+    worker_completes_whole_slice: true
+
+agents:
+  scout: installed
+  worker: installed
+  judge: installed
+
+visual_board:
+  selected: local
+  local:
+    status: live
+    url: "http://goalbuddy.localhost:41737/seo-conversion-round-2/"
+    command: "npx goalbuddy board /Users/neonwatty/Desktop/phone-lunk-alarm/docs/goals/seo-conversion-round-2"
+
+active_task: null
+
+tasks:
+  - id: T001
+    type: scout
+    assignee: Scout
+    status: done
+    reasoning_hint: default
+    objective: "Map the current origin/main implementation state against the round-2 audit findings and identify the safest first implementation package."
+    inputs:
+      - "origin/main at or after c02243b"
+      - "Prior subagent audit findings summarized in goal intake."
+      - "README.md, package.json, app routes, lib/seo.ts, analytics components, tests, deploy scripts/workflows."
+    constraints:
+      - "Read-only."
+      - "Do not edit implementation files."
+      - "Account for local main divergence before recommending a write path."
+      - "Prefer concrete file-path evidence and verification commands over generic advice."
+    expected_output:
+      - "Current-state map for measurement, lead capture, content depth, and deploy/SEO hygiene."
+      - "Ranked candidate implementation packages."
+      - "Recommended first package with risk notes."
+      - "Any required owner input or external credentials."
+    receipt:
+      result: done
+      summary: "origin/main is PR #20 c02243b and local main diverges, so implementation should branch/worktree from origin/main. Current state has generic analytics only, mailto pilot capture, shallow SEO guide pages, reusable CTA not wired on pages inspected, and deploy/SEO hygiene gaps around theme-color, hardcoded URLs, apex/www mismatch, and limited deployment/CI coverage. Safest first package is measurement plus CTA instrumentation because it is local, credential-free, and unlocks later lead/form/content validation."
+      evidence:
+        - "git status shows local main...origin/main [ahead 2, behind 1]; origin/main resolves to c02243b SEO growth pass for Phone Lunk (#20)."
+        - "app/layout.tsx imports Vercel Analytics/Speed Insights and injects GTM/GA, but no custom funnel event helper exists under app/components/lib."
+        - "app/waitlist/page.tsx uses a mailto pilot CTA; no form component, API route, or provider config exists."
+        - "components/CTA.tsx exists but app/page.tsx does not render it."
+        - "components/PhoneDetector.tsx and components/RecordingPreviewModal.tsx implement demo/record/share/download interactions without named event tracking."
+        - "app/gym-phone-policy/page.tsx and app/gym-equipment-hogging/page.tsx are useful but shallow three-section pages; /phone-use-at-gym is absent from app routes and lib/seo.ts."
+        - ".github/workflows/ci.yml runs only watermark.spec.ts for e2e; scripts/test-deployment.mjs is not wired into CI/deploy and still checks only home/waitlist/about sitemap coverage."
+        - "app/layout.tsx does not emit theme-color metadata while scripts/test-deployment.mjs expects it."
+      ranked_packages:
+        - "1. Add privacy-preserving funnel event helper and instrument CTA/demo/record/share/download/copy paths, with tests."
+        - "2. Replace mailto waitlist with a measurable pilot lead form and credential-free fallback."
+        - "3. Wire reusable CTA and post-demo/post-guide CTA coverage."
+        - "4. Add /phone-use-at-gym hub and deepen gym policy/equipment-hogging content."
+        - "5. Fix deploy/SEO hygiene: theme-color, site URL config, basePath-safe assets, deployment checks, and broader CI e2e."
+      risk_notes:
+        - "Production lead capture may require an external provider decision and credentials."
+        - "Canonical apex-vs-www policy should stay www unless the owner explicitly changes it."
+        - "Content package should avoid thin filler and should follow measurement so guide CTAs can be tracked."
+      suggested_verify:
+        - "npm run lint"
+        - "npm run type-check"
+        - "npm run test -- --runInBand"
+        - "npm run build"
+  - id: T002
+    type: judge
+    assignee: Judge
+    status: done
+    reasoning_hint: high
+    objective: "Validate the Scout findings and choose the largest safe useful first Worker package."
+    inputs:
+      - "T001 receipt"
+      - "Goal oracle and existing plan facts"
+    constraints:
+      - "Read-only."
+      - "Do not implement."
+      - "Preserve the agreed priority of measurement, lead capture, CTAs/content depth, then deploy hygiene unless evidence says otherwise."
+      - "Pick a package with explicit allowed_files, verification commands, and stop conditions."
+    expected_output:
+      - "Decision: approved | revise | blocked"
+      - "Exact Worker objective"
+      - "allowed_files"
+      - "verify"
+      - "stop_if"
+      - "Deferred tasks or blocked owner decisions"
+    receipt:
+      result: done
+      decision: approved
+      full_outcome_complete: false
+      rationale: "Scout evidence supports measurement plus CTA instrumentation as the largest safe first slice: credential-free, reversible, aligned with priority order, and enabling later lead/form/content work. Lead-form replacement, content expansion, and deploy hygiene remain deferred until this baseline measurement package lands."
+      evidence:
+        - "T001 receipt says analytics is generic only and no custom funnel helper exists."
+        - "T001 receipt identifies mailto-only waitlist, unused CTA on home, and untracked demo/record/share/download interactions."
+        - "Goal rules prioritize measurement before lead capture, CTAs/content depth, and deploy hygiene."
+        - "State records local main divergence, so Worker must branch or worktree from origin/main."
+      blocked_tasks:
+        - task: "Pilot lead form replacement"
+          reason: "Production provider choice or credentials may be required; defer after measurement baseline."
+        - task: "Apex/www deploy policy changes"
+          reason: "Owner/domain policy should remain unchanged unless explicitly approved."
+  - id: T003
+    type: worker
+    assignee: Worker
+    status: done
+    reasoning_hint: default
+    objective: "From a fresh branch or worktree based on origin/main, add privacy-preserving named funnel event tracking and CTA instrumentation across the homepage, waitlist mailto path, demo start/recording flow, recording preview share/download actions, and existing gym guide CTA paths; wire the reusable CTA on the homepage where appropriate without replacing lead capture backend or changing deploy/domain policy."
+    allowed_files:
+      - "lib/funnel-events.ts"
+      - "components/CTA.tsx"
+      - "components/Hero.tsx"
+      - "components/PhoneDetector.tsx"
+      - "components/RecordingPreviewModal.tsx"
+      - "components/SeoContentPage.tsx"
+      - "components/WaitlistActions.tsx"
+      - "app/page.tsx"
+      - "app/waitlist/page.tsx"
+      - "app/gym-phone-policy/page.tsx"
+      - "app/gym-equipment-hogging/page.tsx"
+      - "__tests__/funnel-events.test.ts"
+      - "__tests__/CTA.test.tsx"
+      - "__tests__/Hero.test.tsx"
+      - "__tests__/PhoneDetector.test.tsx"
+      - "__tests__/RecordingPreviewModal.test.tsx"
+      - "__tests__/SeoContentPage.test.tsx"
+      - "__tests__/WaitlistActions.test.tsx"
+    verify:
+      - "git fetch origin"
+      - "git merge-base --is-ancestor origin/main HEAD"
+      - "npm run lint"
+      - "npm run type-check"
+      - "npm run test -- --runInBand"
+      - "npm run build"
+    stop_if:
+      - "The current worktree is based on divergent local main instead of origin/main and a safe branch/worktree cannot be created."
+      - "Implementation needs files outside allowed_files."
+      - "A production lead-capture provider, secret, API key, database, or owner choice is required."
+      - "Tracking would require sending PII or weaken the current privacy posture."
+      - "Verification fails twice with the same unresolved cause."
+    receipt:
+      result: done
+      changed_files:
+        - "lib/funnel-events.ts"
+        - "components/CTA.tsx"
+        - "components/Hero.tsx"
+        - "components/PhoneDetector.tsx"
+        - "components/RecordingPreviewModal.tsx"
+        - "components/SeoContentPage.tsx"
+        - "components/WaitlistActions.tsx"
+        - "app/page.tsx"
+        - "app/waitlist/page.tsx"
+        - "app/gym-phone-policy/page.tsx"
+        - "app/gym-equipment-hogging/page.tsx"
+        - "__tests__/funnel-events.test.ts"
+        - "__tests__/CTA.test.tsx"
+        - "__tests__/Hero.test.tsx"
+        - "__tests__/PhoneDetector.test.tsx"
+        - "__tests__/RecordingPreviewModal.test.tsx"
+        - "__tests__/SeoContentPage.test.tsx"
+        - "__tests__/WaitlistActions.test.tsx"
+      commands:
+        - cmd: "git merge-base --is-ancestor origin/main HEAD"
+          status: pass
+        - cmd: "npm run lint"
+          status: pass
+        - cmd: "npm run type-check"
+          status: pass
+        - cmd: "npm run test -- --runInBand"
+          status: pass
+        - cmd: "npm run build"
+          status: pass
+        - cmd: "git diff --check"
+          status: pass
+      summary: "Added a privacy-conscious funnel event helper that reports named events to Vercel Analytics globals, dataLayer, and gtag when available. Instrumented hero, homepage post-demo CTA, waitlist mailto/demo actions, guide CTA links, demo camera/recording/detection events, and recording preview share/download/copy actions. Rendered the reusable CTA after the homepage demo and fixed the recording preview's empty video src warning."
+  - id: T004
+    type: worker
+    assignee: Worker
+    status: done
+    reasoning_hint: default
+    objective: "Add measurable funnel instrumentation and CTA coverage across the homepage, demo, waitlist, recording/share actions, and SEO-guide lead paths."
+    allowed_files:
+      - "lib/funnel-events.ts"
+      - "components/CTA.tsx"
+      - "components/Hero.tsx"
+      - "components/PhoneDetector.tsx"
+      - "components/RecordingPreviewModal.tsx"
+      - "components/SeoContentPage.tsx"
+      - "components/WaitlistActions.tsx"
+      - "app/page.tsx"
+      - "app/waitlist/page.tsx"
+      - "app/gym-phone-policy/page.tsx"
+      - "app/gym-equipment-hogging/page.tsx"
+      - "__tests__/funnel-events.test.ts"
+      - "__tests__/CTA.test.tsx"
+      - "__tests__/Hero.test.tsx"
+      - "__tests__/PhoneDetector.test.tsx"
+      - "__tests__/RecordingPreviewModal.test.tsx"
+      - "__tests__/SeoContentPage.test.tsx"
+      - "__tests__/WaitlistActions.test.tsx"
+    verify: []
+    stop_if:
+      - "Judge has not filled allowed_files and verify commands."
+      - "Analytics provider behavior is ambiguous or would weaken privacy posture."
+      - "Need files outside allowed_files."
+    receipt:
+      result: done
+      changed_files:
+        - "lib/funnel-events.ts"
+        - "components/CTA.tsx"
+        - "components/Hero.tsx"
+        - "components/PhoneDetector.tsx"
+        - "components/RecordingPreviewModal.tsx"
+        - "components/SeoContentPage.tsx"
+        - "components/WaitlistActions.tsx"
+        - "app/page.tsx"
+        - "app/waitlist/page.tsx"
+        - "app/gym-phone-policy/page.tsx"
+        - "app/gym-equipment-hogging/page.tsx"
+        - "__tests__/funnel-events.test.ts"
+        - "__tests__/CTA.test.tsx"
+        - "__tests__/Hero.test.tsx"
+        - "__tests__/PhoneDetector.test.tsx"
+        - "__tests__/RecordingPreviewModal.test.tsx"
+        - "__tests__/SeoContentPage.test.tsx"
+        - "__tests__/WaitlistActions.test.tsx"
+      commands:
+        - cmd: "git merge-base --is-ancestor origin/main HEAD"
+          status: pass
+        - cmd: "npm run lint"
+          status: pass
+        - cmd: "npm run type-check"
+          status: pass
+        - cmd: "npm run test -- --runInBand"
+          status: pass
+        - cmd: "npm run build"
+          status: pass
+        - cmd: "git diff --check"
+          status: pass
+      summary: "Absorbed into T003; the measurement and CTA instrumentation package covered this task's homepage, demo, waitlist, recording/share, and SEO-guide CTA scope."
+  - id: T005
+    type: worker
+    assignee: Worker
+    status: done
+    reasoning_hint: default
+    objective: "Replace the mailto-only waitlist with a measurable pilot lead form and local fallback that works without production credentials."
+    allowed_files:
+      - "lib/funnel-events.ts"
+      - "components/PilotInterestForm.tsx"
+      - "components/WaitlistActions.tsx"
+      - "app/waitlist/page.tsx"
+      - "__tests__/PilotInterestForm.test.tsx"
+      - "__tests__/WaitlistActions.test.tsx"
+    verify:
+      - "npm run lint"
+      - "npm run type-check"
+      - "npm run test -- --runInBand"
+      - "npm run build"
+    stop_if:
+      - "Production form provider credentials are required and unavailable."
+      - "Need files outside allowed_files."
+    receipt:
+      result: done
+      changed_files:
+        - "lib/funnel-events.ts"
+        - "components/PilotInterestForm.tsx"
+        - "components/WaitlistActions.tsx"
+        - "app/waitlist/page.tsx"
+        - "__tests__/PilotInterestForm.test.tsx"
+        - "__tests__/WaitlistActions.test.tsx"
+      commands:
+        - cmd: "npm run lint"
+          status: pass
+        - cmd: "npm run type-check"
+          status: pass
+        - cmd: "npm run test -- --runInBand"
+          status: pass
+        - cmd: "npm run build"
+          status: pass
+      summary: "Replaced the visible waitlist mailto-only CTA with a structured pilot inquiry form that saves a local browser draft, opens a prefilled email, and tracks start/submit/mailto-open/demo-click events without sending PII to analytics. Removed the temporary direct waitlist action component after the form became the primary lead path."
+  - id: T006
+    type: worker
+    assignee: Worker
+    status: done
+    reasoning_hint: default
+    objective: "Deepen the gym phone policy and equipment hogging content, add a phone-use-at-gym hub, and strengthen internal linking without creating thin filler."
+    allowed_files:
+      - "app/phone-use-at-gym/page.tsx"
+      - "app/gym-phone-policy/page.tsx"
+      - "app/gym-equipment-hogging/page.tsx"
+      - "components/Footer.tsx"
+      - "components/SeoContentPage.tsx"
+      - "lib/seo.ts"
+      - "next-sitemap.config.js"
+      - "__tests__/seo.test.ts"
+      - "__tests__/Footer.test.tsx"
+      - "__tests__/SeoContentPage.test.tsx"
+    verify:
+      - "npm run lint"
+      - "npm run type-check"
+      - "npm run test -- --runInBand"
+      - "npm run build"
+    stop_if:
+      - "Content claims require external facts that cannot be verified or should not be asserted."
+      - "Need files outside allowed_files."
+    receipt:
+      result: done
+      changed_files:
+        - "app/phone-use-at-gym/page.tsx"
+        - "app/gym-phone-policy/page.tsx"
+        - "app/gym-equipment-hogging/page.tsx"
+        - "components/Footer.tsx"
+        - "components/SeoContentPage.tsx"
+        - "lib/seo.ts"
+        - "next-sitemap.config.js"
+        - "__tests__/seo.test.ts"
+        - "__tests__/Footer.test.tsx"
+        - "__tests__/SeoContentPage.test.tsx"
+      commands:
+        - cmd: "npm run lint"
+          status: pass
+        - cmd: "npm run type-check"
+          status: pass
+        - cmd: "npm run test -- --runInBand"
+          status: pass
+        - cmd: "npm run build"
+          status: pass
+      summary: "Added /phone-use-at-gym as a substantive hub page, expanded gym phone policy and equipment hogging guides with templates, scripts, signage, measurement, and member-facing language, added related guide links, footer discovery, metadata, and sitemap priority coverage."
+  - id: T007
+    type: worker
+    assignee: Worker
+    status: done
+    reasoning_hint: default
+    objective: "Fix deploy/SEO hygiene gaps: theme-color check mismatch, sitemap/deployment route coverage, canonical workflow config, and basePath-safe assets where applicable."
+    allowed_files:
+      - "app/layout.tsx"
+      - "components/VideoMockup.tsx"
+      - "public/manifest.json"
+      - "scripts/test-deployment.mjs"
+      - ".github/workflows/ci.yml"
+      - ".github/workflows/deploy.yml"
+      - "__tests__/seo.test.ts"
+    verify:
+      - "npm run lint"
+      - "npm run type-check"
+      - "npm run test -- --runInBand"
+      - "npm run build"
+    stop_if:
+      - "The fix requires changing hosting/domain policy not already approved."
+      - "Need files outside allowed_files."
+    receipt:
+      result: done
+      changed_files:
+        - "app/layout.tsx"
+        - "components/VideoMockup.tsx"
+        - "public/manifest.json"
+        - "scripts/test-deployment.mjs"
+        - ".github/workflows/ci.yml"
+        - ".github/workflows/deploy.yml"
+        - "__tests__/seo.test.ts"
+      commands:
+        - cmd: "npm run lint"
+          status: pass
+        - cmd: "npm run type-check"
+          status: pass
+        - cmd: "npm run test -- --runInBand"
+          status: pass
+        - cmd: "npm run build"
+          status: pass
+        - cmd: "git diff --check"
+          status: pass
+      summary: "Added Next viewport theme-color metadata, made manifest start_url/icons basePath-safe, made VideoMockup GIF assets respect NEXT_PUBLIC_BASE_PATH, expanded deployment checks to cover all current sitemap routes and manifest portability, aligned deploy build config to the www canonical site URL, and broadened CI E2E coverage to include the homepage flow."
+  - id: T998
+    type: judge
+    assignee: Judge
+    status: done
+    reasoning_hint: high
+    objective: "Review the completed implementation packages for behavioral, SEO, conversion, and verification gaps before publication."
+    inputs:
+      - "Done Worker receipts"
+      - "Current diff"
+      - "Verification outputs"
+    constraints:
+      - "Read-only."
+      - "Order findings by severity and tie them to files or commands."
+      - "Reject completion if lead capture, measurement, content depth, or deploy hygiene remains materially unaddressed."
+    expected_output:
+      - "Findings"
+      - "Required fixes or approval to continue"
+      - "Whether final audit can proceed"
+    receipt:
+      result: done
+      decision: rejected
+      full_outcome_complete: false
+      summary: "Judge rejected the pre-publication gate because the pilot form was still mailto/local-draft dependent, deployment checks were expanded but not wired into deploy, board-level verification was stale, and localStorage stored PII. This created a required follow-up Worker slice before final audit."
+      findings:
+        - "High: lead capture was not yet a real capture path because it only saved a local draft and opened mailto."
+        - "High: deploy hygiene remained incomplete because scripts/test-deployment.mjs was not wired into CI or deploy."
+        - "Medium: board last_verification was still unknown."
+        - "Medium: localStorage persisted name/email/location/problem and could block submit if storage failed."
+      required_fixes:
+        - "Implement a production-credible static-site lead delivery path or explicitly block on owner/provider choice."
+        - "Wire deployment checks into the publication workflow and include deployment-check proof in verification."
+        - "Avoid storing form PII in localStorage and ensure storage failure cannot block submit."
+        - "Keep T999 queued until fixes and fresh verification are recorded."
+  - id: T008
+    type: worker
+    assignee: Worker
+    status: done
+    reasoning_hint: default
+    objective: "Address T998 blockers by converting the pilot form from mailto/local draft to a real static-site lead delivery path, hardening local privacy/failure behavior, and wiring deployment SEO checks into the deploy workflow."
+    allowed_files:
+      - "components/PilotInterestForm.tsx"
+      - "lib/funnel-events.ts"
+      - "__tests__/PilotInterestForm.test.tsx"
+      - "__tests__/seo.test.ts"
+      - "scripts/test-deployment.mjs"
+      - ".github/workflows/deploy.yml"
+    verify:
+      - "npm run lint"
+      - "npm run type-check"
+      - "npm run test -- --runInBand"
+      - "npm run build"
+      - "DEPLOYMENT_TEST_URL=http://127.0.0.1:41738 DEPLOYMENT_TEST_CANONICAL_URL=https://www.phone-lunk.app node scripts/test-deployment.mjs"
+      - "git diff --check"
+    stop_if:
+      - "A credentialed form provider is required to create a real delivery path."
+      - "Need files outside allowed_files."
+      - "Static export constraints prevent the proposed lead capture path."
+    receipt:
+      result: done
+      changed_files:
+        - "components/PilotInterestForm.tsx"
+        - "lib/funnel-events.ts"
+        - "__tests__/PilotInterestForm.test.tsx"
+        - "__tests__/seo.test.ts"
+        - "scripts/test-deployment.mjs"
+        - ".github/workflows/deploy.yml"
+      commands:
+        - cmd: "npm run lint"
+          status: pass
+        - cmd: "npm run type-check"
+          status: pass
+        - cmd: "npm run test -- --runInBand"
+          status: pass
+        - cmd: "npm run build"
+          status: pass
+        - cmd: "DEPLOYMENT_TEST_URL=http://127.0.0.1:41738 DEPLOYMENT_TEST_CANONICAL_URL=https://www.phone-lunk.app node scripts/test-deployment.mjs"
+          status: pass
+        - cmd: "git diff --check"
+          status: pass
+      summary: "Converted the pilot form to a native POST against FormSubmit's static form endpoint for hello@phone-lunk.app with reply-to, subject, redirect, honeypot, and no-captcha fields. Local storage now keeps only non-PII submission metadata in a try/catch so storage failures do not block provider submission. Added provider-submit funnel tracking, updated tests, made the deployment checker support separate fetch and canonical URLs, and added a post-deploy SEO verification job to the GitHub Pages deploy workflow."
+  - id: T999
+    type: judge
+    assignee: Judge
+    status: done
+    reasoning_hint: high
+    objective: "Audit whether Round 2 satisfies the original SEO/spiff-up owner outcome for this tranche."
+    inputs:
+      - "All done task receipts"
+      - "Last verification"
+      - "Current dirty diff"
+      - "Goal oracle"
+    constraints:
+      - "Read-only."
+      - "Reject completion if required Worker work is still queued or active."
+      - "Reject completion if the outcome only added copy but did not improve measurement or conversion."
+      - "Reject completion if verification is stale, incomplete, or unrelated to changed files."
+    expected_output:
+      - "complete | not_complete"
+      - "full_outcome_complete: true | false"
+      - "Evidence mapped to the goal oracle"
+      - "Missing evidence"
+      - "Next task if not complete"
+    receipt:
+      result: done
+      decision: complete
+      full_outcome_complete: true
+      summary: "Final Judge audit found that Round 2 satisfies the oracle: measurement, conversion, CTA/internal-link, content-depth, and deploy/SEO hygiene changes are present, no required Worker task remains queued or active, and fresh verification is recorded."
+      evidence:
+        - "Measurable funnel events exist in lib/funnel-events.ts and are called by CTA, Hero, PhoneDetector, RecordingPreviewModal, SeoContentPage, and PilotInterestForm."
+        - "Pilot lead capture now posts through FormSubmit for hello@phone-lunk.app with reply-to, subject, honeypot, redirect, provider-submit tracking, and no PII localStorage persistence."
+        - "Homepage, guide pages, related links, and footer navigation now strengthen CTA/internal-link paths, including the new phone etiquette hub."
+        - "New and expanded SEO content covers /phone-use-at-gym, gym phone policy, and gym equipment hogging with deeper operator-facing material."
+        - "Deploy/SEO hygiene includes viewport theme-color, basePath-safe manifest and GIF assets, full sitemap route checks, canonical URL checks, and post-deploy SEO verification."
+        - "Verification passed: lint, type-check, full Jest, build, local deployment checker, and git diff --check."
+      missing_evidence: []
+
+checks:
+  dirty_fingerprint: "local main diverges from origin/main: ahead 2, behind 1 at prep time; implementation should branch/worktree from origin/main."
+  last_verification:
+    result: pass
+    task: T008
+    commands:
+      - "npm run lint"
+      - "npm run type-check"
+      - "npm run test -- --runInBand"
+      - "npm run build"
+      - "DEPLOYMENT_TEST_URL=http://127.0.0.1:41738 DEPLOYMENT_TEST_CANONICAL_URL=https://www.phone-lunk.app node scripts/test-deployment.mjs"
+      - "git diff --check"

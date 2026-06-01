@@ -43,6 +43,9 @@ next-env.d.ts
 /playwright-report/
 /playwright/.cache/
 
+# GoalBuddy generated board output
+docs/goals/**/.goalbuddy-board/
+
 # test fixtures (generated during CI)
 tests/fixtures/*.y4m
 tests/fixtures/*.mjpeg

@@ -67,6 +67,20 @@ export default function Hero() {
               {hero.secondaryCTA.text}
             </Link>
           )}
+
+          <a
+            href={siteConfig.social.email}
+            className="btn btn-primary w-full sm:w-auto"
+            onClick={() =>
+              trackFunnelEvent('cta_click', {
+                location: 'hero_email',
+                href: siteConfig.social.email,
+                label: 'Email About a Pilot',
+              })
+            }
+          >
+            Email About a Pilot
+          </a>
         </div>
 
         {/* Video Mockup Demo */}

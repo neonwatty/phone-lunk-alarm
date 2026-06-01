@@ -22,6 +22,11 @@ describe('Footer', () => {
       const githubLink = screen.getByLabelText('GitHub')
       expect(githubLink).toHaveAttribute('href', siteConfig.social.github)
     }
+
+    if (siteConfig.social.email) {
+      const emailLink = screen.getByLabelText('Email')
+      expect(emailLink).toHaveAttribute('href', siteConfig.social.email)
+    }
   })
 
   it('renders author name as a link to blog', () => {

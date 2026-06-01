@@ -70,4 +70,11 @@ describe('Hero', () => {
     const unimplementedPolicyGuideCTA = ['Read the Phone', 'Policy Guide'].join(' ')
     expect(screen.queryByText(unimplementedPolicyGuideCTA)).not.toBeInTheDocument()
   })
+
+  it('renders pilot email CTA', () => {
+    render(<Hero />)
+
+    const pilotCTA = screen.getByRole('link', { name: 'Email About a Pilot' })
+    expect(pilotCTA).toHaveAttribute('href', siteConfig.social.email)
+  })
 })

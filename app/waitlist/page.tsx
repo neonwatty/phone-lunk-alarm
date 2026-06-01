@@ -3,6 +3,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import PilotInterestForm from '@/components/PilotInterestForm'
 import { buildPageMetadata } from '@/lib/seo'
+import siteConfig from '@/site.config.mjs'
 
 export const metadata: Metadata = buildPageMetadata('/waitlist')
 
@@ -42,8 +43,11 @@ export default function WaitlistPage() {
             before they become production features.
           </p>
           <p style={{ color: 'var(--color-text-secondary)' }}>
-            If you operate a gym and want to explore the idea, email the builder and include your gym type,
-            location, and what phone-use problem you are trying to solve.
+            If you operate a gym and want to explore the idea,{' '}
+            <a className="font-medium underline" href={siteConfig.social.email}>
+              email the builder
+            </a>{' '}
+            and include your gym type, location, and what phone-use problem you are trying to solve.
           </p>
         </section>
       </main>

@@ -3,11 +3,11 @@ import { updatePhoneTrack, type PhonePrediction, type PhoneTrack } from './phone
 
 export type LivePhoneDetector = { detect(video: HTMLVideoElement | HTMLCanvasElement): Promise<PhonePrediction[]>; reset(): void; dispose(): void }
 
-export async function createLivePhoneDetector(id: DetectorModelId, signal: AbortSignal): Promise<LivePhoneDetector> {
+export async function createLivePhoneDetector(id: DetectorModelId, signal: AbortSignal, onProgress?: (message: string) => void): Promise<LivePhoneDetector> {
   if (id === 'r18-gpu') {
     if (!('gpu' in navigator)) throw new Error('WebGPU is unavailable. Select Standard detection or use a browser with WebGPU support.')
     const { loadPhoneModel } = await import('./phone-model')
-    const model = await loadPhoneModel(signal, VERIFIED_PHONE_MODEL)
+    const model = await (onProgress ? loadPhoneModel(signal, VERIFIED_PHONE_MODEL, onProgress) : loadPhoneModel(signal, VERIFIED_PHONE_MODEL))
     const frame = document.createElement('canvas')
     const context = frame.getContext('2d', { willReadFrequently: true })!
     let track: PhoneTrack | null = null

@@ -7,13 +7,15 @@ jest.mock('@/lib/funnel-events', () => ({
   trackFunnelEvent: jest.fn(),
 }))
 
+let mockCameraReady = true
 let mockVideo: HTMLVideoElement | null = null
 
 // Mock react-webcam
 jest.mock('react-webcam', () => ({
   __esModule: true,
-  default: jest.fn(({ onUserMediaError, videoConstraints, ref }) => {
+  default: jest.fn(({ onUserMediaError, videoConstraints, ref, onUserMedia }) => {
     require('react').useImperativeHandle(ref, () => ({video: mockVideo}))
+    require('react').useEffect(() => {if (mockCameraReady) onUserMedia?.({})}, [])
     // Store the error callback for testing
     global.mockWebcamErrorCallback = onUserMediaError
     global.mockWebcamConstraints = videoConstraints
@@ -54,6 +56,7 @@ describe('PhoneDetector', () => {
     jest.clearAllMocks()
     localStorage.clear()
     mockVideo = null
+    mockCameraReady = true
     jest.useFakeTimers()
   })
 
@@ -575,14 +578,25 @@ describe('PhoneDetector', () => {
     })
   })
 
-  describe('UI Info Cards', () => {
-    it('displays info cards about the detector', () => {
+  describe('Camera readiness and settings', () => {
+    it('offers sound settings before camera access', async () => {
+      const user = userEvent.setup({delay:null})
       render(<PhoneDetector />)
-
-      // Use getAllByText to handle multiple occurrences (e.g., in different states)
-      expect(screen.getAllByText(/^Real-time detection$/i).length).toBeGreaterThan(0)
-      expect(screen.getAllByText(/On-The-Go/i).length).toBeGreaterThan(0)
-      expect(screen.getAllByText(/^Camera detection$/i).length).toBeGreaterThan(0)
+      await user.click(screen.getByText(/Alarm settings/))
+      expect(screen.getByLabelText('Alarm sound')).toBeVisible()
+      expect(screen.getByLabelText('Volume')).toBeVisible()
+      expect(screen.queryByTestId('webcam-mock')).not.toBeInTheDocument()
+    })
+    it('allows cancellation while permission is pending and disables recording', async () => {
+      mockCameraReady = false
+      const user = userEvent.setup({delay:null})
+      render(<PhoneDetector />)
+      await user.click(await screen.findByRole('button',{name:/Start Camera/i}))
+      expect(screen.getByText('Waiting for camera access')).toBeInTheDocument()
+      expect(screen.queryByText('MONITORING')).not.toBeInTheDocument()
+      expect(screen.getByRole('button',{name:'Start recording'})).toBeDisabled()
+      await user.click(screen.getByRole('button',{name:/Stop Camera/i}))
+      expect(screen.queryByTestId('webcam-mock')).not.toBeInTheDocument()
     })
   })
 })

@@ -16,7 +16,12 @@ export async function loadPhoneModel(options: PhoneModelOptions = {}) {
     env.allowRemoteModels = false
     env.localModelPath = `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/models/`
   }
-  const detector = await pipeline('object-detection', useGpuExport ? 'r18-o365-gpu' : options.modelId || PHONE_MODEL_ID, { dtype: options.dtype || 'fp32', device: options.device || 'wasm' })
+  const detector = await pipeline('object-detection', useGpuExport ? 'r18-o365-gpu' : options.modelId || PHONE_MODEL_ID, { dtype: options.dtype || 'fp32', device: options.device || 'wasm', progress_callback: event => {
+    if ('file' in event && event.file.endsWith('.onnx')) {
+      if (event.status === 'progress') scope.postMessage({type:'progress',message:`Downloading model · ${(event.loaded / 1e6).toFixed(1)} / ${(event.total / 1e6).toFixed(1)} MB`})
+      if (event.status === 'done') scope.postMessage({type:'progress',message:'Preparing model for detection…'})
+    }
+  } })
   return {
     async detect(frame: ImageData): Promise<PhonePrediction[]> {
       const image = new RawImage(frame.data, frame.width, frame.height, 4)

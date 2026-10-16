@@ -3,7 +3,7 @@ import type { PhonePrediction } from './phone-tracking'
 export type PhoneModelOptions = { modelId?: string; dtype?: 'fp32' | 'q8'; mode?: 'full' | 'crop' | 'combined'; device?: 'wasm' | 'webgpu' }
 
 // Keep the large model and inference off the UI thread.
-export async function loadPhoneModel(signal?: AbortSignal, options: PhoneModelOptions = {}) {
+export async function loadPhoneModel(signal?: AbortSignal, options: PhoneModelOptions = {}, onProgress?: (message: string) => void) {
   const worker = new Worker(new URL('./phone-detection.worker.ts', import.meta.url))
   let resolveResult: ((predictions: PhonePrediction[]) => void) | null = null
   let rejectResult: ((error: Error) => void) | null = null
@@ -14,6 +14,7 @@ export async function loadPhoneModel(signal?: AbortSignal, options: PhoneModelOp
     signal?.addEventListener('abort', abort, { once: true })
     worker.onerror = event => { worker.terminate(); reject(new Error(event.message || 'Detector worker failed')) }
     worker.onmessage = event => {
+      if (event.data.type === 'progress') onProgress?.(event.data.message)
       if (event.data.type === 'ready') { signal?.removeEventListener('abort', abort); resolve() }
       if (event.data.type === 'error') { worker.terminate(); reject(new Error(event.data.message)) }
     }

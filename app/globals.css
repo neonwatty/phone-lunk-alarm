@@ -540,3 +540,29 @@ html:not(.loaded) *::after {
 
 .lab-smooth-preview { position: relative; }
 .lab-smooth-preview canvas { position: absolute; inset: 0; background: transparent; pointer-events: none; }
+
+.detector-settings { border: 1px solid var(--color-border-primary); border-radius: 12px; background: var(--color-bg-secondary); padding: 0 16px; }
+.detector-settings summary { cursor: pointer; min-height: 48px; padding-block: 14px; font-size: 14px; font-weight: 600; }
+.detector-settings summary span { float: right; font-weight: 400; color: var(--color-text-secondary); font-size: 12px; }
+.sound-settings { padding-block: 8px 16px; }
+.sound-settings label { font-size: 14px; font-weight: 500; }
+.sound-choice { display:flex; gap:8px; margin-block:8px 16px; }
+.sound-choice select { flex:1; min-width:0; }
+.sound-settings :is(select,button), .detector-appearance :is(select,button) { min-height:44px; border:1px solid var(--color-border-primary); border-radius:8px; background:var(--color-bg-secondary); color:var(--color-text-primary); padding:8px; font-size:16px; }
+.sound-settings button { font-size:13px; }
+.sound-settings button:disabled, .detector-camera button:disabled { opacity:.45; cursor:not-allowed; }
+.sound-volume-label { display:flex; justify-content:space-between; }
+.sound-settings input { width:100%; min-height:44px; accent-color:var(--color-accent-primary); }
+.sound-settings p,.detector-footnote { font-size:12px; line-height:1.6; color:var(--color-text-secondary); }
+.detector-footnote { text-align:center; margin-block:20px; }
+.detector-appearance { border-top:1px solid var(--color-border-primary); padding-bottom:12px; }
+.detector-appearance > div { background:transparent; padding:0; }
+.detector-appearance :is(label,span) { color:var(--color-text-primary); }
+.detector-appearance select { min-width:0; }
+.detector-appearance button[aria-pressed="true"] { background:#c4ed97; color:#16200f; }
+.detector-error { border:1px solid #b8584f; background:var(--color-bg-secondary); color:var(--color-text-primary); }
+.detector-retry { min-height:48px; border-radius:8px; color:#16200f; font-weight:600; }
+.detector-other-camera { display:block; min-height:44px; margin-top:12px; text-decoration:underline; text-underline-offset:4px; }
+.camera-permission-state { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:20px; text-align:center; color:#eef3e8; background:#181f18; }
+.camera-permission-state p { font-size:13px; max-width:320px; color:#b0b9ad; }
+.detector-page { --color-text-tertiary:var(--color-text-secondary); }

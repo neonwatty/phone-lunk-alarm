@@ -45,6 +45,9 @@ export default function PhoneDetector({
   const recordingCanvasRef = useRef<HTMLCanvasElement>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const recordedChunksRef = useRef<Blob[]>([])
+  const [cameraReady, setCameraReady] = useState(false)
+  const switchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(() => () => { if (switchTimerRef.current) clearTimeout(switchTimerRef.current) }, [])
   const recordingTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   // Alarm sound hook
@@ -52,6 +55,7 @@ export default function PhoneDetector({
     selectedSound,
     volume,
     playSound,
+    stopSound,
     previewSound,
     changeSound,
     changeVolume,
@@ -78,6 +82,7 @@ export default function PhoneDetector({
   }, [])
 
   const [selectedModel, setSelectedModel] = useState<DetectorModelId | null>(null)
+  const [loadMessage, setLoadMessage] = useState('Preparing selected model…')
   const [modelAttempt, setModelAttempt] = useState(0)
   const detectorRef = useRef<LivePhoneDetector | null>(null)
   const detectionBusyRef = useRef(false)
@@ -147,8 +152,8 @@ export default function PhoneDetector({
     const controller = new AbortController()
     const generation = detectionGenerationRef
     let owned: LivePhoneDetector | null = null
-    setModelLoaded(false); setIsLoading(true); setError(null)
-    createLivePhoneDetector(selectedModel, controller.signal).then(model => {
+    setModelLoaded(false); setIsLoading(true); setError(null); setLoadMessage('Preparing selected model…')
+    createLivePhoneDetector(selectedModel, controller.signal, message => {if (!controller.signal.aborted) setLoadMessage(message)}).then(model => {
       if (controller.signal.aborted) { model.dispose(); return }
       owned = model; detectorRef.current = model
       setModelLoaded(true); setIsLoading(false)
@@ -552,6 +557,8 @@ export default function PhoneDetector({
 
   // Toggle camera on/off
   const toggleCamera = () => {
+    stopSound(); setCameraReady(false)
+    if (switchTimerRef.current) clearTimeout(switchTimerRef.current)
     if (isCameraActive) {
       cameraActiveRef.current = false
       detectionGenerationRef.current++
@@ -593,6 +600,7 @@ export default function PhoneDetector({
 
   // Retry camera access after error
   const handleRetry = () => {
+    setCameraReady(false)
     if (!modelLoaded) { setModelAttempt(attempt => attempt + 1); return }
     setError(null)
     setIsCameraActive(true)
@@ -603,6 +611,7 @@ export default function PhoneDetector({
 
   // Switch between front and back camera
   const handleCameraSwitch = () => {
+    stopSound(); setCameraReady(false)
     cameraActiveRef.current = false
     detectionGenerationRef.current++
     detectorRef.current?.reset()
@@ -632,8 +641,9 @@ export default function PhoneDetector({
 
     // Brief pause to ensure stream stops before restarting
     setIsCameraActive(false)
-    setTimeout(() => {
+    switchTimerRef.current = setTimeout(() => {
       setIsCameraActive(true)
+      switchTimerRef.current = null
     }, 100)
   }
 
@@ -686,6 +696,14 @@ export default function PhoneDetector({
           <Link href="/model-lab/" className="detector-lab-link inline-flex items-center underline text-sm mt-1">Review detection on the example clip</Link>
         </div>
 
+        <details className="detector-settings text-left mt-4">
+          <summary>Alarm settings <span>{selectedSound === 'none' || volume === 0 ? 'Sound off' : `${Math.round(volume * 100)}% volume`}</span></summary>
+          <SoundSelector selectedSound={selectedSound} volume={volume} onSoundChange={changeSound} onVolumeChange={changeVolume} onPreview={previewSound} />
+          <details className="detector-appearance"><summary>Visual alert settings</summary>
+            <ThemeSelector selectedTheme={selectedTheme} selectedIntensity={selectedIntensity} onThemeChange={handleThemeChange} onIntensityChange={handleIntensityChange} />
+          </details>
+        </details>
+
         {/* Camera Toggle Button */}
         {!isLoading && !error && isCompatible && (
           <div className="detector-start mt-4">
@@ -718,7 +736,7 @@ export default function PhoneDetector({
       <div className="relative">
         {/* Browser compatibility fallback */}
         {!isCompatible && !isLoading && (
-          <div className="bg-gray-800 rounded-2xl p-12 text-center border-2 border-purple-500">
+          <div className="detector-placeholder rounded-2xl p-8 text-center">
 
             <p className="text-white text-xl font-bold">
               Camera access is unavailable. Use a browser that supports camera access over HTTPS.
@@ -731,24 +749,27 @@ export default function PhoneDetector({
           <div className="detector-placeholder rounded-2xl p-8 text-center" role="status">
             <ArrowPathIcon className="animate-spin w-8 h-8 mx-auto mb-4" aria-hidden="true" />
             <p className="text-white text-xl">Loading AI model...</p>
-            <p className="text-gray-400 mt-2">This may take a moment</p>
+            <p className="text-sm mt-2">{loadMessage}</p>
+            <p className="text-gray-400 mt-2">The first load downloads the selected model. Keep this page open; you can choose another model above.</p>
           </div>
         )}
 
         {/* Error state */}
         {error && isCompatible && (
-          <div className="bg-red-900 bg-opacity-20 border border-red-500 rounded-2xl p-8 text-center">
-            <p className="text-red-400 text-xl mb-4">⚠️ {error}</p>
+          <div className="detector-error rounded-2xl p-6 text-left" role="alert">
+            <h3 className="font-semibold mb-2">{modelLoaded ? 'Camera unavailable' : 'Model unavailable'}</h3>
+            <p className="text-sm mb-4">{error}</p>
             <button
               onClick={handleRetry}
-              className="btn-primary text-base px-6 py-3"
+              className="detector-retry text-base px-6 py-3"
               style={{
                 background: 'var(--gradient-professional)',
               }}
             >
-              <span className="inline-block mr-2">🔄</span>
+
               Try Again
             </button>
+            {modelLoaded && <button className="detector-other-camera" onClick={() => {setFacingMode(previous => previous === 'user' ? 'environment' : 'user'); handleRetry()}}>Try the other camera</button>}
           </div>
         )}
 
@@ -771,13 +792,14 @@ export default function PhoneDetector({
             <Webcam
               ref={webcamRef}
               audio={false}
-              className="w-full h-auto"
+              className="w-full h-auto min-h-48"
               screenshotFormat="image/jpeg"
               videoConstraints={{
                 facingMode: facingMode,
                 width: 1280,
                 height: 720,
               }}
+              onUserMedia={() => setCameraReady(true)}
               onUserMediaError={(err: any) => {
                 console.error('Camera error:', err)
 
@@ -785,15 +807,16 @@ export default function PhoneDetector({
                 let errorMessage = 'Camera access failed. Please try again.'
 
                 if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
-                  errorMessage = 'No camera detected. This demo requires a webcam.'
+                  errorMessage = 'No camera detected. Connect a camera, then try again.'
                 } else if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
                   errorMessage = 'Camera access denied. Please allow camera access in your browser settings.'
                 } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
                   errorMessage = 'Camera is being used by another application. Please close other apps using the camera.'
                 } else if (err.name === 'OverconstrainedError' || err.name === 'ConstraintNotSatisfiedError') {
-                  errorMessage = 'Selected camera mode not available. Try switching cameras.'
+                  errorMessage = 'Selected camera mode not available. Choose the other camera below, then try again.'
                 }
 
+                stopSound(); setCameraReady(false); setPhoneDetected(false)
                 setError(errorMessage)
                 setIsCameraActive(false)
                 trackFunnelEvent('demo_camera_error', {
@@ -803,6 +826,7 @@ export default function PhoneDetector({
               }}
             />
 
+            {!cameraReady && <div className="camera-permission-state" role="status"><ArrowPathIcon className="w-7 h-7 animate-spin" aria-hidden="true" /><strong>Waiting for camera access</strong><p>Allow camera access in your browser. You can stop the request at any time.</p></div>}
             {/* Canvas overlay for detection boxes */}
             <canvas
               ref={canvasRef}
@@ -822,26 +846,7 @@ export default function PhoneDetector({
               <div className="flex flex-col gap-2">
                 <div className="bg-black bg-opacity-60 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg flex items-center gap-2">
                   <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse" />
-                  <span className="text-white text-xs sm:text-sm font-semibold">MONITORING</span>
-                </div>
-                {/* Sound Selector */}
-                <div className="hidden sm:block">
-                  <SoundSelector
-                    selectedSound={selectedSound}
-                    volume={volume}
-                    onSoundChange={changeSound}
-                    onVolumeChange={changeVolume}
-                    onPreview={previewSound}
-                  />
-                </div>
-                {/* Theme Selector */}
-                <div className="hidden sm:block">
-                  <ThemeSelector
-                    selectedTheme={selectedTheme}
-                    selectedIntensity={selectedIntensity}
-                    onThemeChange={handleThemeChange}
-                    onIntensityChange={handleIntensityChange}
-                  />
+                  <span className="text-white text-xs sm:text-sm font-semibold">{cameraReady ? 'MONITORING' : 'CONNECTING'}</span>
                 </div>
               </div>
 
@@ -849,6 +854,7 @@ export default function PhoneDetector({
               <div className="flex items-center gap-1.5 sm:gap-2">
                 {/* Camera switch button */}
                 <button
+                  disabled={!cameraReady}
                   onClick={handleCameraSwitch}
                   className="detector-switch bg-black bg-opacity-60 px-3 rounded-lg flex items-center gap-2"
                   aria-label={`Switch to ${facingMode === 'user' ? 'rear' : 'front'} camera`}
@@ -877,7 +883,7 @@ export default function PhoneDetector({
                     phoneDetected ? 'text-red-400' : 'text-green-400'
                   }`}
                 >
-                  {phoneDetected ? '⚠️ PHONE DETECTED' : '✓ All Clear'}
+                  {!cameraReady ? 'Camera starting' : phoneDetected ? 'Phone detected' : 'All Clear'}
                 </span>
               </div>
 
@@ -894,6 +900,7 @@ export default function PhoneDetector({
                   </div>
                 )}
                 <button
+                  disabled={!cameraReady}
                   onClick={isRecording ? stopRecording : startRecording}
                   className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:scale-110 ${
                     isRecording
@@ -914,36 +921,7 @@ export default function PhoneDetector({
           </div>
         )}
 
-        {/* Info cards */}
-        <div className="hidden sm:grid md:grid-cols-3 gap-4 mt-8">
-          <div className="card text-center">
-            <div className="text-3xl mb-2">⚡</div>
-            <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
-              Real-time detection
-            </div>
-            <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-              Real-time phone detection
-            </div>
-          </div>
-          <div className="card text-center">
-            <div className="text-3xl mb-2">📱</div>
-            <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
-              On-The-Go
-            </div>
-            <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-              Runs on your device
-            </div>
-          </div>
-          <div className="card text-center">
-            <div className="text-3xl mb-2">🎯</div>
-            <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
-              Camera detection
-            </div>
-            <div className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-              AI-powered detection
-            </div>
-          </div>
-        </div>
+        <p className="detector-footnote">Detection depends on lighting, distance, and camera angle. Frames stay on your device.</p>
       </div>
 
       {/* Global alarm effect */}

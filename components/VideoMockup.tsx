@@ -1,132 +1,121 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { CameraIcon } from '@heroicons/react/24/outline'
+import { DETECTOR_MODELS, DETECTOR_PREFERENCE, initialDetectorModel, type DetectorModelId } from '@/lib/detector-models'
+import { createLivePhoneDetector, type LivePhoneDetector } from '@/lib/live-phone-detector'
+import { PhoneOverlay } from '@/lib/phone-overlay'
+import { nextVideoFrame } from '@/lib/next-video-frame'
+import type { PhoneBox } from '@/lib/clip-tracking'
 
-// Rotating example GIFs - compressed and optimized
-const EXAMPLE_GIFS = [
-  '/images/examples/phone-lunk-1.gif',
-  '/images/examples/phone-lunk-2.gif',
-  '/images/examples/phone-lunk-3.gif'
-] as const
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+const clipUrl = `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/images/examples/phone-lunk-1.mp4`
 
-const GIF_DISPLAY_DURATION = 5000 // 5 seconds per GIF
-const TRANSITION_DURATION = 300 // 300ms crossfade
+function waitForPlayback(video: HTMLVideoElement, signal: AbortSignal) {
+  return new Promise<void>((resolve, reject) => {
+    const cleanup = () => {
+      video.removeEventListener('play', ready)
+      document.removeEventListener('visibilitychange', ready)
+      signal.removeEventListener('abort', abort)
+    }
+    const ready = () => { if (!video.paused && !document.hidden) { cleanup(); resolve() } }
+    const abort = () => { cleanup(); reject(new DOMException('Cancelled','AbortError')) }
+    video.addEventListener('play', ready)
+    document.addEventListener('visibilitychange', ready)
+    signal.addEventListener('abort', abort, {once:true})
+    if (signal.aborted) abort(); else ready()
+  })
+}
 
 export default function VideoMockup() {
-  const [alarmActive, setAlarmActive] = useState(false)
-  const [showPersonBox, setShowPersonBox] = useState(true)
-  const [currentGifIndex, setCurrentGifIndex] = useState(0)
-  const [isTransitioning, setIsTransitioning] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [box, setBox] = useState<PhoneBox | null>(null)
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [modelId, setModelId] = useState<DetectorModelId | null>(null)
+  const [attempt, setAttempt] = useState(0)
 
-  // Simulate phone detection for demo purposes - synced with GIF timing
   useEffect(() => {
-    // Show person detection continuously
-    setShowPersonBox(true)
+    const video = videoRef.current!
+    const controller = new AbortController()
+    const { signal } = controller
+    const overlay = new PhoneOverlay()
+    let model: LivePhoneDetector | undefined
+    let animation = 0
+    let generation = 0
+    let previousTime = -1
+    let saved: string | null = null
+    try { saved = localStorage.getItem(DETECTOR_PREFERENCE) } catch {}
+    const id = initialDetectorModel(saved, 'gpu' in navigator)
+    setModelId(id); setStatus('loading'); setBox(null)
+    const reset = () => { generation++; overlay.reset(); model?.reset(); setBox(null) }
+    const failed = () => { reset(); setStatus('error'); controller.abort(); model?.dispose() }
+    video.addEventListener('pause',reset)
+    video.addEventListener('seeking',reset)
+    video.addEventListener('error',failed)
+    document.addEventListener('visibilitychange',reset)
 
-    // Trigger phone alarm every 4 seconds (better synced with GIF loop)
-    const interval = setInterval(() => {
-      setAlarmActive(true)
-      setTimeout(() => setAlarmActive(false), 2500) // Alarm lasts 2.5 seconds
-    }, 4000) // Trigger every 4 seconds
-
-    return () => clearInterval(interval)
-  }, [])
-
-  // Rotate through example GIFs automatically
-  useEffect(() => {
-    // Preload all GIFs for smooth transitions
-    EXAMPLE_GIFS.forEach(gif => {
-      const img = new Image()
-      img.src = `${basePath}${gif}`
-    })
-
-    // Set up rotation interval
-    const rotationInterval = setInterval(() => {
-      setIsTransitioning(true)
-      setTimeout(() => {
-        setCurrentGifIndex((prev) => (prev + 1) % EXAMPLE_GIFS.length)
-        setIsTransitioning(false)
-      }, TRANSITION_DURATION)
-    }, GIF_DISPLAY_DURATION)
-
-    return () => clearInterval(rotationInterval)
-  }, [])
+    const draw = (now: number) => {
+      if (signal.aborted) return
+      if (video.currentTime < previousTime) reset()
+      previousTime = video.currentTime
+      const p = !video.paused && !document.hidden ? overlay.frame(now) : null
+      setBox(p && video.videoWidth && video.videoHeight ? {
+        x:p.bbox[0]/video.videoWidth*100, y:p.bbox[1]/video.videoHeight*100,
+        width:p.bbox[2]/video.videoWidth*100, height:p.bbox[3]/video.videoHeight*100, score:p.score,
+      } : null)
+      animation = requestAnimationFrame(draw)
+    }
+    async function run() {
+      try {
+        model = await createLivePhoneDetector(id,signal)
+        if (signal.aborted) return
+        setStatus('ready')
+        animation = requestAnimationFrame(draw)
+        while (!signal.aborted) {
+          await waitForPlayback(video,signal)
+          try { await nextVideoFrame(video,signal) }
+          catch(error) { if (!signal.aborted && (video.paused || document.hidden)) continue; throw error }
+          if (video.paused || document.hidden) continue
+          const current = generation
+          const sourceTime = video.currentTime
+          const predictions = await model.detect(video)
+          if (signal.aborted) return
+          if (current === generation && video.currentTime >= sourceTime && !video.paused && !document.hidden) {
+            overlay.observe(predictions,performance.now())
+          }
+        }
+      } catch(error) {
+        if (!signal.aborted) { console.error('Example phone detection failed',error); setStatus('error') }
+      } finally {
+        cancelAnimationFrame(animation); overlay.reset(); setBox(null)
+        model?.dispose(); model=undefined
+      }
+    }
+    void run()
+    return () => {
+      controller.abort(); cancelAnimationFrame(animation); model?.dispose()
+      video.removeEventListener('pause',reset)
+      video.removeEventListener('seeking',reset)
+      video.removeEventListener('error',failed)
+      document.removeEventListener('visibilitychange',reset)
+    }
+  }, [attempt])
 
   return (
-    <div className="relative w-full max-w-3xl mx-auto mt-12">
-      {/* Main mockup container */}
-      <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
-        {/* Simulated camera feed with GIF */}
-        <div className="relative aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-          {/* Rotating gym phone GIFs - automatically cycles through examples */}
-          <img
-            src={`${basePath}${EXAMPLE_GIFS[currentGifIndex]}`}
-            alt={`Phone Lunk example ${currentGifIndex + 1} - Person on phone in gym`}
-            className={`w-full h-full object-contain pointer-events-none transition-opacity duration-300 ${
-              isTransitioning ? 'opacity-0' : 'opacity-100'
-            }`}
+    <figure className="detector-preview" aria-label="Live phone detection on recorded footage">
+      <div className="preview-top"><span><CameraIcon /> Phone Lunk</span><span className="preview-label">LIVE DETECTION</span></div>
+      <div className="preview-viewfinder">
+        <video ref={videoRef} autoPlay loop muted playsInline controls width={480} height={270}
+          src={clipUrl} aria-label="A person using a phone in a gym" className="preview-footage"
           />
-
-          {/* Detection overlays */}
-          <>
-            {/* Warning banner - always visible */}
-            <div className="absolute top-1 sm:top-4 left-1/2 transform -translate-x-1/2 z-10">
-              <div className="bg-red-600 text-white px-1.5 py-0.5 sm:px-6 sm:py-3 rounded text-[10px] sm:text-xl font-bold shadow-2xl leading-tight">
-                🚨 PHONE LUNK DETECTED 🚨
-              </div>
-            </div>
-
-            {/* Phone detection alarm effects (when active) */}
-            {alarmActive && (
-              <>
-                {/* Red flashing border */}
-                <div className="absolute inset-0 border-8 border-red-600 animate-pulse pointer-events-none" />
-
-                {/* Full screen alarm overlay */}
-                <div className="absolute inset-0 bg-red-600 opacity-20 animate-pulse pointer-events-none" />
-              </>
-            )}
-          </>
-
-          {/* Camera indicator */}
-          <div className="absolute top-1 sm:top-4 left-1 sm:left-4 flex items-center gap-0.5 sm:gap-2 bg-black bg-opacity-50 px-1 py-0.5 sm:px-3 sm:py-2 rounded">
-            <div className="w-1.5 h-1.5 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse" />
-            <span className="text-white text-[9px] sm:text-sm font-medium leading-tight">MONITORING</span>
-          </div>
-
-          {/* Status indicator */}
-          <div className="absolute bottom-1 sm:bottom-4 left-1 sm:left-4 bg-black bg-opacity-70 backdrop-blur-sm px-1 py-0.5 sm:px-4 sm:py-2 rounded">
-            <div className="flex flex-col gap-0.5 sm:gap-1">
-              <span className={`text-[9px] sm:text-sm font-bold leading-tight ${alarmActive ? 'text-red-400' : 'text-green-400'}`}>
-                {alarmActive ? '⚠️ PHONE DETECTED' : '✓ Monitoring'}
-              </span>
-              <span className="text-xs text-gray-300 hidden sm:inline">
-                Objects: {alarmActive ? '2' : '1'} detected
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Control bar mockup */}
-        <div className="bg-gray-800 px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-2 h-2 bg-green-500 rounded-full" />
-            <span className="text-gray-300 text-sm">AI Detection Active</span>
-          </div>
-          <div className="text-gray-400 text-sm">
-            Detections: <span className="text-white font-semibold">247</span> today
-          </div>
-        </div>
+        {box && <div className="preview-detection" style={{ left: `${box.x}%`, top: `${box.y}%`, width: `${box.width}%`, height: `${box.height}%` }}>
+          <span>PHONE DETECTED</span>
+        </div>}
       </div>
-
-      {/* Info text */}
-      <p className="text-center mt-4 text-sm px-4 py-2 rounded-lg inline-block" style={{
-        backgroundColor: 'var(--color-accent-light)',
-        color: 'var(--color-accent-primary)'
-      }}>
-        ↑ Phone detected = alarm triggered + let the shaming begin!
-      </p>
-    </div>
+      <div className="preview-status"><div className="preview-sound"><CameraIcon /></div><div>
+        <strong>{status === 'loading' ? 'Loading detector…' : status === 'error' ? 'Detection unavailable' : box ? 'Phone detected' : 'No phone detected'}</strong>
+        <p>{status === 'error' ? 'Could not run the detector. Try again.' : status === 'ready' ? 'Live detection with camera smoothing' : 'Loading on your device. First load may take a minute.'}</p>
+      </div>{status === 'error' && <button className="preview-retry" onClick={() => setAttempt(a => a + 1)}>Retry</button>}</div>
+      <figcaption>{modelId ? DETECTOR_MODELS[modelId].name : 'On-device detection'} · Recorded footage · Sound off</figcaption>
+    </figure>
   )
 }

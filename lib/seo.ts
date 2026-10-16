@@ -11,13 +11,13 @@ export type PageMetadata = {
 
 export const pageMetadata = {
   '/': {
-    title: 'Phone Lunk - AI Phone Detection Demo for Gyms',
-    description: 'Try a playful AI phone detector demo for gyms, then see how a privacy-first kiosk concept could help reduce equipment hogging.',
+    title: 'Phone Lunk | Real-Time Phone Detection',
+    description: 'Detect phones with your camera and sound an alarm on your device. Camera processing stays in your browser.',
     path: '/',
   },
   '/demo': {
-    title: 'AI Phone Detector Demo for Gyms | Phone Lunk',
-    description: 'Test Phone Lunk in your browser: a local AI demo that detects phones on camera and shows how gym phone enforcement could work.',
+    title: 'Launch the Detector | Phone Lunk',
+    description: 'Launch Phone Lunk to detect visible phones and sound an alarm on your device.',
     path: '/demo',
   },
   '/waitlist': {

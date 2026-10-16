@@ -4,6 +4,8 @@ import Hero from '@/components/Hero'
 import siteConfig from '@/site.config.mjs'
 import { trackFunnelEvent } from '@/lib/funnel-events'
 
+jest.mock('@/components/VideoMockup', () => () => <div>Analyzed on this device · Recorded footage · Sound off</div>)
+
 jest.mock('@/lib/funnel-events', () => ({
   trackFunnelEvent: jest.fn(),
 }))
@@ -29,52 +31,28 @@ describe('Hero', () => {
     })
   })
 
-  it('renders configured demo and gym pilot CTAs', () => {
+  it('offers one launch action without pilot links', () => {
     render(<Hero />)
-
-    const primaryCTA = screen.getByRole('link', { name: 'Try the Demo' })
-    expect(primaryCTA).toBeInTheDocument()
-    expect(primaryCTA).toHaveAttribute('href', '/demo')
-
-    if (siteConfig.hero.secondaryCTA) {
-      const secondaryCTA = screen.getByRole('link', { name: 'Gym Pilot Concept' })
-      expect(secondaryCTA).toBeInTheDocument()
-      expect(secondaryCTA).toHaveAttribute('href', '/waitlist')
-    }
+    expect(screen.getByRole('link', { name: 'Launch Phone Lunk' })).toHaveAttribute('href', '/demo')
+    expect(screen.getAllByRole('link')).toHaveLength(1)
   })
 
   it('tracks hero CTA clicks', async () => {
     const user = userEvent.setup()
     render(<Hero />)
 
-    await user.click(screen.getByRole('link', { name: 'Try the Demo' }))
+    await user.click(screen.getByRole('link', { name: 'Launch Phone Lunk' }))
 
     expect(trackFunnelEvent).toHaveBeenCalledWith('cta_click', {
       location: 'hero_primary',
       href: '/demo',
-      label: 'Try the Demo',
+      label: 'Launch Phone Lunk',
     })
   })
 
-  it('renders refreshed phone lunk definition', () => {
+  it('labels the example footage without claiming a live camera or real usage counts', () => {
     render(<Hero />)
-
-    expect(
-      screen.getByText(/Someone camping on gym equipment while scrolling/)
-    ).toBeInTheDocument()
-  })
-
-  it('does not render unimplemented policy guide CTA', () => {
-    render(<Hero />)
-
-    const unimplementedPolicyGuideCTA = ['Read the Phone', 'Policy Guide'].join(' ')
-    expect(screen.queryByText(unimplementedPolicyGuideCTA)).not.toBeInTheDocument()
-  })
-
-  it('renders pilot email CTA', () => {
-    render(<Hero />)
-
-    const pilotCTA = screen.getByRole('link', { name: 'Email About a Pilot' })
-    expect(pilotCTA).toHaveAttribute('href', siteConfig.social.email)
+    expect(screen.getByText('Analyzed on this device · Recorded footage · Sound off')).toBeInTheDocument()
+    expect(screen.queryByText(/247|shaming|vigilante|pilot/i)).not.toBeInTheDocument()
   })
 })

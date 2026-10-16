@@ -10,7 +10,7 @@ const siteConfig = {
   site: {
     name: 'Phone Lunk',
     tagline: 'AI Phone Detection Demo for Gyms',
-    description: 'A playful AI phone detector demo for gyms exploring how privacy-first kiosk alerts could reduce equipment hogging and improve gym etiquette.',
+    description: 'Detect phones with your camera and sound an alarm on your device. Camera processing stays in your browser.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.phone-lunk.app',
     keywords: [
       'gym phone detection',
@@ -51,18 +51,17 @@ const siteConfig = {
 
   // Navigation menu items
   navigation: [
-    { name: 'Demo', href: '/demo' },
+    { name: 'Launch Detector', href: '/demo' },
     { name: 'How It Works', href: '/#how-it-works' },
-    { name: 'Features', href: '/#features' },
-    { name: 'Gym Pilot', href: '/waitlist' },
+    { name: 'Privacy', href: '/privacy' },
   ],
 
   // Hero section configuration
   hero: {
-    headline: 'Put Phone Lunks On Blast',
-    subheadline: 'A playful AI phone detection demo for gyms tired of equipment hogging. Try the browser demo, then see how a privacy-first gym kiosk could make phone scrolling between sets impossible to ignore.',
+    headline: 'Phone detected. Alarm activated.',
+    subheadline: 'Turn your phone into a real-time phone detector. Open the camera, point it toward a phone, and Phone Lunk sounds an alarm on your device.',
     primaryCTA: {
-      text: 'Try the Demo',
+      text: 'Launch Phone Lunk',
       href: '/demo',
     },
     secondaryCTA: {
@@ -144,8 +143,8 @@ const siteConfig = {
   // SEO defaults
   seo: {
     titleTemplate: '%s | Phone Lunk',
-    defaultTitle: 'Phone Lunk - AI Phone Detection Demo for Gyms',
-    description: 'Try a playful AI phone detector demo for gyms, then see how a privacy-first kiosk concept could help reduce equipment hogging.',
+    defaultTitle: 'Phone Lunk | Real-Time Phone Detection',
+    description: 'Detect phones with your camera and sound an alarm on your device. Camera processing stays in your browser.',
     openGraph: {
       type: 'website',
       locale: 'en_US',

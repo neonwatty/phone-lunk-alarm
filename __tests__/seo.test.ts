@@ -35,7 +35,7 @@ describe('seo helpers', () => {
 
     expect(new Set(titles).size).toBe(routes.length)
     expect(new Set(descriptions).size).toBe(routes.length)
-    expect(pageMetadata['/demo'].title).toContain('AI Phone Detector Demo')
+    expect(pageMetadata['/demo'].title).toContain('Launch the Detector')
     expect(pageMetadata['/waitlist'].title).toContain('Gym Pilot')
   })
 
@@ -55,7 +55,7 @@ describe('seo helpers', () => {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'AI Phone Detector Demo for Gyms | Phone Lunk screenshot',
+        alt: 'Launch the Detector | Phone Lunk screenshot',
       },
     ])
     expect(metadata.twitter?.images).toEqual(['/images/og-image.jpg'])
@@ -78,7 +78,7 @@ describe('seo helpers', () => {
     expect(siteConfig.site).toMatchObject({
       name: 'Phone Lunk',
       tagline: 'AI Phone Detection Demo for Gyms',
-      description: 'A playful AI phone detector demo for gyms exploring how privacy-first kiosk alerts could reduce equipment hogging and improve gym etiquette.',
+      description: 'Detect phones with your camera and sound an alarm on your device. Camera processing stays in your browser.',
       url: 'https://www.phone-lunk.app',
       keywords: [
         'gym phone detection',
@@ -95,10 +95,9 @@ describe('seo helpers', () => {
       description: pageMetadata['/'].description,
     })
     expect(siteConfig.navigation).toEqual([
-      { name: 'Demo', href: '/demo' },
+      { name: 'Launch Detector', href: '/demo' },
       { name: 'How It Works', href: '/#how-it-works' },
-      { name: 'Features', href: '/#features' },
-      { name: 'Gym Pilot', href: '/waitlist' },
+      { name: 'Privacy', href: '/privacy' },
     ])
   })
 

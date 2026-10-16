@@ -49,3 +49,8 @@ docs/goals/**/.goalbuddy-board/
 # test fixtures (generated during CI)
 tests/fixtures/*.y4m
 tests/fixtures/*.mjpeg
+
+# Reproducible local GPU model exports (see scripts/prepare-gpu-model.py)
+/public/models/r18-o365-gpu/
+
+/.venv-model/

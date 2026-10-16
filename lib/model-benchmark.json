@@ -1,0 +1,278 @@
+{
+  "runtime": "Node ONNX Runtime CPU (not browser or phone)",
+  "cpu": "Apple M5 Max",
+  "platform": "darwin",
+  "generatedAt": "2026-10-15T23:26:23.831Z",
+  "reports": [
+    {
+      "key": "r50-fp32",
+      "modelId": "onnx-community/rtdetr_r50vd",
+      "dtype": "fp32",
+      "weightBytes": 175421119,
+      "loadMs": 157.165458,
+      "blankPredictions": [],
+      "full": {
+        "rawHits": 3,
+        "trackedHits": 7,
+        "total": 9,
+        "medianMs": 239.75212499999998,
+        "p95Ms": 249.1242500000003
+      },
+      "crop": {
+        "rawHits": 3,
+        "trackedHits": 6,
+        "total": 9,
+        "medianMs": 240.22687499999995,
+        "p95Ms": 254.58508299999994
+      },
+      "combined": {
+        "rawHits": 5,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 478.00833299999977,
+        "p95Ms": 503.70933300000024
+      }
+    },
+    {
+      "key": "r50-q8",
+      "modelId": "onnx-community/rtdetr_r50vd",
+      "dtype": "q8",
+      "weightBytes": 45463461,
+      "loadMs": 160.71629099999973,
+      "blankPredictions": [],
+      "full": {
+        "rawHits": 2,
+        "trackedHits": 5,
+        "total": 9,
+        "medianMs": 126.93383300000005,
+        "p95Ms": 143.34954199999993
+      },
+      "crop": {
+        "rawHits": 1,
+        "trackedHits": 5,
+        "total": 9,
+        "medianMs": 129.10158299999966,
+        "p95Ms": 130.84449999999924
+      },
+      "combined": {
+        "rawHits": 3,
+        "trackedHits": 7,
+        "total": 9,
+        "medianMs": 256.9588329999997,
+        "p95Ms": 274.1940419999992
+      }
+    },
+    {
+      "key": "r18-fp32",
+      "modelId": "onnx-community/rtdetr_r18vd",
+      "dtype": "fp32",
+      "weightBytes": 82572357,
+      "loadMs": 7423.538125,
+      "blankPredictions": [],
+      "full": {
+        "rawHits": 2,
+        "trackedHits": 6,
+        "total": 9,
+        "medianMs": 116.21537499999977,
+        "p95Ms": 259.14379200000076
+      },
+      "crop": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 115.98137499999939,
+        "p95Ms": 134.52087499999834
+      },
+      "combined": {
+        "rawHits": 2,
+        "trackedHits": 6,
+        "total": 9,
+        "medianMs": 235.39345899999898,
+        "p95Ms": 393.6646669999991
+      }
+    },
+    {
+      "key": "r18-q8",
+      "modelId": "onnx-community/rtdetr_r18vd",
+      "dtype": "q8",
+      "weightBytes": 21713196,
+      "loadMs": 2094.211625,
+      "blankPredictions": [],
+      "full": {
+        "rawHits": 1,
+        "trackedHits": 1,
+        "total": 9,
+        "medianMs": 70.68091699999786,
+        "p95Ms": 73.6650840000002
+      },
+      "crop": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 70.48912500000006,
+        "p95Ms": 73.96708299999955
+      },
+      "combined": {
+        "rawHits": 1,
+        "trackedHits": 1,
+        "total": 9,
+        "medianMs": 141.08587500000067,
+        "p95Ms": 144.44879199999923
+      }
+    },
+    {
+      "key": "r18-o365-fp32",
+      "modelId": "onnx-community/rtdetr_r18vd_coco_o365",
+      "dtype": "fp32",
+      "weightBytes": 82572357,
+      "loadMs": 4670.315500000001,
+      "blankPredictions": [],
+      "full": {
+        "rawHits": 4,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 117.73195900000064,
+        "p95Ms": 180.9086669999997
+      },
+      "crop": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 115.55487499999799,
+        "p95Ms": 118.83579199999804
+      },
+      "combined": {
+        "rawHits": 4,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 233.86299999999756,
+        "p95Ms": 296.23187600000165
+      }
+    },
+    {
+      "key": "r18-o365-q8",
+      "modelId": "onnx-community/rtdetr_r18vd_coco_o365",
+      "dtype": "q8",
+      "weightBytes": 21713196,
+      "loadMs": 2023.7932089999995,
+      "blankPredictions": [],
+      "full": {
+        "rawHits": 1,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 72.1720000000023,
+        "p95Ms": 80.26970799999981
+      },
+      "crop": {
+        "rawHits": 1,
+        "trackedHits": 4,
+        "total": 9,
+        "medianMs": 70.30308300000252,
+        "p95Ms": 90.00283299999865
+      },
+      "combined": {
+        "rawHits": 2,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 146.05158300000403,
+        "p95Ms": 170.27254099999845
+      }
+    },
+    {
+      "key": "r34-q8",
+      "modelId": "onnx-community/rtdetr_r34vd",
+      "dtype": "q8",
+      "weightBytes": 33306917,
+      "loadMs": 3224.610790999999,
+      "blankPredictions": [],
+      "full": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 94.11349999999948,
+        "p95Ms": 97.71141599999828
+      },
+      "crop": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 92.75604200000089,
+        "p95Ms": 94.96020899999712
+      },
+      "combined": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 187.403956999995,
+        "p95Ms": 190.46745799999917
+      }
+    }
+  ],
+  "dense": [
+    {
+      "key": "r18-o365-q8",
+      "weightBytes": 21713196,
+      "full": {
+        "rawHits": 11,
+        "trackedHits": 44,
+        "total": 45,
+        "medianMs": 66.01345900000024,
+        "p95Ms": 69.39008400000012
+      }
+    },
+    {
+      "key": "r18-o365-fp32",
+      "weightBytes": 82572357,
+      "full": {
+        "rawHits": 19,
+        "trackedHits": 45,
+        "total": 45,
+        "medianMs": 118.79383299999972,
+        "p95Ms": 129.59112499999992
+      }
+    }
+  ],
+  "browser": [
+    {
+      "name": "R50 FP32 \u00b7 two passes",
+      "medianMs": 4946,
+      "p95Ms": 4982,
+      "frames": 20
+    },
+    {
+      "name": "R18 Objects365 FP32 \u00b7 one pass",
+      "medianMs": 1136,
+      "p95Ms": 1181,
+      "frames": 20
+    },
+    {
+      "name": "R18 Objects365 INT8 \u00b7 one pass",
+      "medianMs": 1162,
+      "p95Ms": 1187,
+      "frames": 20
+    }
+  ],
+  "gpuFollowup": [
+    {
+      "name": "FP32 \u00b7 WebGPU \u00b7 run 1",
+      "medianMs": 38,
+      "p95Ms": 48,
+      "tracked": 150,
+      "total": 150
+    },
+    {
+      "name": "FP32 \u00b7 WebGPU \u00b7 run 2",
+      "medianMs": 38,
+      "p95Ms": 48,
+      "tracked": 151,
+      "total": 151
+    },
+    {
+      "name": "FP32 \u00b7 WebAssembly",
+      "medianMs": 1135,
+      "p95Ms": 1137,
+      "tracked": 8,
+      "total": 20
+    }
+  ]
+}

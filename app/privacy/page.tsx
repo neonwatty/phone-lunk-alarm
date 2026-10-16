@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <Header />
       <SeoContentPage
         title="Privacy and Camera Safety"
-        intro="Phone Lunk is funny because it feels loud, but camera privacy has to be boringly clear."
+        intro="Camera access is under your control. Phone Lunk processes camera frames directly in your browser."
         sections={[
           {
             heading: 'The demo runs in your browser',
@@ -22,24 +22,19 @@ export default function PrivacyPage() {
             ],
           },
           {
-            heading: 'What a real gym pilot would need',
+            heading: 'You control camera access and recording',
             paragraphs: [
-              'A gym deployment should avoid public personal media by default. The safer product shape is anonymous detection events, staff moderation, and aggregate counts.',
-              'Any public screen should be controlled by the gym owner, with sensitivity settings, a moderation queue, and an instant off switch.',
-            ],
-            bullets: [
-              'No face storage by default.',
-              'No member accounts required for simple participation.',
-              'Clear signage before any pilot runs in a real gym.',
-              'Staff review before anything sensitive appears publicly.',
+              'The camera starts only after you choose to enable it and grant browser permission. Use Stop Camera to end the camera session.',
+              'Recording is optional. If you start a recording, the app creates a video on your device that you can preview and download. Sharing or uploading that file is a separate action.',
+              'Use the camera only where recording is permitted and respect the privacy of people around you.',
             ],
           },
         ]}
         cta={{
-          title: 'Try the browser demo',
-          body: 'See the interaction locally before thinking about a gym pilot.',
+          title: 'Launch the detector',
+          body: 'Open the camera and detect visible phones directly in your browser.',
           href: '/demo',
-          label: 'Open the demo',
+          label: 'Launch Phone Lunk',
         }}
       />
       <Footer />

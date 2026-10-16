@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:https": "NODE_ENV=development node server.mjs",
-    "prebuild": "node scripts/generate-images.mjs",
+    "prebuild": "node scripts/check-detector-assets.mjs && node scripts/generate-images.mjs",
     "build": "next build",
     "postbuild": "next-sitemap",
     "generate:images": "node scripts/generate-images.mjs",
@@ -32,6 +32,7 @@
   "type": "commonjs",
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@huggingface/transformers": "^3.8.1",
     "@tailwindcss/typography": "^0.5.16",
     "@tensorflow-models/coco-ssd": "^2.2.3",
     "@tensorflow/tfjs": "^4.22.0",
@@ -66,5 +67,10 @@
     "puppeteer": "^24.29.0",
     "sharp": "^0.34.5",
     "typescript": "5.9.3"
+  },
+  "overrides": {
+    "@huggingface/transformers": {
+      "onnxruntime-web": "1.30.0"
+    }
   }
 }

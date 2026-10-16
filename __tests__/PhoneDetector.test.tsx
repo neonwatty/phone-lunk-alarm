@@ -7,10 +7,13 @@ jest.mock('@/lib/funnel-events', () => ({
   trackFunnelEvent: jest.fn(),
 }))
 
+let mockVideo: HTMLVideoElement | null = null
+
 // Mock react-webcam
 jest.mock('react-webcam', () => ({
   __esModule: true,
-  default: jest.fn(({ onUserMediaError, videoConstraints }) => {
+  default: jest.fn(({ onUserMediaError, videoConstraints, ref }) => {
+    require('react').useImperativeHandle(ref, () => ({video: mockVideo}))
     // Store the error callback for testing
     global.mockWebcamErrorCallback = onUserMediaError
     global.mockWebcamConstraints = videoConstraints
@@ -26,6 +29,7 @@ jest.mock('react-webcam', () => ({
 const mockDetect = jest.fn().mockResolvedValue([])
 const mockLoadModel = jest.fn().mockResolvedValue({
   detect: mockDetect,
+  dispose: jest.fn(),
 })
 
 jest.mock('@tensorflow/tfjs', () => ({
@@ -48,6 +52,8 @@ jest.mock('@/components/AlarmEffect', () => ({
 describe('PhoneDetector', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    localStorage.clear()
+    mockVideo = null
     jest.useFakeTimers()
   })
 
@@ -59,7 +65,7 @@ describe('PhoneDetector', () => {
   describe('Initial Rendering', () => {
     it('renders without crashing', () => {
       render(<PhoneDetector />)
-      expect(screen.getByText(/Be The Alarm/i)).toBeInTheDocument()
+      expect(screen.getByText(/^Phone detector$/i)).toBeInTheDocument()
     })
 
     it('renders a custom heading when provided', async () => {
@@ -92,7 +98,7 @@ describe('PhoneDetector', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText(/If you were using a better browser you would see the demo here/i)
+          screen.getByText(/Camera access is unavailable/i)
         ).toBeInTheDocument()
       })
 
@@ -135,6 +141,32 @@ describe('PhoneDetector', () => {
       await waitFor(() => {
         expect(screen.getByRole('button', { name: /Try Again/i })).toBeInTheDocument()
       })
+    })
+  })
+
+  describe('Model choice', () => {
+    it('recovers from an unsupported saved GPU choice and remembers Standard', async () => {
+      localStorage.setItem('phoneLunkDetectorModel', 'r18-gpu')
+      const user = userEvent.setup({delay: null})
+      render(<PhoneDetector />)
+      await screen.findByText(/WebGPU is unavailable/)
+      await user.selectOptions(screen.getByLabelText('Detection model'), 'coco-ssd')
+      await screen.findByRole('button', {name: /Start Camera/i})
+      expect(localStorage.getItem('phoneLunkDetectorModel')).toBe('coco-ssd')
+      expect(screen.queryByText(/Failed to load AI model/)).not.toBeInTheDocument()
+      await user.click(screen.getByRole('button', {name: /Start Camera/i}))
+      expect(screen.getByLabelText('Detection model')).toBeDisabled()
+      await user.click(screen.getByRole('button', {name: /Stop Camera/i}))
+      expect(screen.getByLabelText('Detection model')).toBeEnabled()
+    })
+    it('retries a failed model load without starting the camera', async () => {
+      mockLoadModel.mockRejectedValueOnce(new Error('Download failed'))
+      const user = userEvent.setup({delay: null})
+      render(<PhoneDetector />)
+      await user.click(await screen.findByRole('button', {name: /Try Again/i}))
+      await screen.findByRole('button', {name: /Start Camera/i})
+      expect(mockLoadModel).toHaveBeenCalledTimes(2)
+      expect(screen.queryByTestId('webcam-mock')).not.toBeInTheDocument()
     })
   })
 
@@ -209,7 +241,7 @@ describe('PhoneDetector', () => {
       })
 
       // Reset mock for retry
-      mockLoadModel.mockResolvedValueOnce({ detect: mockDetect })
+      mockLoadModel.mockResolvedValueOnce({ detect: mockDetect, dispose: jest.fn() })
 
       const retryButton = screen.getByRole('button', { name: /Try Again/i })
       await user.click(retryButton)
@@ -419,6 +451,34 @@ describe('PhoneDetector', () => {
   })
 
   describe('Detection Logic', () => {
+    it('does not clear the canvas by resizing while the next inference is pending', async () => {
+      const play = jest.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue()
+      const pause = jest.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {})
+      mockVideo = document.createElement('video')
+      Object.defineProperties(mockVideo, {
+        videoWidth: {value:640}, videoHeight: {value:480}, readyState: {value:4},
+      })
+      const widthSetter = jest.spyOn(HTMLCanvasElement.prototype, 'width', 'set')
+      let finish!: (predictions: unknown[]) => void
+      mockDetect.mockResolvedValueOnce([{class:'cell phone',score:.9,bbox:[100,100,40,80]}])
+        .mockImplementationOnce(() => new Promise(resolve => { finish=resolve }))
+      const user = userEvent.setup({delay:null})
+      const view = render(<PhoneDetector />)
+      await user.click(await screen.findByRole('button', {name:/Start Camera/i}))
+      await act(async () => { jest.advanceTimersByTime(100) })
+      await act(async () => { jest.advanceTimersByTime(16) })
+      const resizes = widthSetter.mock.calls.length
+      expect(resizes).toBeGreaterThan(0)
+      await act(async () => { jest.advanceTimersByTime(100) })
+      expect(mockDetect).toHaveBeenCalledTimes(2)
+      expect(widthSetter).toHaveBeenCalledTimes(resizes)
+      await user.click(screen.getByRole('button', {name:/Stop Camera/i}))
+      await act(async () => { finish([]) })
+      view.unmount()
+      widthSetter.mockRestore()
+      play.mockRestore(); pause.mockRestore()
+    })
+
     it('displays detection counter', async () => {
       const user = userEvent.setup({ delay: null })
       render(<PhoneDetector />)
@@ -520,9 +580,9 @@ describe('PhoneDetector', () => {
       render(<PhoneDetector />)
 
       // Use getAllByText to handle multiple occurrences (e.g., in different states)
-      expect(screen.getAllByText(/Instant Justice/i).length).toBeGreaterThan(0)
+      expect(screen.getAllByText(/^Real-time detection$/i).length).toBeGreaterThan(0)
       expect(screen.getAllByText(/On-The-Go/i).length).toBeGreaterThan(0)
-      expect(screen.getAllByText(/No Escape/i).length).toBeGreaterThan(0)
+      expect(screen.getAllByText(/^Camera detection$/i).length).toBeGreaterThan(0)
     })
   })
 })

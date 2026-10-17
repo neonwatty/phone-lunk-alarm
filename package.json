@@ -17,7 +17,8 @@
     "test": "jest",
     "test:ci": "jest --ci --coverage --watchAll=false",
     "test:e2e": "playwright test",
-    "dev:clean": "rm -rf .next && npm run dev"
+    "dev:clean": "rm -rf .next && npm run dev",
+    "dev:local": "next dev --hostname 127.0.0.1 --port 3107"
   },
   "keywords": [
     "gym",

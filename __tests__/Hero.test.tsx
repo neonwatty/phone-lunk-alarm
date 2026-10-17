@@ -4,7 +4,7 @@ import Hero from '@/components/Hero'
 import siteConfig from '@/site.config.mjs'
 import { trackFunnelEvent } from '@/lib/funnel-events'
 
-jest.mock('@/components/VideoMockup', () => () => <div>Analyzed on this device · Recorded footage · Sound off</div>)
+jest.mock('@/components/VideoMockup', () => () => <div>PHONE LUNK DETECTED</div>)
 
 jest.mock('@/lib/funnel-events', () => ({
   trackFunnelEvent: jest.fn(),
@@ -33,7 +33,7 @@ describe('Hero', () => {
 
   it('offers one launch action without pilot links', () => {
     render(<Hero />)
-    expect(screen.getByRole('link', { name: 'Launch Phone Lunk' })).toHaveAttribute('href', '/demo')
+    expect(screen.getByRole('link', { name: 'Launch detector' })).toHaveAttribute('href', '/demo')
     expect(screen.getAllByRole('link')).toHaveLength(1)
   })
 
@@ -41,18 +41,18 @@ describe('Hero', () => {
     const user = userEvent.setup()
     render(<Hero />)
 
-    await user.click(screen.getByRole('link', { name: 'Launch Phone Lunk' }))
+    await user.click(screen.getByRole('link', { name: 'Launch detector' }))
 
     expect(trackFunnelEvent).toHaveBeenCalledWith('cta_click', {
       location: 'hero_primary',
       href: '/demo',
-      label: 'Launch Phone Lunk',
+      label: 'Launch detector',
     })
   })
 
-  it('labels the example footage without claiming a live camera or real usage counts', () => {
+  it('shows the example without usage counts', () => {
     render(<Hero />)
-    expect(screen.getByText('Analyzed on this device · Recorded footage · Sound off')).toBeInTheDocument()
+    expect(screen.getByText('PHONE LUNK DETECTED')).toBeInTheDocument()
     expect(screen.queryByText(/247|shaming|vigilante|pilot/i)).not.toBeInTheDocument()
   })
 })

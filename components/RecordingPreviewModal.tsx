@@ -13,6 +13,19 @@ interface RecordingPreviewModalProps {
 }
 
 export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingPreviewModalProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    const dialog = dialogRef.current!
+    const previousOverflow = document.body.style.overflow
+    dialog.showModal()
+    document.body.style.overflow = 'hidden'
+    return () => {
+      dialog.close()
+      document.body.style.overflow = previousOverflow
+    }
+  }, [])
+
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
 
@@ -39,7 +52,7 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
   }
 
   const shareToTwitter = () => {
-    const text = "I just got put on blast by Phone Lunk 🚨 AI-powered gym justice is real"
+    const text = "I just got put on blast by Phone Lunk 🚨 Phone detection in action"
     const twitterUrl = new URL('https://twitter.com/intent/tweet')
     twitterUrl.searchParams.set('text', text)
     twitterUrl.searchParams.set('url', CANONICAL_SITE_URL)
@@ -139,7 +152,7 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80">
+    <dialog ref={dialogRef} className="recording-dialog" aria-labelledby="recording-title" onCancel={event => { event.preventDefault(); onClose() }}>
       <div
         className="w-full max-w-2xl rounded-2xl overflow-hidden"
         style={{
@@ -149,11 +162,13 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: 'var(--color-border-primary)' }}>
-          <h3 className="text-lg font-bold" style={{ color: 'var(--color-text-primary)' }}>
-            🎬 Your Clip
+          <h3 id="recording-title" className="text-lg font-bold" style={{ color: 'var(--color-text-primary)' }}>
+            Your recording
           </h3>
           <button
             onClick={onClose}
+            aria-label="Close recording preview"
+            autoFocus
             className="p-2 rounded-lg hover:bg-white/10 transition-colors"
             style={{ color: 'var(--color-text-secondary)' }}
           >
@@ -170,6 +185,7 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
               controls
               autoPlay
               loop
+              playsInline
               className="w-full rounded-lg"
               style={{ maxHeight: '400px' }}
             />
@@ -179,7 +195,7 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
         {/* Share Buttons */}
         <div className="p-4 border-t" style={{ borderColor: 'var(--color-border-primary)' }}>
           <p className="text-sm mb-4 text-center" style={{ color: 'var(--color-text-secondary)' }}>
-            Share your moment of justice
+            Save your recording or share Phone Lunk.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             {/* Download */}
@@ -187,8 +203,8 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
               onClick={handleDownload}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:scale-105"
               style={{
-                background: 'var(--color-accent-primary)',
-                color: '#ffffff',
+                background: 'var(--gradient-professional)',
+                color: '#25130f',
               }}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -268,8 +284,8 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
                 onClick={handleNativeShare}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:scale-105 sm:hidden"
                 style={{
-                  background: 'var(--color-accent-primary)',
-                  color: '#ffffff',
+                  background: 'var(--gradient-professional)',
+                  color: '#25130f',
                 }}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,6 +297,6 @@ export default function RecordingPreviewModal({ videoBlob, onClose }: RecordingP
           </div>
         </div>
       </div>
-    </div>
+    </dialog>
   )
 }

@@ -58,10 +58,10 @@ const siteConfig = {
 
   // Hero section configuration
   hero: {
-    headline: 'Phone detected. Alarm activated.',
-    subheadline: 'Turn your phone into a real-time phone detector. Open the camera, point it toward a phone, and Phone Lunk sounds an alarm on your device.',
+    headline: 'Put phone lunks on blast.',
+    subheadline: 'Point your camera. Detect a phone. Sound the alarm.',
     primaryCTA: {
-      text: 'Launch Phone Lunk',
+      text: 'Launch detector',
       href: '/demo',
     },
     secondaryCTA: {

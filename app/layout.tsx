@@ -8,6 +8,7 @@ import Script from 'next/script'
 import siteConfig from '@/site.config.mjs'
 import { CANONICAL_SITE_URL, buildCanonicalUrl, pageMetadata } from '@/lib/seo'
 import './globals.css'
+import './athletic-signal.css'
 
 const inter = Inter({
   subsets: ['latin'],

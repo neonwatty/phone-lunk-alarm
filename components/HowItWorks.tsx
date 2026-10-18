@@ -8,7 +8,7 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="landing-screen landing-steps-screen">
       <div className="landing-steps landing-width">
-      <div className="section-heading"><p className="landing-eyebrow">HOW IT WORKS</p><h2>Catch phone lunks in the act.</h2></div>
+      <div className="section-heading"><h2>Catch phone lunks in the act.</h2></div>
       <ol>{steps.map((step, index) => <li key={step.title}><span className="step-number">0{index + 1}</span><h3>{step.title}</h3><p>{step.description}</p></li>)}</ol>
       </div>
     </section>

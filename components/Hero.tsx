@@ -11,7 +11,6 @@ export default function Hero() {
     <section className="landing-screen landing-hero-screen">
       <div className="landing-hero landing-width">
       <div className="landing-hero-copy">
-        <p className="landing-eyebrow"><span /> LESS SCROLLING. MORE TRAINING.</p>
         <h1>{hero.headline}</h1>
         <p className="landing-definition"><strong>Phone Lunk</strong> <span>(n.)</span> — Someone camping on gym equipment while scrolling.</p>
         <p className="landing-description">{hero.subheadline}</p>

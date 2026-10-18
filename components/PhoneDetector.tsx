@@ -3,12 +3,12 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Webcam from 'react-webcam'
-import { CameraIcon, ArrowPathIcon, StopIcon } from '@heroicons/react/24/outline'
+import { CameraIcon, ArrowPathIcon, StopIcon, ChevronDownIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 import AlarmEffect from './AlarmEffect'
 import RecordingPreviewModal from './RecordingPreviewModal'
 import SoundSelector from './SoundSelector'
 import ThemeSelector from './ThemeSelector'
-import { useAlarmSound } from '@/hooks/useAlarmSound'
+import { useAlarmSound, ALARM_SOUNDS } from '@/hooks/useAlarmSound'
 import {
   ALARM_THEMES,
   ThemeKey,
@@ -57,6 +57,7 @@ export default function PhoneDetector({
     previewSound,
     changeSound,
     changeVolume,
+    toggleMute,
   } = useAlarmSound()
 
   // Theme state
@@ -875,7 +876,15 @@ export default function PhoneDetector({
 
       <p className="detector-local-note">Camera stays on your device.</p>
       <details className="detector-settings detector-options text-left">
-        <summary>Settings <span>{selectedSound === 'none' || volume === 0 ? 'Sound off' : 'Sound on'}</span></summary>
+        <summary className="detector-options-summary">
+          <span className="settings-label"><AdjustmentsHorizontalIcon aria-hidden="true" />Settings</span>
+          <span className="settings-current">{selectedSound === 'none' || volume === 0 ? 'Muted' : `${ALARM_SOUNDS[selectedSound].name} · ${Math.round(volume * 100)}%`}</span>
+          <ChevronDownIcon className="settings-chevron" aria-hidden="true" />
+        </summary>
+        <div className="detector-options-body">
+          <SoundSelector selectedSound={selectedSound} volume={volume} onSoundChange={changeSound} onVolumeChange={changeVolume} onPreview={previewSound} onToggleMute={toggleMute} />
+          <details className="detector-advanced">
+            <summary>Advanced <ChevronDownIcon aria-hidden="true" /></summary>
         <div className="detector-model-card mx-auto mt-4 text-left">
           <label htmlFor="detector-model" className="block font-semibold mb-2">Detection model</label>
           <select id="detector-model" aria-describedby="detector-model-description" value={selectedModel || ''} disabled={isCameraActive} onChange={event => changeModel(event.target.value as DetectorModelId)} className="detector-select w-full min-h-12 p-3 rounded-lg border" style={{background:'var(--color-bg-secondary)',color:'var(--color-text-primary)'}}>
@@ -886,14 +895,12 @@ export default function PhoneDetector({
           <Link href="/model-lab/" className="detector-lab-link inline-flex items-center underline text-sm mt-1">Compare models</Link>
         </div>
 
-        <details className="detector-settings text-left mt-4">
-          <summary>Alarm settings <span>{selectedSound === 'none' || volume === 0 ? 'Sound off' : `${Math.round(volume * 100)}% volume`}</span></summary>
-          <SoundSelector selectedSound={selectedSound} volume={volume} onSoundChange={changeSound} onVolumeChange={changeVolume} onPreview={previewSound} />
-          <details className="detector-appearance"><summary>Visual alert settings</summary>
-            <ThemeSelector selectedTheme={selectedTheme} selectedIntensity={selectedIntensity} onThemeChange={handleThemeChange} onIntensityChange={handleIntensityChange} />
+            <div className="detector-appearance">
+              <h3>Visual alert</h3>
+              <ThemeSelector selectedTheme={selectedTheme} selectedIntensity={selectedIntensity} onThemeChange={handleThemeChange} onIntensityChange={handleIntensityChange} />
+            </div>
           </details>
-        </details>
-
+        </div>
       </details>
 
       {/* Global alarm effect */}

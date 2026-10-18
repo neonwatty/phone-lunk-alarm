@@ -4,8 +4,8 @@
   "description": "A playful AI phone detection demo and privacy-first gym kiosk concept for reducing equipment hogging.",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#111827",
-  "theme_color": "#A4278D",
+  "background_color": "#163dc7",
+  "theme_color": "#163dc7",
   "icons": [
     {
       "src": "favicon.svg",

@@ -11,7 +11,7 @@ export default function DemoPage() {
     <div className="detector-page min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <section className="max-w-5xl mx-auto px-4 pt-8 sm:pt-12 pb-0 text-center">
+        <section className="detector-title max-w-5xl mx-auto px-4 text-center">
           <h1 className="heading-xl mb-3">Phone Lunk Detector</h1>
         </section>
         <PhoneDetector

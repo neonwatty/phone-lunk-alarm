@@ -26,3 +26,24 @@ Preview: https://phone-lunk-alarm-6agd41gnl-jermwatts-projects.vercel.app/
 - A hidden-tab benchmark preserves its interruption status. Completion requires both 20 measured frames and 15 measured seconds. Component tests cover early interruption and normal completion.
 - Both regression tests failed with their respective fixes temporarily removed, then passed after restoration. All 97 Jest tests, TypeScript, ESLint, and six local synthetic-camera/recording Playwright tests pass.
 - Browser inspection at 320px, 390px, and 1440px found no horizontal overflow; reviewed collapsed and expanded settings. The local GPU detector reaches Start Camera. Physical iPhone testing remains deferred.
+
+## Color and sound follow-up — October 18, 2026
+
+- Demo now shares the landing page's cobalt background (#163dc7), equipment-yellow actions, viewfinder wordmark, and steel camera/control surfaces. Browser theme and manifest colors match as well.
+- Checked the demo at 320px, 390px, and 1440px, with expanded sound settings and both theme selections. No horizontal page overflow; computed demo background remains rgb(22, 61, 199).
+- Initially added synthesized Submarine and Fire Alert WAV effects; these have since been replaced by the recorded sources documented below. Both serve HTTP 200 locally, have nonzero PCM signal without clipping, and appear in the selector. Hook tests cover preview URLs and saved choices.
+- All 99 Jest tests, TypeScript, ESLint, and diff whitespace checks pass. Settings structure is unchanged pending discussion; physical iPhone testing remains deferred.
+
+## Settings interaction follow-up — October 18, 2026
+
+- Settings opens directly to sound, preview, volume, and Mute. Advanced contains the optional detector model and visual controls. The disclosure shows the selected sound/volume or Muted, with explicit chevrons and reduced-motion support.
+- New users default to Submarine; saved sound choices remain intact. Mute stops preview/alarm playback and restores the previous nonzero volume when unmuted within the session.
+- All 101 Jest tests, TypeScript, and ESLint pass. Hook regressions cover the default versus saved choice and mute/unmute restoration. Mobile browser checks at 320px and 390px confirm no page overflow, usable Advanced controls, and matching summary/volume/preview states after mute and unmute.
+- The request for more realistic audio and more screen space was subsequently confirmed; see the follow-up below. Changes remain local for review; PR stays draft and physical iPhone testing is deferred.
+
+## Recorded alarms and camera space — October 18, 2026
+
+- Replaced the synthesized Submarine and Fire Alert clips with edited CC0 recordings: jameswrowles’s mechanical Klaxon HEK E/75 and pushkin’s building fire alarm. Source pages, license links, editing details, and a checksum-verified preparation script are documented in public/sounds/CREDITS.md. Source recordings are publicly served high-quality MP3 previews; the bundled mono WAVs are roughly four seconds long.
+- New-user default remains Submarine; existing sound choices remain intact. Both WAVs decode, have nonzero unclipped PCM, and serve HTTP 200 locally. Fire Alert’s Test sound action produced no browser errors.
+- Expanded desktop camera width from 768px to 1024px at a 1440px viewport. At 390px, the camera width increased from 358px to 374px, while the Start Camera button moved from around y=261 to y=175. Camera frame and overlay geometry remain unchanged.
+- Browser checks at 320px, 390px, and 1440px found no horizontal page overflow. All 101 Jest tests, TypeScript, ESLint, and whitespace checks pass. Changes remain local for review; physical iPhone validation is deferred.

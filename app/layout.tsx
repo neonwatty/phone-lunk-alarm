@@ -32,7 +32,7 @@ const jetbrainsMono = JetBrains_Mono({
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 export const viewport: Viewport = {
-  themeColor: '#A4278D',
+  themeColor: '#163dc7',
 }
 
 export const metadata: Metadata = {

@@ -35,7 +35,7 @@ describe('seo helpers', () => {
 
     expect(new Set(titles).size).toBe(routes.length)
     expect(new Set(descriptions).size).toBe(routes.length)
-    expect(pageMetadata['/demo'].title).toContain('Phone Lunk Detector')
+    expect(pageMetadata['/demo'].title).toContain('Lunk Alarm')
     expect(pageMetadata['/waitlist'].title).toContain('Gym Pilot')
   })
 
@@ -55,7 +55,7 @@ describe('seo helpers', () => {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Phone Lunk Detector | Live Camera screenshot',
+        alt: 'Lunk Alarm | Live Camera screenshot',
       },
     ])
     expect(metadata.twitter?.images).toEqual(['/images/og-image.jpg'])
@@ -95,7 +95,7 @@ describe('seo helpers', () => {
       description: pageMetadata['/'].description,
     })
     expect(siteConfig.navigation).toEqual([
-      { name: 'Launch Detector', href: '/demo' },
+      { name: 'Lunk Alarm', href: '/demo' },
       { name: 'How It Works', href: '/#how-it-works' },
       { name: 'Privacy', href: '/privacy' },
     ])

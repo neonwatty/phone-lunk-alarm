@@ -216,3 +216,45 @@ body, .light body { background-image: none; }
   .detector-page .detector-start { margin-top: 12px; }
   .detector-local-note { margin-block: 12px; }
 }
+
+/* Keep chapter navigation available and anchor targets clear of the header. */
+.landing-home { --landing-header-height: 88px; }
+.landing-home .landing-navigation {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: #163dc7;
+}
+.landing-home .landing-header {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  min-height: var(--landing-header-height);
+  gap: 24px;
+  border-color: #6882db;
+}
+.landing-home .landing-header nav { display: contents; }
+.landing-section-links, .landing-nav-actions { display: flex; align-items: center; gap: 24px; }
+.landing-section-links a { border-bottom: 2px solid transparent; font-size: 13px; white-space: nowrap; }
+.landing-section-links a:hover { border-color: #f2ce43; }
+.landing-home .landing-screen {
+  min-height: calc(100svh - var(--landing-header-height));
+  scroll-margin-top: var(--landing-header-height);
+}
+@media (max-width: 760px) {
+  .landing-home { --landing-header-height: 128px; }
+  .landing-home .landing-header {
+    grid-template-columns: 1fr auto;
+    gap: 0 8px;
+    padding-block: 12px 4px;
+  }
+  .landing-home .landing-brand { font-size: 18px; }
+  .landing-home .landing-brand svg { width: 22px; height: 22px; }
+  .landing-home .landing-section-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .landing-home .landing-nav-actions { grid-column: 2; grid-row: 1; gap: 8px; }
+  .landing-home .landing-header .nav-launch { display: inline-flex; gap: 6px; padding-inline: 8px; font-size: 11px; white-space: nowrap; }
+}

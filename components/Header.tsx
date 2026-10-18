@@ -6,7 +6,7 @@ import ThemeToggle from './ThemeToggle'
 import { ViewfinderCircleIcon } from '@heroicons/react/24/outline'
 import siteConfig from '@/site.config.mjs'
 
-export default function Header() {
+export default function Header({ showThemeToggle = true }: { showThemeToggle?: boolean }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -55,18 +55,22 @@ export default function Header() {
                 )}
               </div>
             ))}
-            <div
-              className="h-4 w-px mx-3 lg:mx-4"
-              style={{ backgroundColor: 'var(--color-border-primary)' }}
-            />
-            <div className="scale-100 lg:scale-110">
-              <ThemeToggle />
-            </div>
+            {showThemeToggle && (
+              <>
+                <div
+                  className="h-4 w-px mx-3 lg:mx-4"
+                  style={{ backgroundColor: 'var(--color-border-primary)' }}
+                />
+                <div className="scale-100 lg:scale-110">
+                  <ThemeToggle />
+                </div>
+              </>
+            )}
           </div>
 
-          {/* Mobile Menu Button & Theme Toggle */}
+          {/* Mobile navigation controls */}
           <div className="flex md:hidden items-center space-x-3">
-            <ThemeToggle />
+            {showThemeToggle && <ThemeToggle />}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-md transition-all duration-300"

@@ -73,7 +73,7 @@ describe('PhoneDetector', () => {
   describe('Initial Rendering', () => {
     it('renders without crashing', () => {
       render(<PhoneDetector />)
-      expect(screen.getByText(/^Phone Lunk Detector$/i)).toBeInTheDocument()
+      expect(screen.getByRole('heading', { name: 'Lunk Alarm' })).toBeInTheDocument()
     })
 
     it('renders a custom heading when provided', async () => {

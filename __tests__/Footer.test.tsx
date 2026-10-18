@@ -46,7 +46,7 @@ describe('Footer', () => {
   it('links to the detector and privacy information', () => {
     render(<Footer />)
 
-    expect(screen.getByRole('link', { name: 'Launch detector' })).toHaveAttribute('href', '/demo')
+    expect(screen.getByRole('link', { name: 'Open Lunk Alarm' })).toHaveAttribute('href', '/demo')
     expect(screen.getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy')
   })
 })

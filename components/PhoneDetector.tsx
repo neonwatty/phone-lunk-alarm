@@ -33,7 +33,7 @@ type PhoneDetectorProps = {
 }
 
 export default function PhoneDetector({
-  heading = 'Phone Lunk Detector',
+  heading = 'Lunk Alarm',
   trackingLocation = 'homepage_demo',
   compact = false,
 }: PhoneDetectorProps) {

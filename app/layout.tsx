@@ -143,7 +143,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="apple-touch-icon" href={`${basePath}/images/apple-touch-icon.png`} />
         <link rel="manifest" href={`${basePath}/manifest.json`} />
       </head>
-      <body className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans grid-pattern`}>
+      <body className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

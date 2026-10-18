@@ -89,8 +89,8 @@ export default function PilotInterestForm() {
     <section className="max-w-3xl mx-auto card">
       <h2 className="heading-md mb-4">Tell me about your gym</h2>
       <p className="mb-6" style={{ color: 'var(--color-text-secondary)' }}>
-        Share the basics and Phone Lunk will send a pilot inquiry to the project inbox through a
-        static-site form endpoint. The browser demo still keeps camera processing local.
+        Tell us about your gym and the phone-use problem you want to address.
+        We’ll use these details to discuss a potential pilot.
       </p>
 
       <form className="space-y-5 text-left" action={FORM_ENDPOINT} method="POST" onSubmit={submitLead}>

@@ -1,5 +1,59 @@
 /* Athletic Signal: blue bumper plates, steel, chalk and rubber. */
 @font-face { font-family: 'Barlow Condensed'; src: url('/fonts/barlow-condensed-800.ttf') format('truetype'); font-style: normal; font-weight: 800; font-display: swap; }
+/* Shared app and supporting-page foundation. Page-specific treatments follow. */
+:root {
+  --color-background-primary: #252e3a;
+  --color-background-secondary: #313e4f;
+  --color-background-tertiary: #3c4b5e;
+  --color-background-elevated: #313e4f;
+  --color-text-primary: #f3f5f7;
+  --color-text-secondary: #c3cdd7;
+  --color-text-tertiary: #b0bfce;
+  --color-accent-primary: #a7beff;
+  --color-accent-hover: #dbe3ff;
+  --color-accent-light: #163dc7;
+  --color-border-primary: #687b92;
+  --color-border-secondary: #687b92;
+  --color-border-accent: #a7beff;
+  --gradient-elevated: linear-gradient(#313e4f, #313e4f);
+  --gradient-subtle: var(--gradient-elevated);
+  --gradient-professional: linear-gradient(#f2ce43, #f2ce43);
+}
+.light {
+  --color-background-primary: #d9dfe5;
+  --color-background-secondary: #f3f5f7;
+  --color-background-tertiary: #e5eaf0;
+  --color-background-elevated: #f3f5f7;
+  --color-text-primary: #252e3a;
+  --color-text-secondary: #465362;
+  --color-text-tertiary: #546273;
+  --color-accent-primary: #163dc7;
+  --color-accent-hover: #1233a7;
+  --color-accent-light: #dbe3ff;
+  --color-border-primary: #a1afbd;
+  --color-border-secondary: #a1afbd;
+  --color-border-accent: #163dc7;
+  --gradient-elevated: linear-gradient(#f3f5f7, #f3f5f7);
+  --gradient-subtle: var(--gradient-elevated);
+}
+body, .light body { background-image: none; }
+.heading-xl, .heading-lg, .heading-md, .supporting-page h1 {
+  font-family: 'Barlow Condensed', Impact, sans-serif;
+  font-weight: 800; text-transform: uppercase; line-height: 1; letter-spacing: -.02em;
+}
+.heading-xl, .supporting-page h1 { font-size: clamp(44px, 6vw, 76px); text-wrap: balance; }
+.heading-lg { font-size: clamp(36px, 4vw, 56px); }
+.heading-md { font-size: clamp(28px, 3vw, 38px); }
+.card { border-radius: 4px; box-shadow: none; border-top: 4px solid var(--color-accent-primary); }
+.card:hover { transform: none; box-shadow: none; }
+.btn { border-radius: 4px; min-height: 48px; }
+.btn-primary, .btn-primary:hover { color: #252e3a; box-shadow: 0 3px 0 #a48b29; }
+.btn-secondary { border-color: var(--color-accent-primary); }
+.btn-secondary:hover { color: var(--color-background-primary); }
+:where(a, button, select, input, textarea, summary):focus-visible { outline: 3px solid var(--color-accent-primary); outline-offset: 4px; }
+.supporting-page .prose { --tw-prose-headings: var(--color-text-primary); --tw-prose-body: var(--color-text-secondary); --tw-prose-links: var(--color-accent-primary); }
+@media (max-width: 640px) { .card { padding: 24px 20px; } }
+
 .landing-home, .light .landing-home {
   background: #163dc7;
   --color-text-primary: #f3f5f7;
@@ -74,3 +128,16 @@
   html { scroll-behavior: auto; }
   .detector-page *, .detector-page *::before, .detector-page *::after { animation: none !important; transition: none !important; }
 }
+
+/* Research controls share the app palette without changing benchmark behavior. */
+.model-lab { background: #252e3a; --color-text-primary: #f3f5f7; --color-accent-primary: #a7beff; }
+.model-lab .lab-header { border-color: #687b92; }
+.model-lab .lab-header span, .model-lab .lab-metrics strong { color: #f2ce43; }
+.model-lab .lab-card { background: #313e4f; border-color: #687b92; border-radius: 4px; }
+.model-lab :is(.lab-intro, .lab-card p, .lab-note, .lab-footer, figcaption) { color: #c3cdd7; }
+.model-lab h1, .model-lab h2 { font-family: 'Barlow Condensed', Impact, sans-serif; text-transform: uppercase; }
+.model-lab .lab-controls select { background: #252e3a; border-color: #687b92; border-radius: 4px; }
+.model-lab .landing-launch { background: #f2ce43; color: #252e3a; border-radius: 4px; }
+.model-lab .lab-best { background: #163dc7; color: #f3f5f7; }
+.model-lab :is(th, td, .lab-stop) { border-color: #687b92; }
+.model-lab :is(a, button, select):focus-visible { outline: 3px solid #f2ce43; outline-offset: 4px; }

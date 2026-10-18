@@ -36,3 +36,7 @@ Open **http://phone-lunk.localhost:3107/**. The `.localhost` subdomain resolves 
 ## Deployment
 
 The project is configured for static export and GitHub Pages deployment. Production builds generate the static site in `out/`.
+
+### Vercel previews
+
+`vercel.json` uses `scripts/build-vercel.sh` to prepare the verified GPU export before the normal Next.js build. It uses Python 3.12 and the same pinned model dependencies and parity checks as GitHub CI/Pages. Generated weights remain out of Git; the normal prebuild checksum guard stays enabled.

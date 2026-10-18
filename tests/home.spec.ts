@@ -19,12 +19,15 @@ test.describe('Home Page', () => {
     await expect(headline).toBeVisible()
   })
 
-  test('should display features section', async ({ page }) => {
+  test('should explain the three steps to use the detector', async ({ page }) => {
     await page.goto('/')
 
-    // Check for features section
-    const featuresSection = page.locator('#features')
-    await expect(featuresSection).toBeVisible()
+    const steps = page.locator('#how-it-works')
+    await expect(steps.getByRole('heading', { name: 'Catch phone lunks in the act.' })).toBeVisible()
+    await expect(steps.getByRole('listitem')).toHaveCount(3)
+    for (const name of ['Open the app.', 'Point at a lunk.', 'Put em on blast.']) {
+      await expect(steps.getByRole('heading', { name, exact: true })).toBeVisible()
+    }
   })
 
   test('should have working theme toggle', async ({ page }) => {

@@ -67,6 +67,7 @@ export default function ModelLab() {
     let hasFreshDetection = false
     let lastObservation = -Infinity
     let lastPlaybackTime = -1
+    let stoppedForVisibility = false
     pausedRef.current = false; setPaused(false)
     const usesCameraAdapter = selected === 'r18-o365-fp32' && device === 'webgpu' && mode === 'full'
     let detector: Awaited<ReturnType<typeof loadPhoneModel>> | LivePhoneDetector | null = null
@@ -100,7 +101,7 @@ export default function ModelLab() {
       animation = requestAnimationFrame(drawOverlay)
       setStatus('Running live inference · at least 15 seconds and 20 frames after warmup')
       for (let i=0; !controller.signal.aborted && (continuous || i<21 || performance.now()-measuredStart<15000); i++) {
-        if (document.hidden) { setStatus('Test stopped because the tab was hidden.'); break }
+        if (document.hidden) { stoppedForVisibility = true; setStatus('Test stopped because the tab was hidden.'); break }
         const time = await nextVideoFrame(video, controller.signal)
         if (pausedRef.current) { i--; continue }
         context.drawImage(video,0,0,frame.width,frame.height)
@@ -129,7 +130,7 @@ export default function ModelLab() {
         if (i === 0) measuredStart = performance.now()
         if(i>0) { recorded.push({ms,tracked:!!p,strong:predictions.some(p=>p.class==='cell phone'&&p.score>=.4),time});setMeasurements([...recorded]) }
       }
-      if (!controller.signal.aborted && recorded.length >= 20) setStatus('Run complete')
+      if (!controller.signal.aborted && !stoppedForVisibility && recorded.length >= 20 && performance.now()-measuredStart >= 15000) setStatus('Run complete')
     } catch(error) {
       if (!controller.signal.aborted) setStatus(`Test failed: ${error instanceof Error ? error.message : String(error)}`)
     } finally {

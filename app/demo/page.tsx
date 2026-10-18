@@ -12,16 +12,12 @@ export default function DemoPage() {
       <Header />
       <main className="flex-grow">
         <section className="max-w-5xl mx-auto px-4 pt-8 sm:pt-12 pb-0 text-center">
-          <h1 className="heading-xl mb-3">Phone detector</h1>
-          <p className="text-base md:text-lg max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
-            Point your camera toward a phone. When one is detected, an alarm sounds on your device.
-          </p>
+          <h1 className="heading-xl mb-3">Phone Lunk Detector</h1>
         </section>
         <PhoneDetector
-          heading="Launch the detector"
-          intro="Hold up a phone to test real-time detection. Results depend on lighting, camera angle, and model confidence."
+          heading="Catch phone lunks in the act."
           compact
-          showIntroLinks
+          trackingLocation="demo_page"
         />
       </main>
       <Footer />

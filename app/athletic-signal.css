@@ -141,3 +141,11 @@ body, .light body { background-image: none; }
 .model-lab .lab-best { background: #163dc7; color: #f3f5f7; }
 .model-lab :is(th, td, .lab-stop) { border-color: #687b92; }
 .model-lab :is(a, button, select):focus-visible { outline: 3px solid #f2ce43; outline-offset: 4px; }
+
+/* Keep the camera action ahead of optional setup. */
+.detector-tagline { font-size: 18px; line-height: 1.5; color: var(--color-text-secondary); margin-bottom: 20px; }
+.detector-local-note { text-align: center; color: var(--color-text-secondary); font-size: 12px; margin: 16px 0; }
+.detector-options { margin-top: 20px; }
+.detector-options > .detector-settings { margin-bottom: 16px; }
+.detector-options .detector-model-card { border: 0; border-top: 1px solid var(--color-border-primary); padding: 16px 0; }
+.detector-page .detector-panel { padding-top: 0; }

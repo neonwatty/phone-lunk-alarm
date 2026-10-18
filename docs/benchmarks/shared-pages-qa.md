@@ -18,3 +18,11 @@ Preview: https://phone-lunk-alarm-6agd41gnl-jermwatts-projects.vercel.app/
 - The GPU model reached the Start Camera state on the deployed detector. The narrow model comparison table scrolls within its card rather than expanding the page.
 - No blocking styling defects found; no implementation changes made. This review did not start a camera, submit the pilot form, or repeat physical-iPhone testing.
 - Local detector also reviewed in the browser at http://phone-lunk.localhost:3107/demo/.
+
+## Review fixes and camera-first demo — October 18, 2026
+
+- Renamed the demo to Phone Lunk Detector, with “Catch phone lunks in the act.” as its H2. Removed repeated instructions and descriptions; camera launch now precedes the viewfinder, with model and alarm options in a collapsed Settings panel below it.
+- Recorder stop/cleanup now clears recording state and its timer, including inference-failure recovery. A component regression test starts recording, rejects inference, closes the preview, retries, and successfully starts another recording.
+- A hidden-tab benchmark preserves its interruption status. Completion requires both 20 measured frames and 15 measured seconds. Component tests cover early interruption and normal completion.
+- Both regression tests failed with their respective fixes temporarily removed, then passed after restoration. All 97 Jest tests, TypeScript, ESLint, and six local synthetic-camera/recording Playwright tests pass.
+- Browser inspection at 320px, 390px, and 1440px found no horizontal overflow; reviewed collapsed and expanded settings. The local GPU detector reaches Start Camera. Physical iPhone testing remains deferred.

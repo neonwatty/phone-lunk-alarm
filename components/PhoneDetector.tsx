@@ -28,15 +28,13 @@ const MAX_RECORDING_DURATION = 30 // seconds
 
 type PhoneDetectorProps = {
   heading?: string
-  intro?: string
-  showIntroLinks?: boolean
+  trackingLocation?: 'demo_page' | 'homepage_demo'
   compact?: boolean
 }
 
 export default function PhoneDetector({
-  heading = 'Phone detector',
-  intro = "Open your camera to begin real-time phone detection.",
-  showIntroLinks = false,
+  heading = 'Phone Lunk Detector',
+  trackingLocation = 'homepage_demo',
   compact = false,
 }: PhoneDetectorProps) {
   const webcamRef = useRef<Webcam>(null)
@@ -117,7 +115,6 @@ export default function PhoneDetector({
 
   // Watermark state
   const [watermarkEnabled, setWatermarkEnabled] = useState(true)
-  const trackingLocation = showIntroLinks ? 'demo_page' : 'homepage_demo'
 
   // Load watermark preference on mount
   useEffect(() => {
@@ -438,6 +435,11 @@ export default function PhoneDetector({
     }
 
     mediaRecorder.onstop = () => {
+      setIsRecording(false)
+      if (recordingTimerRef.current) {
+        clearInterval(recordingTimerRef.current)
+        recordingTimerRef.current = null
+      }
       const blob = new Blob(recordedChunksRef.current, { type: mimeType })
       setRecordedBlob(blob)
       setShowPreview(true)
@@ -548,6 +550,7 @@ export default function PhoneDetector({
       // Stop recording if active
       if (mediaRecorderRef.current?.state === 'recording') {
         mediaRecorderRef.current.stop()
+        setIsRecording(false)
       }
       if (recordingTimerRef.current) {
         clearInterval(recordingTimerRef.current)
@@ -650,59 +653,9 @@ export default function PhoneDetector({
   return (
     <section id="demo" className="detector-panel max-w-5xl mx-auto px-4 py-8 sm:py-12">
       <div className="text-center mb-6">
-        <h2 className={compact ? 'sr-only' : 'heading-lg mb-4'} style={{ color: 'var(--color-text-primary)' }}>
+        <h2 className={compact ? 'detector-tagline' : 'heading-lg mb-4'} style={{ color: 'var(--color-text-primary)' }}>
           {heading}
         </h2>
-
-        {/* Instructions */}
-        <details className="detector-help max-w-2xl mx-auto mb-4">
-          <summary>How to use the detector</summary>
-          <p className="text-base md:text-lg mb-4" style={{ color: 'var(--color-text-secondary)' }}>
-            {intro}
-          </p>
-          <ol className="text-left space-y-3 text-base md:text-lg" style={{ color: 'var(--color-text-secondary)' }}>
-            <li className="flex items-start gap-3">
-              <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>1.</span>
-              <span><strong style={{ color: 'var(--color-text-primary)' }}>Allow camera access</strong> to start detection</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>2.</span>
-              <span><strong style={{ color: 'var(--color-text-primary)' }}>Point toward a phone</strong> within the camera view</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="font-bold text-xl" style={{ color: 'var(--color-accent-primary)' }}>3.</span>
-              <span><strong style={{ color: 'var(--color-text-primary)' }}>Hear the alarm</strong> on your device when a phone is detected</span>
-            </li>
-          </ol>
-        </details>
-
-        <div className="detector-privacy text-sm">
-          Your camera feed stays private. All processing happens on your device.
-        </div>
-
-        {showIntroLinks && (
-          <div className="mt-2 text-sm">
-            <Link className="underline" href="/privacy">How camera privacy works</Link>
-          </div>
-        )}
-
-        <div className="detector-model-card mx-auto mt-5 text-left">
-          <label htmlFor="detector-model" className="block font-semibold mb-2">Detection model</label>
-          <select id="detector-model" aria-describedby="detector-model-description" value={selectedModel || ''} disabled={isCameraActive} onChange={event => changeModel(event.target.value as DetectorModelId)} className="detector-select w-full min-h-12 p-3 rounded-lg border" style={{background:'var(--color-bg-secondary)',color:'var(--color-text-primary)'}}>
-            {!selectedModel && <option value="">Choosing model…</option>}
-            {Object.entries(DETECTOR_MODELS).map(([id,model])=><option key={id} value={id}>{model.name}</option>)}
-          </select>
-          <p id="detector-model-description" className="text-sm mt-2" style={{color:'var(--color-text-secondary)'}}>{selectedModel && DETECTOR_MODELS[selectedModel].description} {isCameraActive && 'Stop the camera to change models.'}</p>
-          <Link href="/model-lab/" className="detector-lab-link inline-flex items-center underline text-sm mt-1">Review detection on the example clip</Link>
-        </div>
-
-        <details className="detector-settings text-left mt-4">
-          <summary>Alarm settings <span>{selectedSound === 'none' || volume === 0 ? 'Sound off' : `${Math.round(volume * 100)}% volume`}</span></summary>
-          <SoundSelector selectedSound={selectedSound} volume={volume} onSoundChange={changeSound} onVolumeChange={changeVolume} onPreview={previewSound} />
-          <details className="detector-appearance"><summary>Visual alert settings</summary>
-            <ThemeSelector selectedTheme={selectedTheme} selectedIntensity={selectedIntensity} onThemeChange={handleThemeChange} onIntensityChange={handleIntensityChange} />
-          </details>
-        </details>
 
         {/* Camera Toggle Button */}
         {!isLoading && !error && isCompatible && (
@@ -750,7 +703,6 @@ export default function PhoneDetector({
             <ArrowPathIcon className="animate-spin w-8 h-8 mx-auto mb-4" aria-hidden="true" />
             <p className="text-white text-xl">Loading AI model...</p>
             <p className="text-sm mt-2">{loadMessage}</p>
-            <p className="text-gray-400 mt-2">The first load downloads the selected model. Keep this page open; you can choose another model above.</p>
           </div>
         )}
 
@@ -778,8 +730,7 @@ export default function PhoneDetector({
           <div className="detector-placeholder relative rounded-2xl overflow-hidden flex items-center justify-center">
             <div className="text-center p-6">
               <CameraIcon className="w-9 h-9 mx-auto mb-3" aria-hidden="true" />
-              <p className="text-white text-xl font-bold mb-2">Camera is off</p>
-              <p className="text-gray-400">Tap Start Camera to begin detection</p>
+              <p className="text-white text-xl font-bold">Camera is off</p>
             </div>
           </div>
         )}
@@ -920,9 +871,30 @@ export default function PhoneDetector({
             </div>
           </div>
         )}
-
-        <p className="detector-footnote">Detection depends on lighting, distance, and camera angle. Frames stay on your device.</p>
       </div>
+
+      <p className="detector-local-note">Camera stays on your device.</p>
+      <details className="detector-settings detector-options text-left">
+        <summary>Settings <span>{selectedSound === 'none' || volume === 0 ? 'Sound off' : 'Sound on'}</span></summary>
+        <div className="detector-model-card mx-auto mt-4 text-left">
+          <label htmlFor="detector-model" className="block font-semibold mb-2">Detection model</label>
+          <select id="detector-model" aria-describedby="detector-model-description" value={selectedModel || ''} disabled={isCameraActive} onChange={event => changeModel(event.target.value as DetectorModelId)} className="detector-select w-full min-h-12 p-3 rounded-lg border" style={{background:'var(--color-bg-secondary)',color:'var(--color-text-primary)'}}>
+            {!selectedModel && <option value="">Choosing model…</option>}
+            {Object.entries(DETECTOR_MODELS).map(([id,model])=><option key={id} value={id}>{model.name}</option>)}
+          </select>
+          <p id="detector-model-description" className="text-sm mt-2" style={{color:'var(--color-text-secondary)'}}>{selectedModel && DETECTOR_MODELS[selectedModel].description} {isCameraActive && 'Stop the camera to change models.'}</p>
+          <Link href="/model-lab/" className="detector-lab-link inline-flex items-center underline text-sm mt-1">Compare models</Link>
+        </div>
+
+        <details className="detector-settings text-left mt-4">
+          <summary>Alarm settings <span>{selectedSound === 'none' || volume === 0 ? 'Sound off' : `${Math.round(volume * 100)}% volume`}</span></summary>
+          <SoundSelector selectedSound={selectedSound} volume={volume} onSoundChange={changeSound} onVolumeChange={changeVolume} onPreview={previewSound} />
+          <details className="detector-appearance"><summary>Visual alert settings</summary>
+            <ThemeSelector selectedTheme={selectedTheme} selectedIntensity={selectedIntensity} onThemeChange={handleThemeChange} onIntensityChange={handleIntensityChange} />
+          </details>
+        </details>
+
+      </details>
 
       {/* Global alarm effect */}
       <AlarmEffect active={phoneDetected} theme={selectedTheme} intensity={selectedIntensity} />

@@ -35,7 +35,7 @@ describe('seo helpers', () => {
 
     expect(new Set(titles).size).toBe(routes.length)
     expect(new Set(descriptions).size).toBe(routes.length)
-    expect(pageMetadata['/demo'].title).toContain('Launch the Detector')
+    expect(pageMetadata['/demo'].title).toContain('Phone Lunk Detector')
     expect(pageMetadata['/waitlist'].title).toContain('Gym Pilot')
   })
 
@@ -55,7 +55,7 @@ describe('seo helpers', () => {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Launch the Detector | Phone Lunk screenshot',
+        alt: 'Phone Lunk Detector | Live Camera screenshot',
       },
     ])
     expect(metadata.twitter?.images).toEqual(['/images/og-image.jpg'])

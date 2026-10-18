@@ -51,6 +51,11 @@ jest.mock('@/components/AlarmEffect', () => ({
   ),
 }))
 
+jest.mock('@/components/RecordingPreviewModal', () => ({
+  __esModule: true,
+  default: ({onClose}: {onClose: () => void}) => <button onClick={onClose}>Close recording preview</button>,
+}))
+
 describe('PhoneDetector', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -68,7 +73,7 @@ describe('PhoneDetector', () => {
   describe('Initial Rendering', () => {
     it('renders without crashing', () => {
       render(<PhoneDetector />)
-      expect(screen.getByText(/^Phone detector$/i)).toBeInTheDocument()
+      expect(screen.getByText(/^Phone Lunk Detector$/i)).toBeInTheDocument()
     })
 
     it('renders a custom heading when provided', async () => {
@@ -84,7 +89,7 @@ describe('PhoneDetector', () => {
 
     it('displays privacy notice', () => {
       render(<PhoneDetector />)
-      expect(screen.getByText(/Your camera feed stays private/i)).toBeInTheDocument()
+      expect(screen.getByText(/Camera stays on your device/i)).toBeInTheDocument()
     })
   })
 
@@ -453,6 +458,49 @@ describe('PhoneDetector', () => {
     })
   })
 
+  it('clears recording state after inference failure and permits a new recording after retry', async () => {
+    const originalRecorder = global.MediaRecorder
+    const capture = HTMLCanvasElement.prototype.captureStream
+    const context = HTMLCanvasElement.prototype.getContext
+    const errorLog = jest.spyOn(console, 'error').mockImplementation(() => {})
+    let recorder!: TestRecorder
+    class TestRecorder {
+      state = 'inactive'
+      onstop: (() => void) | null = null
+      static isTypeSupported() { return true }
+      constructor() { recorder = this }
+      start() { this.state = 'recording' }
+      stop() { this.state = 'inactive'; this.onstop?.() }
+    }
+    global.MediaRecorder = TestRecorder as unknown as typeof MediaRecorder
+    HTMLCanvasElement.prototype.captureStream = jest.fn().mockReturnValue({})
+    const drawing = HTMLCanvasElement.prototype.getContext('2d')
+    HTMLCanvasElement.prototype.getContext = jest.fn().mockReturnValue({...drawing, drawImage: jest.fn()})
+    mockVideo = document.createElement('video')
+    mockDetect.mockRejectedValueOnce(new Error('Inference failed'))
+    const user = userEvent.setup({delay:null})
+    const view = render(<PhoneDetector />)
+    try {
+      await user.click(await screen.findByRole('button', {name:'Start Camera'}))
+      await user.click(screen.getByRole('button', {name:'Start recording'}))
+      expect(recorder.state).toBe('recording')
+      await act(async () => { jest.advanceTimersByTime(100) })
+      expect(recorder.state).toBe('inactive')
+      await user.click(screen.getByRole('button', {name:'Close recording preview'}))
+      await user.click(screen.getByRole('button', {name:'Try Again'}))
+      expect(screen.queryByRole('button', {name:'Stop recording'})).not.toBeInTheDocument()
+      await user.click(screen.getByRole('button', {name:'Start recording'}))
+      expect(recorder.state).toBe('recording')
+      await user.click(screen.getByRole('button', {name:'Stop recording'}))
+    } finally {
+      view.unmount()
+      global.MediaRecorder = originalRecorder
+      HTMLCanvasElement.prototype.captureStream = capture
+      HTMLCanvasElement.prototype.getContext = context
+      errorLog.mockRestore()
+    }
+  })
+
   describe('Detection Logic', () => {
     it('does not clear the canvas by resizing while the next inference is pending', async () => {
       const play = jest.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue()
@@ -582,6 +630,7 @@ describe('PhoneDetector', () => {
     it('offers sound settings before camera access', async () => {
       const user = userEvent.setup({delay:null})
       render(<PhoneDetector />)
+      await user.click(screen.getByText(/^Settings/))
       await user.click(screen.getByText(/Alarm settings/))
       expect(screen.getByLabelText('Alarm sound')).toBeVisible()
       expect(screen.getByLabelText('Volume')).toBeVisible()

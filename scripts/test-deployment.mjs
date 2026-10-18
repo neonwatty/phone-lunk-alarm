@@ -117,12 +117,12 @@ async function testMetaTags() {
     const html = result.data;
 
     const tests = [
-      { name: 'OG Image tag', pattern: /<meta[^>]*property="og:image"[^>]*content="https:\/\/www\.phone-lunk\.app\/images\/og-image\.jpg"/ },
+      { name: 'OG Image tag', pattern: new RegExp(`<meta[^>]*property="og:image"[^>]*content="${CANONICAL_SITE_URL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/images/og-image\\.jpg"`) },
       { name: 'OG Image Alt text', pattern: /<meta[^>]*property="og:image:alt"[^>]*content="[^"]*Phone Lunk/ },
       { name: 'Twitter Card', pattern: /<meta[^>]*name="twitter:card"[^>]*content="summary_large_image"/ },
       { name: 'Twitter Handle', pattern: /<meta[^>]*name="twitter:creator"[^>]*content="@neonwatty"/ },
       { name: 'Twitter Site', pattern: /<meta[^>]*name="twitter:site"[^>]*content="@neonwatty"/ },
-      { name: 'Theme Color', pattern: /<meta[^>]*name="theme-color"[^>]*content="#A4278D"/ },
+      { name: 'Theme Color', pattern: /<meta[^>]*name="theme-color"[^>]*content="#163dc7"/ },
       { name: 'Apple Touch Icon', pattern: /<link[^>]*rel="apple-touch-icon"[^>]*href="\/images\/apple-touch-icon/ },
       { name: 'Manifest Link', pattern: /<link[^>]*rel="manifest"[^>]*href="\/manifest\.json"/ },
     ];
@@ -167,8 +167,8 @@ async function testManifest() {
       const tests = [
         { name: 'App Name', check: () => manifest.name === 'Phone Lunk - AI Phone Detection Demo for Gyms' },
         { name: 'Short Name', check: () => manifest.short_name === 'Phone Lunk' },
-        { name: 'Theme Color', check: () => manifest.theme_color === '#A4278D' },
-        { name: 'Background Color', check: () => manifest.background_color === '#111827' },
+        { name: 'Theme Color', check: () => manifest.theme_color === '#163dc7' },
+        { name: 'Background Color', check: () => manifest.background_color === '#163dc7' },
         { name: 'Relative Start URL', check: () => manifest.start_url === '.' },
         { name: 'Has Icons', check: () => manifest.icons && manifest.icons.length >= 6 },
         { name: 'Has 192x192 icon', check: () => manifest.icons.some(i => i.sizes === '192x192') },

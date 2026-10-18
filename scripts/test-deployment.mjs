@@ -11,11 +11,11 @@ import http from 'http';
 const SITE_URL = (
   process.env.DEPLOYMENT_TEST_URL ||
   process.env.NEXT_PUBLIC_SITE_URL ||
-  'https://www.phone-lunk.app'
+  'https://phone-lunk.neonwatty.com'
 ).replace(/\/$/, '');
 const CANONICAL_SITE_URL = (
   process.env.DEPLOYMENT_TEST_CANONICAL_URL ||
-  'https://www.phone-lunk.app'
+  'https://phone-lunk.neonwatty.com'
 ).replace(/\/$/, '');
 const TIMEOUT = 10000; // 10 seconds
 const EXPECTED_SITEMAP_PATHS = [

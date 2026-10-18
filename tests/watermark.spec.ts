@@ -33,18 +33,20 @@ test.beforeAll(async () => {
   }
 })
 
+// Exercise recording with the supported CPU/WebGL model on GPU-less CI runners.
+test.beforeEach(async ({ context }) => {
+  await context.grantPermissions(['camera'])
+  await context.addInitScript(() => localStorage.setItem('phoneLunkDetectorModel', 'coco-ssd'))
+})
+
 test.describe('Watermark Feature', () => {
   // Increase timeout for tests that involve recording
   test.setTimeout(90000)
 
-  test.beforeEach(async ({ context }) => {
-    // Grant camera permissions
-    await context.grantPermissions(['camera'])
-  })
 
   test('camera starts with fake video capture', async ({ page }) => {
     test.slow() // Mark as slow test
-    await page.goto('/')
+    await page.goto('/demo/')
     await page.waitForLoadState('networkidle')
 
     // Find and click Start Camera button
@@ -62,7 +64,7 @@ test.describe('Watermark Feature', () => {
   test('recording produces video file', async ({ page }) => {
     test.slow() // Mark as slow test - recording needs time
 
-    await page.goto('/')
+    await page.goto('/demo/')
     await page.waitForLoadState('networkidle')
 
     // Start camera
@@ -91,7 +93,7 @@ test.describe('Watermark Feature', () => {
     await page.locator('button[title="Stop recording"]').evaluate((el: HTMLElement) => el.click())
 
     // Wait for preview modal with longer timeout
-    await expect(page.locator('text=🎬 Your Clip')).toBeVisible({ timeout: 20000 })
+    await expect(page.getByRole('dialog', { name: 'Your recording' })).toBeVisible({ timeout: 20000 })
 
     // Small delay to let video render
     await page.waitForTimeout(1000)
@@ -113,7 +115,7 @@ test.describe('Watermark Feature', () => {
   test('downloaded video has correct filename format', async ({ page }) => {
     test.slow() // Mark as slow test - recording + download needs time
 
-    await page.goto('/')
+    await page.goto('/demo/')
     await page.waitForLoadState('networkidle')
 
     // Start camera
@@ -137,7 +139,7 @@ test.describe('Watermark Feature', () => {
     await page.locator('button[title="Stop recording"]').evaluate((el: HTMLElement) => el.click())
 
     // Wait for preview modal
-    await expect(page.locator('text=🎬 Your Clip')).toBeVisible({ timeout: 20000 })
+    await expect(page.getByRole('dialog', { name: 'Your recording' })).toBeVisible({ timeout: 20000 })
 
     // Wait for download button to be ready
     const downloadButton = page.locator('button:has-text("Download")')
@@ -164,7 +166,7 @@ test.describe('Watermark Feature', () => {
   })
 
   test('watermark is enabled by default in localStorage', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/demo/')
     await page.waitForLoadState('networkidle')
 
     // Start camera to initialize the component and localStorage
@@ -186,7 +188,7 @@ test.describe('Watermark Feature', () => {
   })
 
   test('watermark preference persists across page reloads', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/demo/')
     await page.waitForLoadState('networkidle')
 
     // Set watermark preference to false
@@ -217,7 +219,7 @@ test.describe('Watermark Rendering Verification', () => {
     // This test verifies the watermark rendering code exists
     // by checking the canvas drawing logic via JavaScript evaluation
 
-    await page.goto('/')
+    await page.goto('/demo/')
     await page.waitForLoadState('networkidle')
 
     // Start camera

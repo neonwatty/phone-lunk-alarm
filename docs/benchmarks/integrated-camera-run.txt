@@ -1,0 +1,241 @@
+Browser tab: 3, Title: "Phone detector comparison | Phone Lunk", URL: "http://localhost:3107/model-lab/".
+0 AXWebArea Phone detector comparison | Phone Lunk, URL: localhost:3107/model-lab/
+	1 container
+		2 link Description: ← Phone Lunk, Value: localhost:3107/
+		3 text MODEL COMPARISON
+	4 heading A smaller detector. Speed and detection coverage., Value: 1
+		5 text A smaller detector.
+		6 text Speed and detection coverage.
+	7 text Compare model size, phone-detection coverage, and actual processing speed on the gym clip. This page tests recorded frames—not your camera.
+	8 container
+		9 heading Initial screening · nine frames, Value: 2
+			10 text Initial screening · nine frames
+		11 text Same clip and thresholds: 0.40 to acquire, 0.18 to continue a nearby track. Coverage counts accepted phone tracks; it is not a general accuracy score. Confirm the box visually in the live check below.
+		12 table
+			13 row
+				14 cell
+					15 text Model
+				16 cell
+					17 text Weights
+				18 cell
+					19 text Frames ≥ 0.40
+				20 cell
+					21 text Tracked frames
+				22 cell
+					23 text CPU median
+			24 row
+				25 cell
+					26 text R50 · FP32 (baseline)
+				27 cell
+					28 text 175.4  MB
+				29 cell
+					30 text 3  /  9
+				31 cell
+					32 text 7  /  9
+				33 cell
+					34 text 240  ms
+			35 row
+				36 cell
+					37 text R50 · INT8
+				38 cell
+					39 text 45.5  MB
+				40 cell
+					41 text 2  /  9
+				42 cell
+					43 text 5  /  9
+				44 cell
+					45 text 127  ms
+			46 row
+				47 cell
+					48 text R18 · FP32
+				49 cell
+					50 text 82.6  MB
+				51 cell
+					52 text 2  /  9
+				53 cell
+					54 text 6  /  9
+				55 cell
+					56 text 116  ms
+			57 row
+				58 cell
+					59 text R18 · INT8
+				60 cell
+					61 text 21.7  MB
+				62 cell
+					63 text 1  /  9
+				64 cell
+					65 text 1  /  9
+				66 cell
+					67 text 71  ms
+			68 row
+				69 cell
+					70 text R18 Objects365 · FP32
+				71 cell
+					72 text 82.6  MB
+				73 cell
+					74 text 4  /  9
+				75 cell
+					76 text 9  /  9
+				77 cell
+					78 text 118  ms
+			79 row
+				80 cell
+					81 text R18 Objects365 · INT8
+				82 cell
+					83 text 21.7  MB
+				84 cell
+					85 text 1  /  9
+				86 cell
+					87 text 9  /  9
+				88 cell
+					89 text 72  ms
+			90 row
+				91 cell
+					92 text R34 · INT8
+				93 cell
+					94 text 33.3  MB
+				95 cell
+					96 text 0  /  9
+				97 cell
+					98 text 0  /  9
+				99 cell
+					100 text 94  ms
+		101 text All rows use one full-frame pass. Node / ONNX Runtime on  Apple M5 Max ; model loading and warmup excluded. Browser and phone timings will differ. The earlier R50 two-pass preview scored  9 /9 at  478  ms.
+	102 container
+		103 heading Local results, Value: 2
+			104 text Local results
+		105 text The 21.7 MB R18 Objects365 INT8 model tracked 44 of 45 decoded frames, acquiring on the second frame. Its 82.6 MB FP32 version tracked 45 of 45. Only 11 and 19 frames respectively reached the acquisition threshold independently.
+		106 table Earlier desktop runs · WebAssembly · 20 measured frames
+			107 text Earlier desktop runs · WebAssembly · 20 measured frames
+			108 row
+				109 cell
+					110 text Model / input
+				111 cell
+					112 text Median
+				113 cell
+					114 text P95
+			115 row
+				116 cell
+					117 text R50 FP32 · two passes
+				118 cell
+					119 text 4946  ms
+				120 cell
+					121 text 4982  ms
+			122 row
+				123 cell
+					124 text R18 Objects365 FP32 · one pass
+				125 cell
+					126 text 1136  ms
+				127 cell
+					128 text 1181  ms
+			129 row
+				130 cell
+					131 text R18 Objects365 INT8 · one pass
+				132 cell
+					133 text 1162  ms
+				134 cell
+					135 text 1187  ms
+		136 heading GPU compatibility fixed · FP32, Value: 2
+			137 text GPU compatibility fixed · FP32
+		138 text The verified 82.5 MB export runs on WebGPU. It matches the CPU phone boxes on nine identical clip samples and keeps the blank negative clear. The INT8 GPU export failed numerical validation and is disabled.
+		139 table Updated runtime · distinct source frames · full-frame pass
+			140 text Updated runtime · distinct source frames · full-frame pass
+			141 row
+				142 cell
+					143 text Model / runtime
+				144 cell
+					145 text Median
+				146 cell
+					147 text P95
+				148 cell
+					149 text Tracked
+			150 row
+				151 cell
+					152 text FP32 · WebGPU · run 1
+				153 cell
+					154 text 38  ms
+				155 cell
+					156 text 48  ms
+				157 cell
+					158 text 150 / 150
+			159 row
+				160 cell
+					161 text FP32 · WebGPU · run 2
+				162 cell
+					163 text 38  ms
+				164 cell
+					165 text 48  ms
+				166 cell
+					167 text 151 / 151
+			168 row
+				169 cell
+					170 text FP32 · WebAssembly
+				171 cell
+					172 text 1135  ms
+				173 cell
+					174 text 1137  ms
+				175 cell
+					176 text 8 / 20
+		177 text The GPU keeps up with this 10 fps clip across repeated loops. Phone performance and broader detection accuracy still require testing. Each GPU run spans at least 15 seconds; model loading is excluded. Measured October 15, 2026, on Apple M5 Max. One recorded gym clip and a blank negative control; this does not establish general accuracy. Runtime downloads and model loading are excluded from frame timing.
+	178 container
+		179 heading Live browser check, Value: 2
+			180 text Live browser check
+		181 text Inference runs continuously in a worker. The result panel shows the exact frame analyzed, so slow inference cannot masquerade as smooth tracking. No precomputed boxes. R18 Objects365 FP32 with WebGPU and one pass uses the same detector adapter as the camera. Model
+		182 pop up button (collapsed, settable) Model, Value: R18 Objects365 · FP32, Secondary Actions: Expand
+			183 menu
+				184 R50 · FP32 (baseline)
+				185 R50 · INT8
+				186 R18 · FP32
+				187 R18 · INT8
+				188 (selected) R18 Objects365 · FP32
+				189 R18 Objects365 · INT8
+				190 R34 · INT8
+		191 text Input
+		192 pop up button (collapsed, settable) Input, Value: Full frame · one pass, Secondary Actions: Expand
+			193 menu
+				194 (selected) Full frame · one pass
+				195 Full frame + center crop · two passes
+		196 text Runtime
+		197 pop up button (collapsed, settable) Runtime, Value: WebGPU, Secondary Actions: Expand
+			198 menu
+				199 (selected) WebGPU
+				200 WebAssembly · CPU
+		201 button Run live check
+		202 button Validate FP32 GPU against CPU
+		203 text Run complete
+		215 container
+			216 button
+			217 button
+			218 pop up button
+			219 slider video time scrubber
+		210 text Input · 10 source frames / sec
+		211 image Latest analyzed frame with model detection box
+		212 text Phone detected · score 0.44 · source 2.00s
+		213 text 37 ms Median frame processing 27.1 Inference capacity / sec 149  /  150 Live sampled frames with a track Runtime for next run:  WebGPU . GPU testing requires the locally prepared FP32 export (see SETUP.md). This is the current computer—not an iPhone benchmark. A phone trial is still required. Each new source frame is sampled once; inference capacity excludes waiting for the 10 fps clip. Detection misses disappear rather than being filled with a guessed box.
+		220 table Runs in this browser session
+			221 text Runs in this browser session
+			222 row
+				223 cell
+					224 text Run
+				225 cell
+					226 text Median
+				227 cell
+					228 text P95
+				229 cell
+					230 text Frames ≥ 0.40
+				231 cell
+					232 text Tracked
+			233 row
+				234 cell
+					235 text R18 Objects365 · FP32 / one pass / webgpu
+				236 cell
+					237 text 37  ms
+				238 cell
+					239 text 43  ms
+				240 cell
+					241 text 59 / 150
+				242 cell
+					243 text 149 / 150
+	214 text Local research preview · no camera access · no frame uploads
+
+The focused UI element is 0 AXWebArea Phone detector comparison | Phone Lunk, URL: localhost:3107/model-lab/

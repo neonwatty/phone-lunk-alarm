@@ -19,13 +19,13 @@ const sitemapConfig = require('../next-sitemap.config.js')
 
 describe('seo helpers', () => {
   it('uses the www canonical domain', () => {
-    expect(CANONICAL_SITE_URL).toBe('https://www.phone-lunk.app')
+    expect(CANONICAL_SITE_URL).toBe('https://phone-lunk.neonwatty.com')
   })
 
   it('builds trailing-slash canonical URLs', () => {
-    expect(buildCanonicalUrl('/')).toBe('https://www.phone-lunk.app/')
-    expect(buildCanonicalUrl('/demo')).toBe('https://www.phone-lunk.app/demo/')
-    expect(buildCanonicalUrl('gym-phone-policy')).toBe('https://www.phone-lunk.app/gym-phone-policy/')
+    expect(buildCanonicalUrl('/')).toBe('https://phone-lunk.neonwatty.com/')
+    expect(buildCanonicalUrl('/demo')).toBe('https://phone-lunk.neonwatty.com/demo/')
+    expect(buildCanonicalUrl('gym-phone-policy')).toBe('https://phone-lunk.neonwatty.com/gym-phone-policy/')
   })
 
   it('defines unique metadata for core public routes', () => {
@@ -35,7 +35,7 @@ describe('seo helpers', () => {
 
     expect(new Set(titles).size).toBe(routes.length)
     expect(new Set(descriptions).size).toBe(routes.length)
-    expect(pageMetadata['/demo'].title).toContain('AI Phone Detector Demo')
+    expect(pageMetadata['/demo'].title).toContain('Phone Lunk Detector')
     expect(pageMetadata['/waitlist'].title).toContain('Gym Pilot')
   })
 
@@ -48,14 +48,14 @@ describe('seo helpers', () => {
   it('builds page metadata with canonical, social URLs, and fallback images', () => {
     const metadata = buildPageMetadata('/demo')
 
-    expect(metadata.alternates?.canonical).toBe('https://www.phone-lunk.app/demo/')
-    expect(metadata.openGraph?.url).toBe('https://www.phone-lunk.app/demo/')
+    expect(metadata.alternates?.canonical).toBe('https://phone-lunk.neonwatty.com/demo/')
+    expect(metadata.openGraph?.url).toBe('https://phone-lunk.neonwatty.com/demo/')
     expect(metadata.openGraph?.images).toEqual([
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'AI Phone Detector Demo for Gyms | Phone Lunk screenshot',
+        alt: 'Phone Lunk Detector | Live Camera screenshot',
       },
     ])
     expect(metadata.twitter?.images).toEqual(['/images/og-image.jpg'])
@@ -78,8 +78,8 @@ describe('seo helpers', () => {
     expect(siteConfig.site).toMatchObject({
       name: 'Phone Lunk',
       tagline: 'AI Phone Detection Demo for Gyms',
-      description: 'A playful AI phone detector demo for gyms exploring how privacy-first kiosk alerts could reduce equipment hogging and improve gym etiquette.',
-      url: 'https://www.phone-lunk.app',
+      description: 'Detect phones with your camera and sound an alarm on your device. Camera processing stays in your browser.',
+      url: 'https://phone-lunk.neonwatty.com',
       keywords: [
         'gym phone detection',
         'AI phone detector demo',
@@ -95,10 +95,9 @@ describe('seo helpers', () => {
       description: pageMetadata['/'].description,
     })
     expect(siteConfig.navigation).toEqual([
-      { name: 'Demo', href: '/demo' },
+      { name: 'Launch Detector', href: '/demo' },
       { name: 'How It Works', href: '/#how-it-works' },
-      { name: 'Features', href: '/#features' },
-      { name: 'Gym Pilot', href: '/waitlist' },
+      { name: 'Privacy', href: '/privacy' },
     ])
   })
 
@@ -138,7 +137,7 @@ describe('seo helpers', () => {
   })
 
   it('uses canonical sitemap domain and route priorities', async () => {
-    expect(sitemapConfig.siteUrl).toBe('https://www.phone-lunk.app')
+    expect(sitemapConfig.siteUrl).toBe('https://phone-lunk.neonwatty.com')
 
     await expect(sitemapConfig.transform(sitemapConfig, '/demo')).resolves.toMatchObject({
       changefreq: 'weekly',
@@ -157,17 +156,17 @@ describe('seo helpers', () => {
     }
   })
 
-  it('keeps robots.txt pointed at the www sitemap host', () => {
+  it('keeps robots.txt pointed at the canonical subdomain', () => {
     const robotsTxt = readFileSync(join(process.cwd(), 'public/robots.txt'), 'utf8')
 
-    expect(robotsTxt).toContain('Sitemap: https://www.phone-lunk.app/sitemap.xml')
+    expect(robotsTxt).toContain('Sitemap: https://phone-lunk.neonwatty.com/sitemap.xml')
     expect(robotsTxt).not.toContain('Sitemap: https://phone-lunk.app/sitemap.xml')
   })
 
   it('keeps the static export CNAME aligned with the canonical host', () => {
     const cname = readFileSync(join(process.cwd(), 'public/CNAME'), 'utf8').trim()
 
-    expect(cname).toBe('www.phone-lunk.app')
+    expect(cname).toBe('phone-lunk.neonwatty.com')
   })
 
   it('keeps the web manifest basePath-safe', () => {
@@ -183,13 +182,13 @@ describe('seo helpers', () => {
 
     expect(deployWorkflow).toContain('test-deployment:')
     expect(deployWorkflow).toContain('node scripts/test-deployment.mjs')
-    expect(deployWorkflow).toContain("DEPLOYMENT_TEST_URL: 'https://www.phone-lunk.app'")
-    expect(deployWorkflow).toContain("DEPLOYMENT_TEST_CANONICAL_URL: 'https://www.phone-lunk.app'")
+    expect(deployWorkflow).toContain("DEPLOYMENT_TEST_URL: 'https://phone-lunk.neonwatty.com'")
+    expect(deployWorkflow).toContain("DEPLOYMENT_TEST_CANONICAL_URL: 'https://phone-lunk.neonwatty.com'")
     expect(deploymentScript).toContain('process.env.DEPLOYMENT_TEST_URL')
     expect(deploymentScript).toContain('process.env.DEPLOYMENT_TEST_CANONICAL_URL')
   })
 
-  it('keeps the canonical sitemap domain when deployment env uses the apex host', () => {
+  it('keeps the canonical sitemap domain when deployment env still uses the legacy host', () => {
     const originalSiteUrl = process.env.NEXT_PUBLIC_SITE_URL
     process.env.NEXT_PUBLIC_SITE_URL = 'https://phone-lunk.app'
     jest.resetModules()
@@ -197,7 +196,7 @@ describe('seo helpers', () => {
     try {
       const configWithDeployEnv = require('../next-sitemap.config.js')
 
-      expect(configWithDeployEnv.siteUrl).toBe('https://www.phone-lunk.app')
+      expect(configWithDeployEnv.siteUrl).toBe('https://phone-lunk.neonwatty.com')
     } finally {
       if (originalSiteUrl === undefined) {
         delete process.env.NEXT_PUBLIC_SITE_URL
@@ -215,12 +214,12 @@ describe('structured data helpers', () => {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Phone Lunk',
-      url: 'https://www.phone-lunk.app/',
+      url: 'https://phone-lunk.neonwatty.com/',
       description: pageMetadata['/'].description,
       publisher: {
         '@type': 'Organization',
         name: 'Phone Lunk',
-        url: 'https://www.phone-lunk.app/',
+        url: 'https://phone-lunk.neonwatty.com/',
       },
       creator: {
         '@type': 'Person',
@@ -237,7 +236,7 @@ describe('structured data helpers', () => {
       name: 'Phone Lunk',
       applicationCategory: 'BrowserApplication',
       operatingSystem: 'Web',
-      url: 'https://www.phone-lunk.app/demo/',
+      url: 'https://phone-lunk.neonwatty.com/demo/',
       description: pageMetadata['/demo'].description,
       offers: {
         '@type': 'Offer',

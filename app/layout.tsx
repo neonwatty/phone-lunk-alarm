@@ -8,6 +8,7 @@ import Script from 'next/script'
 import siteConfig from '@/site.config.mjs'
 import { CANONICAL_SITE_URL, buildCanonicalUrl, pageMetadata } from '@/lib/seo'
 import './globals.css'
+import './athletic-signal.css'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,7 +32,7 @@ const jetbrainsMono = JetBrains_Mono({
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 export const viewport: Viewport = {
-  themeColor: '#A4278D',
+  themeColor: '#163dc7',
 }
 
 export const metadata: Metadata = {
@@ -142,7 +143,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="apple-touch-icon" href={`${basePath}/images/apple-touch-icon.png`} />
         <link rel="manifest" href={`${basePath}/manifest.json`} />
       </head>
-      <body className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans grid-pattern`}>
+      <body className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

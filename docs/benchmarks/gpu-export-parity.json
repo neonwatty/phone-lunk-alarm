@@ -1,0 +1,50 @@
+[
+  {
+    "file": "model.onnx",
+    "sourceSha256": "6c74a62251534f427294342508a162a7cd142418b4dd6222d0d0198851724bfa",
+    "reference": "fixed-shape original ceil pooling, CPU graph optimizations disabled",
+    "tolerance": {
+      "rtol": 0.0001,
+      "atol": 0.001
+    },
+    "outputSha256": "e4b37345cda3fb4c5bea926cfe03c955522c51d9e557ef1c54a77e3b84c6124e",
+    "bytes": 82542104,
+    "patched": [
+      {
+        "node": "/model/backbone/model/encoder/stages.1/layers.0/shortcut/shortcut.0/AveragePool",
+        "inputSpatialShape": [
+          160,
+          160
+        ]
+      },
+      {
+        "node": "/model/backbone/model/encoder/stages.2/layers.0/shortcut/shortcut.0/AveragePool",
+        "inputSpatialShape": [
+          80,
+          80
+        ]
+      },
+      {
+        "node": "/model/backbone/model/encoder/stages.3/layers.0/shortcut/shortcut.0/AveragePool",
+        "inputSpatialShape": [
+          40,
+          40
+        ]
+      }
+    ],
+    "maxAbsoluteOutputErrors": [
+      [
+        0.00011992454528808594,
+        5.4836273193359375e-06
+      ],
+      [
+        0.00015401840209960938,
+        2.0563602447509766e-05
+      ],
+      [
+        4.2438507080078125e-05,
+        1.341104507446289e-05
+      ]
+    ]
+  }
+]

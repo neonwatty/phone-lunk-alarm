@@ -14,3 +14,9 @@ summaries, and optimistic UI as claims, not proof. Treat unverified assumptions
 as blockers or explicit follow-ups.
 
 Keep this section synchronized with `AGENTS.md` whenever either file changes.
+
+## Local Review
+
+Use `http://phone-lunk.localhost:3107/` for local previews, never bare localhost.
+Start the development server with `npm run dev:local` so edits appear without rebuilding.
+Before handing off, verify the server responds and review the app in a browser.

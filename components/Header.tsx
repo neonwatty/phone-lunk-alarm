@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import ThemeToggle from './ThemeToggle'
+import { ViewfinderCircleIcon } from '@heroicons/react/24/outline'
 import siteConfig from '@/site.config.mjs'
 
 export default function Header() {
@@ -18,13 +19,14 @@ export default function Header() {
       <nav className="max-w-4xl mx-auto px-4 py-4" aria-label="Top">
         <div className="flex items-center justify-between">
           {/* Logo/Site name */}
-          <Link href="/" className="font-bold text-xl sm:text-2xl transition-all duration-300"
+          <Link href="/" className="inline-flex items-center gap-2 font-bold text-xl sm:text-2xl transition-all duration-300"
                 style={{
                   color: 'var(--color-text-primary)',
                   letterSpacing: '-0.02em',
                   textShadow: '0 1px 2px rgba(0, 0, 0, 0.05)'
                 }}>
-            {siteConfig.site.name}
+            <ViewfinderCircleIcon className="w-6 h-6" aria-hidden="true" />
+            <span>{siteConfig.site.name}<span style={{color:'#f2ce43'}}>.</span></span>
           </Link>
 
           {/* Desktop Navigation */}

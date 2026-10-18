@@ -2,22 +2,29 @@
 
 import { useRef, useEffect, useCallback, useState } from 'react'
 
-export type AlarmSoundType = 'airhorn' | 'lunk-alarm' | 'shame-bell' | 'buzzer' | 'none'
+export type AlarmSoundType = 'airhorn' | 'lunk-alarm' | 'shame-bell' | 'buzzer' | 'submarine' | 'fire-alert' | 'none'
 
 export const ALARM_SOUNDS: Record<AlarmSoundType, { name: string; file: string | null }> = {
   'airhorn': { name: 'Air Horn', file: '/sounds/airhorn.wav' },
   'lunk-alarm': { name: 'Lunk Alarm', file: '/sounds/lunk-alarm.wav' },
-  'shame-bell': { name: 'Shame Bell', file: '/sounds/shame-bell.wav' },
+  'shame-bell': { name: 'Bell', file: '/sounds/shame-bell.wav' },
   'buzzer': { name: 'Buzzer', file: '/sounds/buzzer.wav' },
+  'submarine': { name: 'Submarine', file: '/sounds/submarine.wav' },
+  'fire-alert': { name: 'Fire Alert', file: '/sounds/fire-alert.wav' },
   'none': { name: 'No Sound', file: null },
 }
+
+export const DEFAULT_ALARM_SOUND: AlarmSoundType = 'submarine'
 
 const STORAGE_KEY = 'phoneLunkAlarmSound'
 const VOLUME_KEY = 'phoneLunkAlarmVolume'
 
 export function useAlarmSound() {
+  const previewRef = useRef<HTMLAudioElement | null>(null)
+  const previewTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const audibleVolumeRef = useRef(0.7)
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const [selectedSound, setSelectedSound] = useState<AlarmSoundType>('airhorn')
+  const [selectedSound, setSelectedSound] = useState<AlarmSoundType>(DEFAULT_ALARM_SOUND)
   const [volume, setVolume] = useState(0.7)
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -62,6 +69,7 @@ export function useAlarmSound() {
 
   // Update volume when it changes
   useEffect(() => {
+    if (volume > 0) audibleVolumeRef.current = volume
     if (audioRef.current) {
       audioRef.current.volume = volume
     }
@@ -80,28 +88,35 @@ export function useAlarmSound() {
 
   // Stop the sound
   const stopSound = useCallback(() => {
+    if (previewTimer.current) clearTimeout(previewTimer.current)
+    previewRef.current?.pause(); previewRef.current = null
     if (audioRef.current) {
       audioRef.current.pause()
       audioRef.current.currentTime = 0
     }
   }, [])
 
+  useEffect(() => () => stopSound(), [stopSound])
+
   // Preview sound (for selector)
   const previewSound = useCallback(() => {
     const soundConfig = ALARM_SOUNDS[selectedSound]
     if (!soundConfig.file) return
 
+    stopSound()
     const previewAudio = new Audio(soundConfig.file)
+    previewRef.current = previewAudio
     previewAudio.volume = volume
     previewAudio.play().catch((err) => {
       console.warn('Preview playback failed:', err)
     })
 
     // Stop after 2 seconds
-    setTimeout(() => {
+    previewTimer.current = setTimeout(() => {
       previewAudio.pause()
+      previewRef.current = null
     }, 2000)
-  }, [selectedSound, volume])
+  }, [selectedSound, volume, stopSound])
 
   // Change sound selection
   const changeSound = useCallback((sound: AlarmSoundType) => {
@@ -120,6 +135,17 @@ export function useAlarmSound() {
     }
   }, [])
 
+  const isMuted = selectedSound === 'none' || volume === 0
+  const toggleMute = useCallback(() => {
+    stopSound()
+    if (selectedSound === 'none' || volume === 0) {
+      if (selectedSound === 'none') changeSound(DEFAULT_ALARM_SOUND)
+      if (volume === 0) changeVolume(audibleVolumeRef.current)
+    } else {
+      changeVolume(0)
+    }
+  }, [selectedSound, volume, changeSound, changeVolume, stopSound])
+
   return {
     selectedSound,
     volume,
@@ -129,5 +155,7 @@ export function useAlarmSound() {
     changeSound,
     changeVolume,
     isLoaded,
+    isMuted,
+    toggleMute,
   }
 }

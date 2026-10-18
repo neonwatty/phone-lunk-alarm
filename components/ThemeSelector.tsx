@@ -1,5 +1,7 @@
 'use client'
 
+import { useId } from 'react'
+
 import {
   ALARM_THEMES,
   INTENSITY_SETTINGS,
@@ -20,15 +22,16 @@ export default function ThemeSelector({
   onThemeChange,
   onIntensityChange,
 }: ThemeSelectorProps) {
+  const id = useId()
   const currentTheme = ALARM_THEMES[selectedTheme]
 
   return (
     <div className="bg-black bg-opacity-60 backdrop-blur-sm rounded-lg p-3 space-y-3">
       <div className="flex items-center gap-2">
-        <label className="text-white text-xs font-semibold whitespace-nowrap">
+        <label htmlFor={`${id}-theme`} className="text-white text-xs font-semibold whitespace-nowrap">
           Theme:
         </label>
-        <select
+        <select id={`${id}-theme`}
           value={selectedTheme}
           onChange={(e) => onThemeChange(e.target.value as ThemeKey)}
           className="flex-1 bg-gray-800 text-white text-sm rounded px-2 py-1 border border-gray-600 focus:border-purple-500 focus:outline-none"
@@ -49,13 +52,12 @@ export default function ThemeSelector({
       </div>
 
       <div className="flex items-center gap-2">
-        <label className="text-white text-xs font-semibold whitespace-nowrap">
-          Intensity:
-        </label>
+        <span className="text-white text-xs font-semibold whitespace-nowrap">Intensity:</span>
         <div className="flex gap-1 flex-1">
           {(Object.keys(INTENSITY_SETTINGS) as IntensityLevel[]).map((level) => (
             <button
               key={level}
+              aria-pressed={selectedIntensity === level}
               onClick={() => onIntensityChange(level)}
               className={`flex-1 text-xs py-1 px-2 rounded transition-colors ${
                 selectedIntensity === level

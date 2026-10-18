@@ -1,0 +1,460 @@
+[
+  {
+    "frame": "Clip sample 1",
+    "pass": true,
+    "iou": 1,
+    "scoreDifference": 9.5367431640625e-7,
+    "cpu": [
+      {
+        "class": "cell phone",
+        "score": 0.5678604245185852,
+        "bbox": [
+          233,
+          123,
+          20,
+          9
+        ]
+      }
+    ],
+    "gpu": [
+      {
+        "class": "cell phone",
+        "score": 0.5678613781929016,
+        "bbox": [
+          233,
+          123,
+          20,
+          9
+        ]
+      }
+    ]
+  },
+  {
+    "frame": "Clip sample 2",
+    "pass": true,
+    "iou": 1,
+    "scoreDifference": 8.046627044677734e-7,
+    "cpu": [
+      {
+        "class": "cell phone",
+        "score": 0.41242608428001404,
+        "bbox": [
+          230,
+          124,
+          20,
+          9
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.2159123718738556,
+        "bbox": [
+          229,
+          124,
+          23,
+          18
+        ]
+      }
+    ],
+    "gpu": [
+      {
+        "class": "cell phone",
+        "score": 0.41242527961730957,
+        "bbox": [
+          230,
+          124,
+          20,
+          9
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.21591068804264069,
+        "bbox": [
+          229,
+          124,
+          23,
+          18
+        ]
+      }
+    ]
+  },
+  {
+    "frame": "Clip sample 3",
+    "pass": true,
+    "iou": 1,
+    "scoreDifference": 7.748603820800781e-7,
+    "cpu": [
+      {
+        "class": "cell phone",
+        "score": 0.4452248215675354,
+        "bbox": [
+          230,
+          129,
+          22,
+          9
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.2084551751613617,
+        "bbox": [
+          166,
+          93,
+          8,
+          6
+        ]
+      }
+    ],
+    "gpu": [
+      {
+        "class": "cell phone",
+        "score": 0.4452255964279175,
+        "bbox": [
+          230,
+          129,
+          22,
+          9
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.20845501124858856,
+        "bbox": [
+          166,
+          93,
+          8,
+          6
+        ]
+      }
+    ]
+  },
+  {
+    "frame": "Clip sample 4",
+    "pass": true,
+    "iou": 1,
+    "scoreDifference": 4.172325134277344e-7,
+    "cpu": [
+      {
+        "class": "cell phone",
+        "score": 0.4157102704048157,
+        "bbox": [
+          231,
+          120,
+          21,
+          9
+        ]
+      }
+    ],
+    "gpu": [
+      {
+        "class": "cell phone",
+        "score": 0.4157106876373291,
+        "bbox": [
+          231,
+          120,
+          21,
+          9
+        ]
+      }
+    ]
+  },
+  {
+    "frame": "Clip sample 5",
+    "pass": true,
+    "iou": 1,
+    "scoreDifference": 0.000003248453140258789,
+    "cpu": [
+      {
+        "class": "cell phone",
+        "score": 0.21737685799598694,
+        "bbox": [
+          228,
+          126,
+          23,
+          19
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.3069939911365509,
+        "bbox": [
+          228,
+          127,
+          22,
+          10
+        ]
+      }
+    ],
+    "gpu": [
+      {
+        "class": "cell phone",
+        "score": 0.21737712621688843,
+        "bbox": [
+          228,
+          126,
+          23,
+          19
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.30699074268341064,
+        "bbox": [
+          228,
+          127,
+          22,
+          10
+        ]
+      }
+    ]
+  },
+  {
+    "frame": "Clip sample 6",
+    "pass": true,
+    "iou": 1,
+    "scoreDifference": 8.940696716308594e-8,
+    "cpu": [
+      {
+        "class": "cell phone",
+        "score": 0.22970396280288696,
+        "bbox": [
+          230,
+          123,
+          21,
+          10
+        ]
+      }
+    ],
+    "gpu": [
+      {
+        "class": "cell phone",
+        "score": 0.22970405220985413,
+        "bbox": [
+          230,
+          123,
+          21,
+          10
+        ]
+      }
+    ]
+  },
+  {
+    "frame": "Clip sample 7",
+    "pass": true,
+    "iou": 1,
+    "scoreDifference": 5.662441253662109e-7,
+    "cpu": [
+      {
+        "class": "cell phone",
+        "score": 0.2460101693868637,
+        "bbox": [
+          231,
+          124,
+          21,
+          16
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.2847892940044403,
+        "bbox": [
+          231,
+          125,
+          20,
+          9
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.1838066726922989,
+        "bbox": [
+          243,
+          126,
+          9,
+          7
+        ]
+      }
+    ],
+    "gpu": [
+      {
+        "class": "cell phone",
+        "score": 0.2460087388753891,
+        "bbox": [
+          231,
+          124,
+          21,
+          16
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.2847898602485657,
+        "bbox": [
+          231,
+          125,
+          20,
+          9
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.18380632996559143,
+        "bbox": [
+          243,
+          126,
+          9,
+          7
+        ]
+      }
+    ]
+  },
+  {
+    "frame": "Clip sample 8",
+    "pass": true,
+    "iou": 1,
+    "scoreDifference": 4.76837158203125e-7,
+    "cpu": [
+      {
+        "class": "cell phone",
+        "score": 0.21686893701553345,
+        "bbox": [
+          225,
+          127,
+          11,
+          7
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.31126561760902405,
+        "bbox": [
+          224,
+          127,
+          21,
+          8
+        ]
+      }
+    ],
+    "gpu": [
+      {
+        "class": "cell phone",
+        "score": 0.2168687880039215,
+        "bbox": [
+          225,
+          127,
+          11,
+          7
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.31126609444618225,
+        "bbox": [
+          224,
+          127,
+          21,
+          8
+        ]
+      }
+    ]
+  },
+  {
+    "frame": "Clip sample 9",
+    "pass": true,
+    "iou": 1,
+    "scoreDifference": 0,
+    "cpu": [
+      {
+        "class": "cell phone",
+        "score": 0.19034603238105774,
+        "bbox": [
+          222,
+          122,
+          21,
+          19
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.3812682330608368,
+        "bbox": [
+          223,
+          124,
+          19,
+          10
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.22109286487102509,
+        "bbox": [
+          223,
+          124,
+          20,
+          17
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.19887840747833252,
+        "bbox": [
+          222,
+          119,
+          14,
+          12
+        ]
+      }
+    ],
+    "gpu": [
+      {
+        "class": "cell phone",
+        "score": 0.19034399092197418,
+        "bbox": [
+          222,
+          122,
+          21,
+          19
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.3812682330608368,
+        "bbox": [
+          223,
+          124,
+          19,
+          10
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.2210918813943863,
+        "bbox": [
+          223,
+          124,
+          20,
+          17
+        ]
+      },
+      {
+        "class": "cell phone",
+        "score": 0.19887588918209076,
+        "bbox": [
+          222,
+          119,
+          14,
+          12
+        ]
+      }
+    ]
+  },
+  {
+    "frame": "Blank negative",
+    "pass": true,
+    "iou": null,
+    "scoreDifference": null,
+    "cpu": [],
+    "gpu": []
+  }
+]

@@ -442,3 +442,116 @@ Allow 24-48 hours for DNS propagation.
 ---
 
 Happy building! 🚀
+
+## Landing-page detection preview
+
+The preview uses [RT-DETR R50](https://huggingface.co/onnx-community/rtdetr_r50vd)
+through Transformers.js in a Web Worker. It downloads the FP32 model (about
+175 MB, cached by the browser), then analyzes the recorded clip locally at two
+samples per second. The full frame and a central crop are both inspected.
+Initial analysis can take a minute or more depending on the device.
+
+Playback uses these session-local predictions, with position interpolation
+between accepted detections. It does not use authored coordinates or a saved
+track file. A new track requires a score of 0.4; an existing track can follow
+nearby, similarly sized phone predictions scoring at least 0.18. Missing
+predictions clear the box. Model resources are released after analysis.
+Camera permission is not requested by the preview, and frames are not uploaded.
+The live camera detector remains a separate COCO-SSD implementation.
+
+To reproduce the frame benchmark (requires FFmpeg):
+
+```sh
+mkdir -p /tmp/phone-lunk-frames
+ffmpeg -i public/images/examples/phone-lunk-1.mp4 -vf fps=2 /tmp/phone-lunk-frames/frame-%02d.png
+node scripts/check-phone-model.mjs /tmp/phone-lunk-frames /tmp/phone-lunk-results.json
+```
+
+The script reports real model scores and boxes without tracking or interpolation.
+
+## Smaller-model comparison
+
+Open `/model-lab/` to compare seven RT-DETR variants and run actual continuous
+inference on the clip. The right panel shows the exact analyzed frame, not a
+box painted onto a newer frame. Each run excludes one warmup frame and measures
+20 inferences including worker transfer, preprocessing, and postprocessing.
+Models load only after pressing **Run live check**. Stop terminates the worker.
+WebGPU errors are surfaced rather than silently falling back to CPU.
+
+The checked-in screening data in `docs/benchmarks/` was measured on an Apple
+M5 Max. It is **not a phone benchmark**. All tests use acquisition score 0.40,
+continuation score 0.18, and the production association logic. Coverage is not
+precision/recall: these are one clip's model-supported tracks, without human
+annotations. The blank-image negative control is only a basic sanity check.
+
+Reproduce the seven-model screen and denser candidate check:
+
+```sh
+mkdir -p /tmp/phone-lunk-screen /tmp/phone-lunk-dense
+ffmpeg -i public/images/examples/phone-lunk-1.mp4 -vf fps=2 /tmp/phone-lunk-screen/frame-%03d.png
+node scripts/benchmark-phone-models.mjs /tmp/phone-lunk-screen /tmp/screen.json
+ffmpeg -i public/images/examples/phone-lunk-1.mp4 -vf fps=10 /tmp/phone-lunk-dense/frame-%03d.png
+CANDIDATE=r18-o365-q8 SAMPLE_FPS=10 node scripts/benchmark-phone-models.mjs /tmp/phone-lunk-dense /tmp/r18-q8.json
+CANDIDATE=r18-o365-fp32 SAMPLE_FPS=10 node scripts/benchmark-phone-models.mjs /tmp/phone-lunk-dense /tmp/r18-fp32.json
+```
+
+The script also records incompatible candidates as errors (YOLOv10n is not
+supported by the installed Transformers.js object-detection pipeline). It
+compares full-frame, crop-only, and combined passes. Weight size excludes runtime
+assets and activation memory. Node timings are warm inference timings, not cold
+model download time. The original landing preview and camera model are unchanged
+by the lab; a deployment choice still needs an actual phone/browser benchmark.
+
+### Verified GPU export (local model lab)
+
+The lab's default is now R18 Objects365 FP32 with a fixed `[1,3,640,640]`
+export. Three 2×2/stride-2 AveragePool nodes receive even spatial dimensions
+(160, 80, 40), so ceil rounding is unnecessary. The preparation script checks
+these invariants and the source SHA-256 before changing those three attributes.
+It verifies CPU numerical parity before writing the generated model. Browser
+validation additionally compares original CPU and prepared GPU predictions on
+nine identical clip frames plus a blank negative.
+
+ONNX Runtime Web is pinned to 1.30.0 via an npm override. Its matching WASM
+assets are loaded from jsDelivr; do not mix that runtime with the older WASM
+files bundled by Transformers.js. Upgrading the runtime alone does not fix the
+ceil-pooling limitation. The INT8 export is **not enabled on GPU**: its numerical
+parity check failed. Camera inference is still the separate COCO-SSD path.
+
+Prepare the FP32 export before using the lab on a fresh checkout:
+
+```sh
+python3 -m venv /tmp/phone-lunk-onnx-tools
+/tmp/phone-lunk-onnx-tools/bin/pip install onnx onnxruntime numpy
+mkdir -p /tmp/phone-lunk-r18/onnx
+curl -fL https://huggingface.co/onnx-community/rtdetr_r18vd_coco_o365/resolve/main/config.json -o /tmp/phone-lunk-r18/config.json
+curl -fL https://huggingface.co/onnx-community/rtdetr_r18vd_coco_o365/resolve/main/preprocessor_config.json -o /tmp/phone-lunk-r18/preprocessor_config.json
+curl -fL https://huggingface.co/onnx-community/rtdetr_r18vd_coco_o365/resolve/main/onnx/model.onnx -o /tmp/phone-lunk-r18/onnx/model.onnx
+/tmp/phone-lunk-onnx-tools/bin/python scripts/prepare-gpu-model.py /tmp/phone-lunk-r18
+```
+
+The 82.5 MB generated weights under `public/models/r18-o365-gpu/` are ignored by
+Git and included in a subsequent static build if present. They are experimental
+local artifacts, not an automatic change to the camera or landing detector.
+Keep the preparation receipt in `docs/benchmarks/gpu-export-parity.json`.
+
+Live lab runs now sample each decoded frame once using video-frame callbacks,
+run for at least 15 seconds and 20 frames, and age tracks with monotonic capture
+time. The footage has only 10 fps: inference capacity is measured separately
+from playback rate. The **Validate FP32 GPU against CPU** button is a repeatable
+accuracy-regression check, not a benchmark of general detection accuracy.
+
+### Camera model selection
+
+The camera now offers GPU phone detection (R18 Objects365 FP32) and Standard detection (COCO-SSD), remembering the choice on this browser. See `docs/detector-model-choice.md` for the native iOS requirement and deferred physical-device evaluation.
+
+A fresh checkout must prepare the ignored GPU assets before a production build:
+
+```sh
+python3 -m venv .venv-model
+.venv-model/bin/pip install -r scripts/model-requirements.txt
+.venv-model/bin/python scripts/prepare-gpu-model.py
+npm run build
+```
+
+The preparation command downloads source weights when no existing cache directory is supplied, verifies their checksum, and checks conversion parity. CI and Pages builds perform this step automatically. `prebuild` checks the verified export checksum and metadata, refusing to ship a missing or different model. Preparation requires network access and about 83 MB of model download. Development also needs these assets to use the GPU option.

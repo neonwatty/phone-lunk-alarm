@@ -18,6 +18,8 @@ describe('RecordingPreviewModal', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+    HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }
+    HTMLDialogElement.prototype.close = function () { this.removeAttribute('open') }
     window.open = jest.fn()
     Object.defineProperty(URL, 'createObjectURL', {
       configurable: true,
@@ -35,6 +37,17 @@ describe('RecordingPreviewModal', () => {
   afterEach(() => {
     window.open = originalOpen
     HTMLAnchorElement.prototype.click = originalAnchorClick
+  })
+
+  it('provides a named close control and restores page scrolling on unmount', async () => {
+    const onClose = jest.fn()
+    const view = render(<RecordingPreviewModal videoBlob={new Blob(['clip'])} onClose={onClose} />)
+    expect(screen.getByRole('dialog', { name: 'Your recording' })).toBeInTheDocument()
+    expect(document.body.style.overflow).toBe('hidden')
+    await userEvent.click(screen.getByRole('button', { name: 'Close recording preview' }))
+    expect(onClose).toHaveBeenCalledTimes(1)
+    view.unmount()
+    expect(document.body.style.overflow).toBe('')
   })
 
   it('tracks video downloads from the preview', async () => {

@@ -1,0 +1,13 @@
+{
+  "runtime": "Node ONNX Runtime CPU (not browser or phone)",
+  "cpu": "Apple M5 Max",
+  "platform": "darwin",
+  "generatedAt": "2026-10-15T23:32:13.331Z",
+  "sampleFps": 10,
+  "reports": [
+    {
+      "key": "yolov10n-fp32",
+      "error": "Error: Unsupported model type: yolov10"
+    }
+  ]
+}

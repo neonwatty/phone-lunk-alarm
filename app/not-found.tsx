@@ -11,7 +11,7 @@ export default function NotFound() {
         <div className="text-center">
           <h1 className="text-9xl font-bold mb-4"
               style={{
-                background: 'var(--gradient-professional)',
+                background: 'var(--color-accent-primary)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text'

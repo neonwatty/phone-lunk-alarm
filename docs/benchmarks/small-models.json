@@ -1,0 +1,6961 @@
+{
+  "runtime": "Node ONNX Runtime CPU (not browser or phone)",
+  "cpu": "Apple M5 Max",
+  "platform": "darwin",
+  "generatedAt": "2026-10-15T23:26:23.831Z",
+  "reports": [
+    {
+      "key": "r50-fp32",
+      "modelId": "onnx-community/rtdetr_r50vd",
+      "dtype": "fp32",
+      "weightBytes": 175421119,
+      "loadMs": 157.165458,
+      "full": {
+        "rawHits": 3,
+        "trackedHits": 7,
+        "total": 9,
+        "medianMs": 239.75212499999998,
+        "p95Ms": 249.1242500000003,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 240.17316700000003,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3750317394733429,
+                "bbox": [
+                  233,
+                  122,
+                  20,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18354147672653198,
+                "bbox": [
+                  249,
+                  110,
+                  12,
+                  19
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 236.79633299999978,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2841891944408417,
+                "bbox": [
+                  228,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 234.46641599999998,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.48544949293136597,
+                "bbox": [
+                  230,
+                  129,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2358415722846985,
+                "bbox": [
+                  245,
+                  132,
+                  7,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2342505007982254,
+                "bbox": [
+                  246,
+                  117,
+                  10,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18831060826778412,
+                "bbox": [
+                  244,
+                  129,
+                  8,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2066987305879593,
+                "bbox": [
+                  246,
+                  117,
+                  11,
+                  17
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 235.24937500000033,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.31147438287734985,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 239.75212499999998,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3082205057144165,
+                "bbox": [
+                  227,
+                  127,
+                  23,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21679987013339996,
+                "bbox": [
+                  245,
+                  115,
+                  10,
+                  15
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 236.223833,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.40994325280189514,
+                "bbox": [
+                  229,
+                  122,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23904213309288025,
+                "bbox": [
+                  243,
+                  124,
+                  9,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18815132975578308,
+                "bbox": [
+                  246,
+                  119,
+                  13,
+                  12
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 241.44612499999994,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.21181388199329376,
+                "bbox": [
+                  231,
+                  125,
+                  21,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 249.1242500000003,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.334911972284317,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.30463889241218567,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 247.0255419999994,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.5058064460754395,
+                "bbox": [
+                  221,
+                  124,
+                  22,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18676453828811646,
+                "bbox": [
+                  233,
+                  126,
+                  10,
+                  6
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "crop": {
+        "rawHits": 3,
+        "trackedHits": 6,
+        "total": 9,
+        "medianMs": 240.22687499999995,
+        "p95Ms": 254.58508299999994,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 240.22687499999995,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.6486361622810364,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21431350708007812,
+                "bbox": [
+                  249,
+                  110,
+                  12,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18951043486595154,
+                "bbox": [
+                  249,
+                  121,
+                  17,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18284490704536438,
+                "bbox": [
+                  249,
+                  110,
+                  12,
+                  18
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 235.55254100000002,
+            "predictions": []
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 237.5984579999997,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2842671871185303,
+                "bbox": [
+                  230,
+                  128,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20532460510730743,
+                "bbox": [
+                  224,
+                  128,
+                  27,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 238.1344170000002,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3637145757675171,
+                "bbox": [
+                  230,
+                  120,
+                  21,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 236.8064589999999,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.654240071773529,
+                "bbox": [
+                  227,
+                  127,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 241.78449999999975,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.4493519961833954,
+                "bbox": [
+                  228,
+                  122,
+                  23,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18172802031040192,
+                "bbox": [
+                  231,
+                  126,
+                  10,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1917378306388855,
+                "bbox": [
+                  228,
+                  122,
+                  13,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2101598083972931,
+                "bbox": [
+                  231,
+                  126,
+                  19,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19665831327438354,
+                "bbox": [
+                  228,
+                  122,
+                  13,
+                  6
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 241.63058299999966,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.21418148279190063,
+                "bbox": [
+                  230,
+                  124,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 254.58508299999994,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22020411491394043,
+                "bbox": [
+                  223,
+                  126,
+                  21,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 243.69775000000027,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2307279258966446,
+                "bbox": [
+                  221,
+                  124,
+                  12,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3114607632160187,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "combined": {
+        "rawHits": 5,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 478.00833299999977,
+        "p95Ms": 503.70933300000024,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 480.400042,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3750317394733429,
+                "bbox": [
+                  233,
+                  122,
+                  20,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18354147672653198,
+                "bbox": [
+                  249,
+                  110,
+                  12,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.6486361622810364,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21431350708007812,
+                "bbox": [
+                  249,
+                  110,
+                  12,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18951043486595154,
+                "bbox": [
+                  249,
+                  121,
+                  17,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18284490704536438,
+                "bbox": [
+                  249,
+                  110,
+                  12,
+                  18
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 472.3488739999998,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2841891944408417,
+                "bbox": [
+                  228,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 472.0648739999997,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.48544949293136597,
+                "bbox": [
+                  230,
+                  129,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2358415722846985,
+                "bbox": [
+                  245,
+                  132,
+                  7,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2342505007982254,
+                "bbox": [
+                  246,
+                  117,
+                  10,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18831060826778412,
+                "bbox": [
+                  244,
+                  129,
+                  8,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2066987305879593,
+                "bbox": [
+                  246,
+                  117,
+                  11,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2842671871185303,
+                "bbox": [
+                  230,
+                  128,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20532460510730743,
+                "bbox": [
+                  224,
+                  128,
+                  27,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 473.38379200000054,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.31147438287734985,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3637145757675171,
+                "bbox": [
+                  230,
+                  120,
+                  21,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 476.5585839999999,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3082205057144165,
+                "bbox": [
+                  227,
+                  127,
+                  23,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21679987013339996,
+                "bbox": [
+                  245,
+                  115,
+                  10,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.654240071773529,
+                "bbox": [
+                  227,
+                  127,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 478.00833299999977,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.40994325280189514,
+                "bbox": [
+                  229,
+                  122,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23904213309288025,
+                "bbox": [
+                  243,
+                  124,
+                  9,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18815132975578308,
+                "bbox": [
+                  246,
+                  119,
+                  13,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4493519961833954,
+                "bbox": [
+                  228,
+                  122,
+                  23,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18172802031040192,
+                "bbox": [
+                  231,
+                  126,
+                  10,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1917378306388855,
+                "bbox": [
+                  228,
+                  122,
+                  13,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2101598083972931,
+                "bbox": [
+                  231,
+                  126,
+                  19,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19665831327438354,
+                "bbox": [
+                  228,
+                  122,
+                  13,
+                  6
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 483.0767079999996,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.21181388199329376,
+                "bbox": [
+                  231,
+                  125,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21418148279190063,
+                "bbox": [
+                  230,
+                  124,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 503.70933300000024,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.334911972284317,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.30463889241218567,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22020411491394043,
+                "bbox": [
+                  223,
+                  126,
+                  21,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 490.7232919999997,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.5058064460754395,
+                "bbox": [
+                  221,
+                  124,
+                  22,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18676453828811646,
+                "bbox": [
+                  233,
+                  126,
+                  10,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2307279258966446,
+                "bbox": [
+                  221,
+                  124,
+                  12,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3114607632160187,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "blankPredictions": []
+    },
+    {
+      "key": "r50-q8",
+      "modelId": "onnx-community/rtdetr_r50vd",
+      "dtype": "q8",
+      "weightBytes": 45463461,
+      "loadMs": 160.71629099999973,
+      "full": {
+        "rawHits": 2,
+        "trackedHits": 5,
+        "total": 9,
+        "medianMs": 126.93383300000005,
+        "p95Ms": 143.34954199999993,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 143.34954199999993,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2977747917175293,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 126.93383300000005,
+            "predictions": []
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 126.52074999999968,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.4789676070213318,
+                "bbox": [
+                  230,
+                  129,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19685262441635132,
+                "bbox": [
+                  245,
+                  132,
+                  7,
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 127.85725000000002,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.323294997215271,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 128.92920799999956,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.34519603848457336,
+                "bbox": [
+                  228,
+                  127,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20756420493125916,
+                "bbox": [
+                  245,
+                  115,
+                  10,
+                  15
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 126.76241599999958,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.36287590861320496,
+                "bbox": [
+                  229,
+                  122,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18176427483558655,
+                "bbox": [
+                  247,
+                  119,
+                  11,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21447739005088806,
+                "bbox": [
+                  243,
+                  124,
+                  8,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18079130351543427,
+                "bbox": [
+                  245,
+                  109,
+                  12,
+                  21
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 130.8075829999998,
+            "predictions": []
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 125.84679099999994,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.29074040055274963,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 126.438083,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.6206576824188232,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "crop": {
+        "rawHits": 1,
+        "trackedHits": 5,
+        "total": 9,
+        "medianMs": 129.10158299999966,
+        "p95Ms": 130.84449999999924,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 130.84449999999924,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.6035556793212891,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 128.4474170000003,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.20050305128097534,
+                "bbox": [
+                  227,
+                  123,
+                  23,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 130.73058299999957,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2940390110015869,
+                "bbox": [
+                  230,
+                  128,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19815772771835327,
+                "bbox": [
+                  224,
+                  128,
+                  27,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 129.10158299999966,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.25575634837150574,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 130.13550000000032,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.35818225145339966,
+                "bbox": [
+                  227,
+                  127,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 127.67650000000049,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 127.52695800000038,
+            "predictions": []
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 129.24091700000008,
+            "predictions": []
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 128.5030829999996,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.19831286370754242,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "combined": {
+        "rawHits": 3,
+        "trackedHits": 7,
+        "total": 9,
+        "medianMs": 256.9588329999997,
+        "p95Ms": 274.1940419999992,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 274.1940419999992,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2977747917175293,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.6035556793212891,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 255.38125000000036,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.20050305128097534,
+                "bbox": [
+                  227,
+                  123,
+                  23,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 257.25133299999925,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.4789676070213318,
+                "bbox": [
+                  230,
+                  129,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19685262441635132,
+                "bbox": [
+                  245,
+                  132,
+                  7,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2940390110015869,
+                "bbox": [
+                  230,
+                  128,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19815772771835327,
+                "bbox": [
+                  224,
+                  128,
+                  27,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 256.9588329999997,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.323294997215271,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.25575634837150574,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 259.0647079999999,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.34519603848457336,
+                "bbox": [
+                  228,
+                  127,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20756420493125916,
+                "bbox": [
+                  245,
+                  115,
+                  10,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.35818225145339966,
+                "bbox": [
+                  227,
+                  127,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 254.43891600000006,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.36287590861320496,
+                "bbox": [
+                  229,
+                  122,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18176427483558655,
+                "bbox": [
+                  247,
+                  119,
+                  11,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21447739005088806,
+                "bbox": [
+                  243,
+                  124,
+                  8,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18079130351543427,
+                "bbox": [
+                  245,
+                  109,
+                  12,
+                  21
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 258.3345410000002,
+            "predictions": []
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 255.08770800000002,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.29074040055274963,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 254.9411659999996,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.6206576824188232,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19831286370754242,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "blankPredictions": []
+    },
+    {
+      "key": "r18-fp32",
+      "modelId": "onnx-community/rtdetr_r18vd",
+      "dtype": "fp32",
+      "weightBytes": 82572357,
+      "loadMs": 7423.538125,
+      "full": {
+        "rawHits": 2,
+        "trackedHits": 6,
+        "total": 9,
+        "medianMs": 116.21537499999977,
+        "p95Ms": 259.14379200000076,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 116.21537499999977,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.23720847070217133,
+                "bbox": [
+                  230,
+                  122,
+                  25,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4265258312225342,
+                "bbox": [
+                  231,
+                  122,
+                  23,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2238592654466629,
+                "bbox": [
+                  232,
+                  122,
+                  24,
+                  33
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19265834987163544,
+                "bbox": [
+                  248,
+                  110,
+                  14,
+                  19
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 146.06612499999937,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2949487864971161,
+                "bbox": [
+                  230,
+                  124,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1898912787437439,
+                "bbox": [
+                  230,
+                  124,
+                  20,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 259.14379200000076,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.31118038296699524,
+                "bbox": [
+                  230,
+                  129,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 119.4120839999996,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.237053781747818,
+                "bbox": [
+                  230,
+                  119,
+                  23,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3125776946544647,
+                "bbox": [
+                  230,
+                  120,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19399002194404602,
+                "bbox": [
+                  231,
+                  119,
+                  20,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 114.03516599999784,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2670120894908905,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 113.00075000000288,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 111.87483300000167,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18945194780826569,
+                "bbox": [
+                  230,
+                  121,
+                  22,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23148900270462036,
+                "bbox": [
+                  230,
+                  124,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18679505586624146,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  15
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 111.37845899999957,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.217974454164505,
+                "bbox": [
+                  224,
+                  126,
+                  22,
+                  13
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 127.7848750000012,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.4261491894721985,
+                "bbox": [
+                  222,
+                  123,
+                  21,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19285191595554352,
+                "bbox": [
+                  223,
+                  120,
+                  46,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21106137335300446,
+                "bbox": [
+                  254,
+                  94,
+                  15,
+                  25
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "crop": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 115.98137499999939,
+        "p95Ms": 134.52087499999834,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 115.67658299999857,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.27064329385757446,
+                "bbox": [
+                  233,
+                  122,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24596542119979858,
+                "bbox": [
+                  232,
+                  122,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23296219110488892,
+                "bbox": [
+                  233,
+                  122,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2444928139448166,
+                "bbox": [
+                  266,
+                  96,
+                  13,
+                  25
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18422718346118927,
+                "bbox": [
+                  242,
+                  134,
+                  16,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18439531326293945,
+                "bbox": [
+                  241,
+                  134,
+                  32,
+                  22
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19105200469493866,
+                "bbox": [
+                  230,
+                  122,
+                  65,
+                  36
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 133.79958299999998,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18928271532058716,
+                "bbox": [
+                  231,
+                  124,
+                  19,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20780357718467712,
+                "bbox": [
+                  231,
+                  124,
+                  19,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18369868397712708,
+                "bbox": [
+                  228,
+                  124,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20580703020095825,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21480870246887207,
+                "bbox": [
+                  231,
+                  124,
+                  19,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18487486243247986,
+                "bbox": [
+                  237,
+                  124,
+                  13,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 134.52087499999834,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.23156733810901642,
+                "bbox": [
+                  229,
+                  128,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 115.98137499999939,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2475338727235794,
+                "bbox": [
+                  230,
+                  119,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23914571106433868,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19121575355529785,
+                "bbox": [
+                  238,
+                  120,
+                  13,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 110.88045899999997,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3434463143348694,
+                "bbox": [
+                  228,
+                  126,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.26677757501602173,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18868501484394073,
+                "bbox": [
+                  238,
+                  128,
+                  11,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21429239213466644,
+                "bbox": [
+                  228,
+                  127,
+                  13,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1979064643383026,
+                "bbox": [
+                  228,
+                  127,
+                  24,
+                  31
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 113.06370799999786,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 113.27887499999997,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.23224158585071564,
+                "bbox": [
+                  230,
+                  126,
+                  24,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18203873932361603,
+                "bbox": [
+                  227,
+                  125,
+                  27,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22090792655944824,
+                "bbox": [
+                  230,
+                  126,
+                  23,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2068302035331726,
+                "bbox": [
+                  231,
+                  125,
+                  20,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 124.22245900000053,
+            "predictions": []
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 118.74741699999868,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22387069463729858,
+                "bbox": [
+                  221,
+                  123,
+                  23,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2607262134552002,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "combined": {
+        "rawHits": 2,
+        "trackedHits": 6,
+        "total": 9,
+        "medianMs": 235.39345899999898,
+        "p95Ms": 393.6646669999991,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 231.89195799999834,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.23720847070217133,
+                "bbox": [
+                  230,
+                  122,
+                  25,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4265258312225342,
+                "bbox": [
+                  231,
+                  122,
+                  23,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2238592654466629,
+                "bbox": [
+                  232,
+                  122,
+                  24,
+                  33
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19265834987163544,
+                "bbox": [
+                  248,
+                  110,
+                  14,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.27064329385757446,
+                "bbox": [
+                  233,
+                  122,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24596542119979858,
+                "bbox": [
+                  232,
+                  122,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23296219110488892,
+                "bbox": [
+                  233,
+                  122,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2444928139448166,
+                "bbox": [
+                  266,
+                  96,
+                  13,
+                  25
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18422718346118927,
+                "bbox": [
+                  242,
+                  134,
+                  16,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18439531326293945,
+                "bbox": [
+                  241,
+                  134,
+                  32,
+                  22
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19105200469493866,
+                "bbox": [
+                  230,
+                  122,
+                  65,
+                  36
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 279.86570799999936,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2949487864971161,
+                "bbox": [
+                  230,
+                  124,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1898912787437439,
+                "bbox": [
+                  230,
+                  124,
+                  20,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18928271532058716,
+                "bbox": [
+                  231,
+                  124,
+                  19,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20780357718467712,
+                "bbox": [
+                  231,
+                  124,
+                  19,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18369868397712708,
+                "bbox": [
+                  228,
+                  124,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20580703020095825,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21480870246887207,
+                "bbox": [
+                  231,
+                  124,
+                  19,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18487486243247986,
+                "bbox": [
+                  237,
+                  124,
+                  13,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 393.6646669999991,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.31118038296699524,
+                "bbox": [
+                  230,
+                  129,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23156733810901642,
+                "bbox": [
+                  229,
+                  128,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 235.39345899999898,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.237053781747818,
+                "bbox": [
+                  230,
+                  119,
+                  23,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3125776946544647,
+                "bbox": [
+                  230,
+                  120,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19399002194404602,
+                "bbox": [
+                  231,
+                  119,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2475338727235794,
+                "bbox": [
+                  230,
+                  119,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23914571106433868,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19121575355529785,
+                "bbox": [
+                  238,
+                  120,
+                  13,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 224.91562499999782,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2670120894908905,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3434463143348694,
+                "bbox": [
+                  228,
+                  126,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.26677757501602173,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18868501484394073,
+                "bbox": [
+                  238,
+                  128,
+                  11,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21429239213466644,
+                "bbox": [
+                  228,
+                  127,
+                  13,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1979064643383026,
+                "bbox": [
+                  228,
+                  127,
+                  24,
+                  31
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 226.06445800000074,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 225.15370800000164,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18945194780826569,
+                "bbox": [
+                  230,
+                  121,
+                  22,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23148900270462036,
+                "bbox": [
+                  230,
+                  124,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18679505586624146,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23224158585071564,
+                "bbox": [
+                  230,
+                  126,
+                  24,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18203873932361603,
+                "bbox": [
+                  227,
+                  125,
+                  27,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22090792655944824,
+                "bbox": [
+                  230,
+                  126,
+                  23,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2068302035331726,
+                "bbox": [
+                  231,
+                  125,
+                  20,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 235.6009180000001,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.217974454164505,
+                "bbox": [
+                  224,
+                  126,
+                  22,
+                  13
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 246.53229199999987,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.4261491894721985,
+                "bbox": [
+                  222,
+                  123,
+                  21,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19285191595554352,
+                "bbox": [
+                  223,
+                  120,
+                  46,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21106137335300446,
+                "bbox": [
+                  254,
+                  94,
+                  15,
+                  25
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22387069463729858,
+                "bbox": [
+                  221,
+                  123,
+                  23,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2607262134552002,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "blankPredictions": []
+    },
+    {
+      "key": "r18-q8",
+      "modelId": "onnx-community/rtdetr_r18vd",
+      "dtype": "q8",
+      "weightBytes": 21713196,
+      "loadMs": 2094.211625,
+      "full": {
+        "rawHits": 1,
+        "trackedHits": 1,
+        "total": 9,
+        "medianMs": 70.68091699999786,
+        "p95Ms": 73.6650840000002,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 72.53529200000048,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3246564567089081,
+                "bbox": [
+                  230,
+                  122,
+                  25,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.34716281294822693,
+                "bbox": [
+                  231,
+                  122,
+                  23,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2335219830274582,
+                "bbox": [
+                  231,
+                  122,
+                  26,
+                  33
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1888798028230667,
+                "bbox": [
+                  242,
+                  122,
+                  11,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 69.88016699999935,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2335355281829834,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18059667944908142,
+                "bbox": [
+                  227,
+                  123,
+                  23,
+                  16
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 68.21683299999859,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.24911154806613922,
+                "bbox": [
+                  229,
+                  129,
+                  22,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 70.68091699999786,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2826881408691406,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2046932429075241,
+                "bbox": [
+                  262,
+                  94,
+                  15,
+                  25
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 71.39891700000226,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18867671489715576,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 69.9138329999987,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 73.6650840000002,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.19757230579853058,
+                "bbox": [
+                  230,
+                  124,
+                  22,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 72.24462499999936,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2063717395067215,
+                "bbox": [
+                  223,
+                  127,
+                  23,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24699831008911133,
+                "bbox": [
+                  224,
+                  127,
+                  22,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19333025813102722,
+                "bbox": [
+                  225,
+                  127,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18354257941246033,
+                "bbox": [
+                  240,
+                  113,
+                  13,
+                  20
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 68.92091699999946,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.448027640581131,
+                "bbox": [
+                  222,
+                  124,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18995359539985657,
+                "bbox": [
+                  254,
+                  94,
+                  15,
+                  25
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "crop": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 70.48912500000006,
+        "p95Ms": 73.96708299999955,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 68.55058300000019,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2658115327358246,
+                "bbox": [
+                  232,
+                  122,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2938929498195648,
+                "bbox": [
+                  267,
+                  96,
+                  12,
+                  25
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22896674275398254,
+                "bbox": [
+                  232,
+                  122,
+                  22,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24712206423282623,
+                "bbox": [
+                  232,
+                  123,
+                  23,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20443710684776306,
+                "bbox": [
+                  233,
+                  122,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19968420267105103,
+                "bbox": [
+                  230,
+                  122,
+                  51,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.265128493309021,
+                "bbox": [
+                  231,
+                  122,
+                  42,
+                  33
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24096991121768951,
+                "bbox": [
+                  241,
+                  134,
+                  32,
+                  21
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1987619549036026,
+                "bbox": [
+                  266,
+                  96,
+                  14,
+                  35
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 70.48912500000006,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.21466529369354248,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19914069771766663,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1955203264951706,
+                "bbox": [
+                  227,
+                  124,
+                  38,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19509290158748627,
+                "bbox": [
+                  232,
+                  125,
+                  37,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20648498833179474,
+                "bbox": [
+                  230,
+                  125,
+                  20,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.191067636013031,
+                "bbox": [
+                  228,
+                  124,
+                  21,
+                  33
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 73.96708299999955,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22891215980052948,
+                "bbox": [
+                  229,
+                  128,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21224021911621094,
+                "bbox": [
+                  229,
+                  128,
+                  23,
+                  19
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 68.97529099999883,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2311205118894577,
+                "bbox": [
+                  229,
+                  119,
+                  23,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2145911008119583,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18017201125621796,
+                "bbox": [
+                  229,
+                  120,
+                  29,
+                  32
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 68.61854100000346,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2534874379634857,
+                "bbox": [
+                  228,
+                  126,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23578839004039764,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19184982776641846,
+                "bbox": [
+                  232,
+                  133,
+                  21,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22469408810138702,
+                "bbox": [
+                  227,
+                  127,
+                  28,
+                  31
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21520084142684937,
+                "bbox": [
+                  229,
+                  132,
+                  21,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22772029042243958,
+                "bbox": [
+                  227,
+                  127,
+                  27,
+                  31
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 71.15445900000122,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 67.80858399999852,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2679467499256134,
+                "bbox": [
+                  228,
+                  127,
+                  27,
+                  16
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 72.20416699999987,
+            "predictions": []
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 72.16545899999983,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.31837281584739685,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.27021121978759766,
+                "bbox": [
+                  221,
+                  123,
+                  23,
+                  18
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "combined": {
+        "rawHits": 1,
+        "trackedHits": 1,
+        "total": 9,
+        "medianMs": 141.08587500000067,
+        "p95Ms": 144.44879199999923,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 141.08587500000067,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3246564567089081,
+                "bbox": [
+                  230,
+                  122,
+                  25,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.34716281294822693,
+                "bbox": [
+                  231,
+                  122,
+                  23,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2335219830274582,
+                "bbox": [
+                  231,
+                  122,
+                  26,
+                  33
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1888798028230667,
+                "bbox": [
+                  242,
+                  122,
+                  11,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2658115327358246,
+                "bbox": [
+                  232,
+                  122,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2938929498195648,
+                "bbox": [
+                  267,
+                  96,
+                  12,
+                  25
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22896674275398254,
+                "bbox": [
+                  232,
+                  122,
+                  22,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24712206423282623,
+                "bbox": [
+                  232,
+                  123,
+                  23,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20443710684776306,
+                "bbox": [
+                  233,
+                  122,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19968420267105103,
+                "bbox": [
+                  230,
+                  122,
+                  51,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.265128493309021,
+                "bbox": [
+                  231,
+                  122,
+                  42,
+                  33
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24096991121768951,
+                "bbox": [
+                  241,
+                  134,
+                  32,
+                  21
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1987619549036026,
+                "bbox": [
+                  266,
+                  96,
+                  14,
+                  35
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 140.3692919999994,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2335355281829834,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18059667944908142,
+                "bbox": [
+                  227,
+                  123,
+                  23,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21466529369354248,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19914069771766663,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1955203264951706,
+                "bbox": [
+                  227,
+                  124,
+                  38,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19509290158748627,
+                "bbox": [
+                  232,
+                  125,
+                  37,
+                  34
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20648498833179474,
+                "bbox": [
+                  230,
+                  125,
+                  20,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.191067636013031,
+                "bbox": [
+                  228,
+                  124,
+                  21,
+                  33
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 142.18391599999813,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.24911154806613922,
+                "bbox": [
+                  229,
+                  129,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22891215980052948,
+                "bbox": [
+                  229,
+                  128,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21224021911621094,
+                "bbox": [
+                  229,
+                  128,
+                  23,
+                  19
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 139.6562079999967,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2826881408691406,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2046932429075241,
+                "bbox": [
+                  262,
+                  94,
+                  15,
+                  25
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2311205118894577,
+                "bbox": [
+                  229,
+                  119,
+                  23,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2145911008119583,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18017201125621796,
+                "bbox": [
+                  229,
+                  120,
+                  29,
+                  32
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 140.01745800000572,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18867671489715576,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2534874379634857,
+                "bbox": [
+                  228,
+                  126,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23578839004039764,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19184982776641846,
+                "bbox": [
+                  232,
+                  133,
+                  21,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22469408810138702,
+                "bbox": [
+                  227,
+                  127,
+                  28,
+                  31
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21520084142684937,
+                "bbox": [
+                  229,
+                  132,
+                  21,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22772029042243958,
+                "bbox": [
+                  227,
+                  127,
+                  27,
+                  31
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 141.06829199999993,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 141.47366799999872,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.19757230579853058,
+                "bbox": [
+                  230,
+                  124,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2679467499256134,
+                "bbox": [
+                  228,
+                  127,
+                  27,
+                  16
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 144.44879199999923,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2063717395067215,
+                "bbox": [
+                  223,
+                  127,
+                  23,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24699831008911133,
+                "bbox": [
+                  224,
+                  127,
+                  22,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19333025813102722,
+                "bbox": [
+                  225,
+                  127,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18354257941246033,
+                "bbox": [
+                  240,
+                  113,
+                  13,
+                  20
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 141.0863759999993,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.448027640581131,
+                "bbox": [
+                  222,
+                  124,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18995359539985657,
+                "bbox": [
+                  254,
+                  94,
+                  15,
+                  25
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.31837281584739685,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.27021121978759766,
+                "bbox": [
+                  221,
+                  123,
+                  23,
+                  18
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "blankPredictions": []
+    },
+    {
+      "key": "r18-o365-fp32",
+      "modelId": "onnx-community/rtdetr_r18vd_coco_o365",
+      "dtype": "fp32",
+      "weightBytes": 82572357,
+      "loadMs": 4670.315500000001,
+      "full": {
+        "rawHits": 4,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 117.73195900000064,
+        "p95Ms": 180.9086669999997,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 180.9086669999997,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.571870744228363,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4515670835971832,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18122856318950653,
+                "bbox": [
+                  233,
+                  123,
+                  20,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 117.73195900000064,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.40256163477897644,
+                "bbox": [
+                  230,
+                  124,
+                  20,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 115.50583299999926,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3813517987728119,
+                "bbox": [
+                  230,
+                  129,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 121.15583400000105,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.40988826751708984,
+                "bbox": [
+                  231,
+                  120,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18106569349765778,
+                "bbox": [
+                  231,
+                  119,
+                  21,
+                  18
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 115.71800000000076,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.21672604978084564,
+                "bbox": [
+                  227,
+                  126,
+                  24,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.31677642464637756,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 118.64916700000322,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.19587492942810059,
+                "bbox": [
+                  228,
+                  121,
+                  24,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.25182169675827026,
+                "bbox": [
+                  229,
+                  123,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19724468886852264,
+                "bbox": [
+                  229,
+                  120,
+                  16,
+                  12
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 113.83891700000095,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18098266422748566,
+                "bbox": [
+                  231,
+                  120,
+                  20,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.26671236753463745,
+                "bbox": [
+                  231,
+                  125,
+                  20,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 116.75829199999862,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.31674495339393616,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20626762509346008,
+                "bbox": [
+                  225,
+                  127,
+                  11,
+                  6
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 118.30812499999956,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2651515007019043,
+                "bbox": [
+                  222,
+                  123,
+                  20,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4076918363571167,
+                "bbox": [
+                  223,
+                  124,
+                  19,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.29290294647216797,
+                "bbox": [
+                  222,
+                  123,
+                  13,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "crop": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 115.55487499999799,
+        "p95Ms": 118.83579199999804,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 115.32320900000195,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2674649655818939,
+                "bbox": [
+                  231,
+                  123,
+                  27,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2735110819339752,
+                "bbox": [
+                  233,
+                  123,
+                  19,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20722679793834686,
+                "bbox": [
+                  168,
+                  93,
+                  5,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23590022325515747,
+                "bbox": [
+                  240,
+                  135,
+                  19,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20988261699676514,
+                "bbox": [
+                  239,
+                  131,
+                  19,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 117.07479199999943,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.26596763730049133,
+                "bbox": [
+                  227,
+                  124,
+                  23,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2556819021701813,
+                "bbox": [
+                  231,
+                  124,
+                  19,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18478825688362122,
+                "bbox": [
+                  223,
+                  128,
+                  9,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19540277123451233,
+                "bbox": [
+                  233,
+                  130,
+                  16,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19354702532291412,
+                "bbox": [
+                  223,
+                  124,
+                  11,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22087213397026062,
+                "bbox": [
+                  232,
+                  128,
+                  8,
+                  4
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 115.73600000000079,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3110688328742981,
+                "bbox": [
+                  230,
+                  128,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21526801586151123,
+                "bbox": [
+                  230,
+                  129,
+                  13,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2063307911157608,
+                "bbox": [
+                  224,
+                  129,
+                  28,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 113.45475000000079,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2283850908279419,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3969827890396118,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2130431830883026,
+                "bbox": [
+                  229,
+                  119,
+                  13,
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 116.34125000000131,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3667881190776825,
+                "bbox": [
+                  227,
+                  127,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1956338882446289,
+                "bbox": [
+                  227,
+                  127,
+                  23,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2299206554889679,
+                "bbox": [
+                  222,
+                  123,
+                  27,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19229845702648163,
+                "bbox": [
+                  228,
+                  127,
+                  11,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20494328439235687,
+                "bbox": [
+                  235,
+                  134,
+                  14,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2138008177280426,
+                "bbox": [
+                  238,
+                  128,
+                  10,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 113.82299999999668,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.1885288506746292,
+                "bbox": [
+                  231,
+                  125,
+                  18,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19584688544273376,
+                "bbox": [
+                  232,
+                  128,
+                  16,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20389871299266815,
+                "bbox": [
+                  237,
+                  131,
+                  12,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 112.86579200000051,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22428961098194122,
+                "bbox": [
+                  231,
+                  125,
+                  22,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2632206976413727,
+                "bbox": [
+                  230,
+                  125,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2688126266002655,
+                "bbox": [
+                  232,
+                  128,
+                  22,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18705472350120544,
+                "bbox": [
+                  232,
+                  129,
+                  19,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20208033919334412,
+                "bbox": [
+                  237,
+                  136,
+                  17,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18146303296089172,
+                "bbox": [
+                  222,
+                  119,
+                  31,
+                  23
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 118.83579199999804,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.1953127533197403,
+                "bbox": [
+                  223,
+                  126,
+                  20,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18871742486953735,
+                "bbox": [
+                  224,
+                  127,
+                  22,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20536506175994873,
+                "bbox": [
+                  224,
+                  126,
+                  19,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 115.55487499999799,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2956623136997223,
+                "bbox": [
+                  223,
+                  124,
+                  21,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.32534733414649963,
+                "bbox": [
+                  222,
+                  123,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19244466722011566,
+                "bbox": [
+                  229,
+                  131,
+                  15,
+                  10
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "combined": {
+        "rawHits": 4,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 233.86299999999756,
+        "p95Ms": 296.23187600000165,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 296.23187600000165,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.571870744228363,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4515670835971832,
+                "bbox": [
+                  232,
+                  122,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18122856318950653,
+                "bbox": [
+                  233,
+                  123,
+                  20,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2674649655818939,
+                "bbox": [
+                  231,
+                  123,
+                  27,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2735110819339752,
+                "bbox": [
+                  233,
+                  123,
+                  19,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20722679793834686,
+                "bbox": [
+                  168,
+                  93,
+                  5,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23590022325515747,
+                "bbox": [
+                  240,
+                  135,
+                  19,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20988261699676514,
+                "bbox": [
+                  239,
+                  131,
+                  19,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 234.80675100000008,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.40256163477897644,
+                "bbox": [
+                  230,
+                  124,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.26596763730049133,
+                "bbox": [
+                  227,
+                  124,
+                  23,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2556819021701813,
+                "bbox": [
+                  231,
+                  124,
+                  19,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18478825688362122,
+                "bbox": [
+                  223,
+                  128,
+                  9,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19540277123451233,
+                "bbox": [
+                  233,
+                  130,
+                  16,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19354702532291412,
+                "bbox": [
+                  223,
+                  124,
+                  11,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22087213397026062,
+                "bbox": [
+                  232,
+                  128,
+                  8,
+                  4
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 231.24183300000004,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3813517987728119,
+                "bbox": [
+                  230,
+                  129,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3110688328742981,
+                "bbox": [
+                  230,
+                  128,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21526801586151123,
+                "bbox": [
+                  230,
+                  129,
+                  13,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2063307911157608,
+                "bbox": [
+                  224,
+                  129,
+                  28,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 234.61058400000184,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.40988826751708984,
+                "bbox": [
+                  231,
+                  120,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18106569349765778,
+                "bbox": [
+                  231,
+                  119,
+                  21,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2283850908279419,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3969827890396118,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2130431830883026,
+                "bbox": [
+                  229,
+                  119,
+                  13,
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 232.05925000000207,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.21672604978084564,
+                "bbox": [
+                  227,
+                  126,
+                  24,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.31677642464637756,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3667881190776825,
+                "bbox": [
+                  227,
+                  127,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1956338882446289,
+                "bbox": [
+                  227,
+                  127,
+                  23,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2299206554889679,
+                "bbox": [
+                  222,
+                  123,
+                  27,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19229845702648163,
+                "bbox": [
+                  228,
+                  127,
+                  11,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20494328439235687,
+                "bbox": [
+                  235,
+                  134,
+                  14,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2138008177280426,
+                "bbox": [
+                  238,
+                  128,
+                  10,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 232.4721669999999,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.19587492942810059,
+                "bbox": [
+                  228,
+                  121,
+                  24,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.25182169675827026,
+                "bbox": [
+                  229,
+                  123,
+                  22,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19724468886852264,
+                "bbox": [
+                  229,
+                  120,
+                  16,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1885288506746292,
+                "bbox": [
+                  231,
+                  125,
+                  18,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19584688544273376,
+                "bbox": [
+                  232,
+                  128,
+                  16,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20389871299266815,
+                "bbox": [
+                  237,
+                  131,
+                  12,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 226.70470900000146,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18098266422748566,
+                "bbox": [
+                  231,
+                  120,
+                  20,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.26671236753463745,
+                "bbox": [
+                  231,
+                  125,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22428961098194122,
+                "bbox": [
+                  231,
+                  125,
+                  22,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2632206976413727,
+                "bbox": [
+                  230,
+                  125,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2688126266002655,
+                "bbox": [
+                  232,
+                  128,
+                  22,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18705472350120544,
+                "bbox": [
+                  232,
+                  129,
+                  19,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20208033919334412,
+                "bbox": [
+                  237,
+                  136,
+                  17,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18146303296089172,
+                "bbox": [
+                  222,
+                  119,
+                  31,
+                  23
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 235.59408399999666,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.31674495339393616,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20626762509346008,
+                "bbox": [
+                  225,
+                  127,
+                  11,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1953127533197403,
+                "bbox": [
+                  223,
+                  126,
+                  20,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18871742486953735,
+                "bbox": [
+                  224,
+                  127,
+                  22,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20536506175994873,
+                "bbox": [
+                  224,
+                  126,
+                  19,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 233.86299999999756,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2651515007019043,
+                "bbox": [
+                  222,
+                  123,
+                  20,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4076918363571167,
+                "bbox": [
+                  223,
+                  124,
+                  19,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.29290294647216797,
+                "bbox": [
+                  222,
+                  123,
+                  13,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2956623136997223,
+                "bbox": [
+                  223,
+                  124,
+                  21,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.32534733414649963,
+                "bbox": [
+                  222,
+                  123,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19244466722011566,
+                "bbox": [
+                  229,
+                  131,
+                  15,
+                  10
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "blankPredictions": []
+    },
+    {
+      "key": "r18-o365-q8",
+      "modelId": "onnx-community/rtdetr_r18vd_coco_o365",
+      "dtype": "q8",
+      "weightBytes": 21713196,
+      "loadMs": 2023.7932089999995,
+      "full": {
+        "rawHits": 1,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 72.1720000000023,
+        "p95Ms": 80.26970799999981,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 80.26970799999981,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22357289493083954,
+                "bbox": [
+                  232,
+                  122,
+                  22,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4797195494174957,
+                "bbox": [
+                  232,
+                  123,
+                  22,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 80.22404099999767,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.36780357360839844,
+                "bbox": [
+                  230,
+                  124,
+                  20,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 72.1720000000023,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2753782570362091,
+                "bbox": [
+                  229,
+                  129,
+                  23,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.33672651648521423,
+                "bbox": [
+                  229,
+                  129,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 76.99449999999706,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.35822412371635437,
+                "bbox": [
+                  231,
+                  119,
+                  21,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 78.84095800000068,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.20058278739452362,
+                "bbox": [
+                  227,
+                  126,
+                  25,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2936635911464691,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 69.39474999999948,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2075251340866089,
+                "bbox": [
+                  229,
+                  122,
+                  22,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2108452469110489,
+                "bbox": [
+                  230,
+                  124,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 68.30745799999931,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18956762552261353,
+                "bbox": [
+                  230,
+                  122,
+                  22,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.26298466324806213,
+                "bbox": [
+                  231,
+                  125,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18008364737033844,
+                "bbox": [
+                  230,
+                  124,
+                  25,
+                  18
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 70.40425000000323,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2825336158275604,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22449223697185516,
+                "bbox": [
+                  224,
+                  127,
+                  21,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1909971833229065,
+                "bbox": [
+                  224,
+                  126,
+                  12,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 71.98245800000223,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22059105336666107,
+                "bbox": [
+                  222,
+                  123,
+                  21,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.36668968200683594,
+                "bbox": [
+                  223,
+                  124,
+                  19,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21259705722332,
+                "bbox": [
+                  222,
+                  123,
+                  13,
+                  8
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "crop": {
+        "rawHits": 1,
+        "trackedHits": 4,
+        "total": 9,
+        "medianMs": 70.30308300000252,
+        "p95Ms": 90.00283299999865,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 90.00283299999865,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18216653168201447,
+                "bbox": [
+                  266,
+                  97,
+                  13,
+                  24
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22890622913837433,
+                "bbox": [
+                  232,
+                  123,
+                  27,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2493601143360138,
+                "bbox": [
+                  233,
+                  123,
+                  19,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2542920410633087,
+                "bbox": [
+                  241,
+                  135,
+                  19,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18153198063373566,
+                "bbox": [
+                  168,
+                  93,
+                  5,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24080798029899597,
+                "bbox": [
+                  238,
+                  130,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23474429547786713,
+                "bbox": [
+                  235,
+                  127,
+                  28,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18037955462932587,
+                "bbox": [
+                  240,
+                  134,
+                  24,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 75.25875000000087,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2593775987625122,
+                "bbox": [
+                  227,
+                  124,
+                  23,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24042430520057678,
+                "bbox": [
+                  232,
+                  125,
+                  18,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.28917890787124634,
+                "bbox": [
+                  233,
+                  131,
+                  20,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2060118168592453,
+                "bbox": [
+                  232,
+                  130,
+                  18,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19393226504325867,
+                "bbox": [
+                  223,
+                  124,
+                  12,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21461129188537598,
+                "bbox": [
+                  232,
+                  128,
+                  8,
+                  4
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18177099525928497,
+                "bbox": [
+                  236,
+                  138,
+                  12,
+                  18
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 73.87958300000173,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.21513842046260834,
+                "bbox": [
+                  230,
+                  128,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21609480679035187,
+                "bbox": [
+                  230,
+                  128,
+                  13,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 73.61283299999923,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.23785656690597534,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4040240943431854,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20675037801265717,
+                "bbox": [
+                  229,
+                  119,
+                  23,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2176527976989746,
+                "bbox": [
+                  238,
+                  127,
+                  13,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 69.627416000003,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2911328971385956,
+                "bbox": [
+                  228,
+                  127,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2381725013256073,
+                "bbox": [
+                  228,
+                  127,
+                  12,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18252819776535034,
+                "bbox": [
+                  235,
+                  136,
+                  14,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20386891067028046,
+                "bbox": [
+                  231,
+                  131,
+                  9,
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 68.25966699999844,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.20418091118335724,
+                "bbox": [
+                  232,
+                  127,
+                  17,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19503052532672882,
+                "bbox": [
+                  237,
+                  132,
+                  12,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 68.62437499999942,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22582757472991943,
+                "bbox": [
+                  230,
+                  128,
+                  23,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21118436753749847,
+                "bbox": [
+                  230,
+                  125,
+                  24,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2427869737148285,
+                "bbox": [
+                  231,
+                  127,
+                  25,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.224453404545784,
+                "bbox": [
+                  230,
+                  125,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19197720289230347,
+                "bbox": [
+                  229,
+                  124,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 70.30308300000252,
+            "predictions": []
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 69.97179200000028,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.37044087052345276,
+                "bbox": [
+                  222,
+                  124,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2420099675655365,
+                "bbox": [
+                  222,
+                  124,
+                  21,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.29713404178619385,
+                "bbox": [
+                  223,
+                  124,
+                  21,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18463736772537231,
+                "bbox": [
+                  242,
+                  125,
+                  22,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22483164072036743,
+                "bbox": [
+                  226,
+                  130,
+                  29,
+                  11
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "combined": {
+        "rawHits": 2,
+        "trackedHits": 9,
+        "total": 9,
+        "medianMs": 146.05158300000403,
+        "p95Ms": 170.27254099999845,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 170.27254099999845,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22357289493083954,
+                "bbox": [
+                  232,
+                  122,
+                  22,
+                  12
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4797195494174957,
+                "bbox": [
+                  232,
+                  123,
+                  22,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18216653168201447,
+                "bbox": [
+                  266,
+                  97,
+                  13,
+                  24
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22890622913837433,
+                "bbox": [
+                  232,
+                  123,
+                  27,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2493601143360138,
+                "bbox": [
+                  233,
+                  123,
+                  19,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2542920410633087,
+                "bbox": [
+                  241,
+                  135,
+                  19,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18153198063373566,
+                "bbox": [
+                  168,
+                  93,
+                  5,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24080798029899597,
+                "bbox": [
+                  238,
+                  130,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23474429547786713,
+                "bbox": [
+                  235,
+                  127,
+                  28,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18037955462932587,
+                "bbox": [
+                  240,
+                  134,
+                  24,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 155.48279099999854,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.36780357360839844,
+                "bbox": [
+                  230,
+                  124,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2593775987625122,
+                "bbox": [
+                  227,
+                  124,
+                  23,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24042430520057678,
+                "bbox": [
+                  232,
+                  125,
+                  18,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.28917890787124634,
+                "bbox": [
+                  233,
+                  131,
+                  20,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2060118168592453,
+                "bbox": [
+                  232,
+                  130,
+                  18,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19393226504325867,
+                "bbox": [
+                  223,
+                  124,
+                  12,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21461129188537598,
+                "bbox": [
+                  232,
+                  128,
+                  8,
+                  4
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18177099525928497,
+                "bbox": [
+                  236,
+                  138,
+                  12,
+                  18
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 146.05158300000403,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2753782570362091,
+                "bbox": [
+                  229,
+                  129,
+                  23,
+                  16
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.33672651648521423,
+                "bbox": [
+                  229,
+                  129,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21513842046260834,
+                "bbox": [
+                  230,
+                  128,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21609480679035187,
+                "bbox": [
+                  230,
+                  128,
+                  13,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 150.6073329999963,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.35822412371635437,
+                "bbox": [
+                  231,
+                  119,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23785656690597534,
+                "bbox": [
+                  230,
+                  119,
+                  22,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.4040240943431854,
+                "bbox": [
+                  230,
+                  119,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20675037801265717,
+                "bbox": [
+                  229,
+                  119,
+                  23,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2176527976989746,
+                "bbox": [
+                  238,
+                  127,
+                  13,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 148.46837400000368,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.20058278739452362,
+                "bbox": [
+                  227,
+                  126,
+                  25,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2936635911464691,
+                "bbox": [
+                  227,
+                  126,
+                  23,
+                  11
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2911328971385956,
+                "bbox": [
+                  228,
+                  127,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2381725013256073,
+                "bbox": [
+                  228,
+                  127,
+                  12,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18252819776535034,
+                "bbox": [
+                  235,
+                  136,
+                  14,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20386891067028046,
+                "bbox": [
+                  231,
+                  131,
+                  9,
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 137.65441699999792,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2075251340866089,
+                "bbox": [
+                  229,
+                  122,
+                  22,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2108452469110489,
+                "bbox": [
+                  230,
+                  124,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20418091118335724,
+                "bbox": [
+                  232,
+                  127,
+                  17,
+                  13
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19503052532672882,
+                "bbox": [
+                  237,
+                  132,
+                  12,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 136.93183299999873,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.18956762552261353,
+                "bbox": [
+                  230,
+                  122,
+                  22,
+                  19
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.26298466324806213,
+                "bbox": [
+                  231,
+                  125,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18008364737033844,
+                "bbox": [
+                  230,
+                  124,
+                  25,
+                  18
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22582757472991943,
+                "bbox": [
+                  230,
+                  128,
+                  23,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21118436753749847,
+                "bbox": [
+                  230,
+                  125,
+                  24,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2427869737148285,
+                "bbox": [
+                  231,
+                  127,
+                  25,
+                  15
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.224453404545784,
+                "bbox": [
+                  230,
+                  125,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19197720289230347,
+                "bbox": [
+                  229,
+                  124,
+                  22,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 140.70733300000575,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.2825336158275604,
+                "bbox": [
+                  224,
+                  126,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22449223697185516,
+                "bbox": [
+                  224,
+                  127,
+                  21,
+                  7
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.1909971833229065,
+                "bbox": [
+                  224,
+                  126,
+                  12,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 141.9542500000025,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22059105336666107,
+                "bbox": [
+                  222,
+                  123,
+                  21,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.36668968200683594,
+                "bbox": [
+                  223,
+                  124,
+                  19,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.21259705722332,
+                "bbox": [
+                  222,
+                  123,
+                  13,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.37044087052345276,
+                "bbox": [
+                  222,
+                  124,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2420099675655365,
+                "bbox": [
+                  222,
+                  124,
+                  21,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.29713404178619385,
+                "bbox": [
+                  223,
+                  124,
+                  21,
+                  17
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18463736772537231,
+                "bbox": [
+                  242,
+                  125,
+                  22,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.22483164072036743,
+                "bbox": [
+                  226,
+                  130,
+                  29,
+                  11
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "blankPredictions": []
+    },
+    {
+      "key": "r34-q8",
+      "modelId": "onnx-community/rtdetr_r34vd",
+      "dtype": "q8",
+      "weightBytes": 33306917,
+      "loadMs": 3224.610790999999,
+      "full": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 94.11349999999948,
+        "p95Ms": 97.71141599999828,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 93.58962500000052,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.20292958617210388,
+                "bbox": [
+                  235,
+                  126,
+                  18,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3199063241481781,
+                "bbox": [
+                  233,
+                  123,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2520393133163452,
+                "bbox": [
+                  237,
+                  127,
+                  15,
+                  4
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2332450896501541,
+                "bbox": [
+                  240,
+                  124,
+                  13,
+                  6
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 91.88783400000102,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.33194348216056824,
+                "bbox": [
+                  228,
+                  123,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.186359241604805,
+                "bbox": [
+                  241,
+                  124,
+                  10,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 95.90625,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.19673536717891693,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.28324636816978455,
+                "bbox": [
+                  230,
+                  128,
+                  20,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 94.11349999999948,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22769445180892944,
+                "bbox": [
+                  232,
+                  124,
+                  17,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.27420514822006226,
+                "bbox": [
+                  230,
+                  119,
+                  20,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23903948068618774,
+                "bbox": [
+                  231,
+                  121,
+                  17,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20810145139694214,
+                "bbox": [
+                  231,
+                  120,
+                  20,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 94.6034159999981,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3123382031917572,
+                "bbox": [
+                  228,
+                  127,
+                  21,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 97.71141599999828,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 94.19179099999747,
+            "predictions": []
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 93.77391699999862,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.26372864842414856,
+                "bbox": [
+                  223,
+                  125,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18425893783569336,
+                "bbox": [
+                  225,
+                  129,
+                  19,
+                  6
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 93.93491599999834,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.33801189064979553,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "crop": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 92.75604200000089,
+        "p95Ms": 94.96020899999712,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 91.16658299999835,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.20174092054367065,
+                "bbox": [
+                  231,
+                  123,
+                  21,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 92.35308300000179,
+            "predictions": []
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 94.23216699999466,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.24727904796600342,
+                "bbox": [
+                  230,
+                  128,
+                  21,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 92.58974999999919,
+            "predictions": []
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 94.56950000000506,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.34992116689682007,
+                "bbox": [
+                  227,
+                  127,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19994229078292847,
+                "bbox": [
+                  255,
+                  121,
+                  11,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 92.75604200000089,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 93.21216599999752,
+            "predictions": []
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 92.31683300000441,
+            "predictions": []
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 94.96020899999712,
+            "predictions": []
+          }
+        ]
+      },
+      "combined": {
+        "rawHits": 0,
+        "trackedHits": 0,
+        "total": 9,
+        "medianMs": 187.403956999995,
+        "p95Ms": 190.46745799999917,
+        "frames": [
+          {
+            "file": "frame-01.png",
+            "ms": 184.75620799999888,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.20292958617210388,
+                "bbox": [
+                  235,
+                  126,
+                  18,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.3199063241481781,
+                "bbox": [
+                  233,
+                  123,
+                  21,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2520393133163452,
+                "bbox": [
+                  237,
+                  127,
+                  15,
+                  4
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.2332450896501541,
+                "bbox": [
+                  240,
+                  124,
+                  13,
+                  6
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20174092054367065,
+                "bbox": [
+                  231,
+                  123,
+                  21,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-02.png",
+            "ms": 184.2409170000028,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.33194348216056824,
+                "bbox": [
+                  228,
+                  123,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.186359241604805,
+                "bbox": [
+                  241,
+                  124,
+                  10,
+                  8
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-03.png",
+            "ms": 190.13841699999466,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.19673536717891693,
+                "bbox": [
+                  229,
+                  124,
+                  21,
+                  14
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.28324636816978455,
+                "bbox": [
+                  230,
+                  128,
+                  20,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.24727904796600342,
+                "bbox": [
+                  230,
+                  128,
+                  21,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-04.png",
+            "ms": 186.70324999999866,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.22769445180892944,
+                "bbox": [
+                  232,
+                  124,
+                  17,
+                  5
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.27420514822006226,
+                "bbox": [
+                  230,
+                  119,
+                  20,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.23903948068618774,
+                "bbox": [
+                  231,
+                  121,
+                  17,
+                  8
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.20810145139694214,
+                "bbox": [
+                  231,
+                  120,
+                  20,
+                  9
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-05.png",
+            "ms": 189.17291600000317,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.3123382031917572,
+                "bbox": [
+                  228,
+                  127,
+                  21,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.34992116689682007,
+                "bbox": [
+                  227,
+                  127,
+                  22,
+                  9
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.19994229078292847,
+                "bbox": [
+                  255,
+                  121,
+                  11,
+                  7
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-06.png",
+            "ms": 190.46745799999917,
+            "predictions": []
+          },
+          {
+            "file": "frame-07.png",
+            "ms": 187.403956999995,
+            "predictions": []
+          },
+          {
+            "file": "frame-08.png",
+            "ms": 186.09075000000303,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.26372864842414856,
+                "bbox": [
+                  223,
+                  125,
+                  21,
+                  10
+                ]
+              },
+              {
+                "class": "cell phone",
+                "score": 0.18425893783569336,
+                "bbox": [
+                  225,
+                  129,
+                  19,
+                  6
+                ]
+              }
+            ]
+          },
+          {
+            "file": "frame-09.png",
+            "ms": 188.89512499999546,
+            "predictions": [
+              {
+                "class": "cell phone",
+                "score": 0.33801189064979553,
+                "bbox": [
+                  221,
+                  123,
+                  22,
+                  9
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "blankPredictions": []
+    }
+  ]
+}

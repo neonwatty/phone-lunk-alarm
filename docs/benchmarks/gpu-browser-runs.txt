@@ -1,0 +1,7 @@
+Runs in this browser session
+Run	Median	P95	Frames ≥ 0.40	Tracked
+R18 Objects365 · FP32 / one pass / webgpu	34 ms	37 ms	155/429	422/429
+R18 Objects365 · FP32 / one pass / webgpu	33 ms	34 ms	157/416	416/416
+R18 Objects365 · FP32 / one pass / webgpu	38 ms	48 ms	59/150	150/150
+R18 Objects365 · FP32 / one pass / wasm	1135 ms	1137 ms	8/20	8/20
+R18 Objects365 · FP32 / one pass / webgpu	38 ms	48 ms	58/151	151/151

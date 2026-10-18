@@ -1,0 +1,3 @@
+Runs in this browser session
+Run	Median	P95	Frames ≥ 0.40	Tracked
+R18 Objects365 · FP32 / one pass / webgpu	38 ms	48 ms	59/151	150/151

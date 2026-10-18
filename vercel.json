@@ -1,4 +1,28 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "bash scripts/build-vercel.sh"
+  "buildCommand": "bash scripts/build-vercel.sh",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "phone-lunk.app"
+        }
+      ],
+      "destination": "https://phone-lunk.neonwatty.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.phone-lunk.app"
+        }
+      ],
+      "destination": "https://phone-lunk.neonwatty.com/:path*",
+      "permanent": true
+    }
+  ]
 }

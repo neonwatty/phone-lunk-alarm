@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-export const CANONICAL_SITE_URL = 'https://www.phone-lunk.app'
+export const CANONICAL_SITE_URL = 'https://phone-lunk.neonwatty.com'
 
 export type PageMetadata = {
   title: string

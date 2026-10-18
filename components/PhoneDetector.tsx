@@ -271,7 +271,7 @@ export default function PhoneDetector({
     ctx.font = 'bold 24px sans-serif'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.fillText('🚨 PHONE LUNK DETECTED 🚨  phone-lunk.app', width / 2, watermarkHeight / 2)
+    ctx.fillText('🚨 PHONE LUNK DETECTED 🚨  phone-lunk.neonwatty.com', width / 2, watermarkHeight / 2, width - 24)
 
     // Draw video frame
     ctx.drawImage(video, 0, watermarkHeight, width, height)
@@ -375,7 +375,7 @@ export default function PhoneDetector({
 
       // Semi-transparent white text
       ctx.fillStyle = 'rgba(255, 255, 255, 0.75)'
-      ctx.fillText('phone-lunk.app', width - padding, watermarkHeight + height - padding)
+      ctx.fillText('phone-lunk.neonwatty.com', width - padding, watermarkHeight + height - padding)
 
       ctx.restore()
     }

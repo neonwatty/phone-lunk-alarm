@@ -11,7 +11,7 @@ const siteConfig = {
     name: 'Phone Lunk',
     tagline: 'AI Phone Detection Demo for Gyms',
     description: 'Detect phones with your camera and sound an alarm on your device. Camera processing stays in your browser.',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.phone-lunk.app',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://phone-lunk.neonwatty.com',
     keywords: [
       'gym phone detection',
       'AI phone detector demo',

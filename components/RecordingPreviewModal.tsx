@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 import { getShareCaption, getTikTokShareUrl, copyToClipboard } from '@/lib/video-utils'
 import { trackFunnelEvent } from '@/lib/funnel-events'
 
-const CANONICAL_SITE_URL = 'https://www.phone-lunk.app'
+const CANONICAL_SITE_URL = 'https://phone-lunk.neonwatty.com'
 
 interface RecordingPreviewModalProps {
   videoBlob: Blob

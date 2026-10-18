@@ -231,7 +231,7 @@ const overlaySvg = `
     </text>
     <text x="600" y="595" font-family="Arial, sans-serif" font-size="28"
           font-weight="600" text-anchor="middle" fill="white">
-      phone-lunk.app
+      phone-lunk.neonwatty.com
     </text>
   </g>
 </svg>

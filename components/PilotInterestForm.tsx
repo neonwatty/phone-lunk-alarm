@@ -23,7 +23,7 @@ const initialForm: PilotLeadForm = {
 }
 
 const FORM_ENDPOINT = 'https://formsubmit.co/hello@phone-lunk.app'
-const THANK_YOU_URL = 'https://www.phone-lunk.app/waitlist/?pilot=sent'
+const THANK_YOU_URL = 'https://phone-lunk.neonwatty.com/waitlist/?pilot=sent'
 
 export default function PilotInterestForm() {
   const [form, setForm] = useState<PilotLeadForm>(initialForm)

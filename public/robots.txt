@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://www.phone-lunk.app/sitemap.xml
+Sitemap: https://phone-lunk.neonwatty.com/sitemap.xml

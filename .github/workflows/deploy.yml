@@ -47,7 +47,7 @@ jobs:
       - name: Build with Next.js
         run: npm run build
         env:
-          NEXT_PUBLIC_SITE_URL: 'https://www.phone-lunk.app'
+          NEXT_PUBLIC_SITE_URL: 'https://phone-lunk.neonwatty.com'
           NEXT_PUBLIC_BASE_PATH: ''
           NEXT_PUBLIC_GA_ID: ${{ secrets.NEXT_PUBLIC_GA_ID }}
 
@@ -80,5 +80,5 @@ jobs:
       - name: Verify deployed SEO assets
         run: node scripts/test-deployment.mjs
         env:
-          DEPLOYMENT_TEST_URL: 'https://www.phone-lunk.app'
-          DEPLOYMENT_TEST_CANONICAL_URL: 'https://www.phone-lunk.app'
+          DEPLOYMENT_TEST_URL: 'https://phone-lunk.neonwatty.com'
+          DEPLOYMENT_TEST_CANONICAL_URL: 'https://phone-lunk.neonwatty.com'

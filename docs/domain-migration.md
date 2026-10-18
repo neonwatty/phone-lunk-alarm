@@ -1,15 +1,15 @@
 # Move to phone-lunk.neonwatty.com
 
-Prepared October 18, 2026. The user chose to release the domain migration
-alongside PR #26 after approval. The PR remains ready for review and unmerged;
-production DNS and the GA stream URL remain unchanged until cutover.
+Cut over October 18, 2026 with user approval. PR #26 merged as
+`69da64452d6a681044d5bfa7cd7792261c8e3ea9`. Vercel production, DNS/HTTPS,
+the existing GA stream URL, and legacy-host redirects now use the new domain.
 
 ## Existing services to retain
 
 - Vercel project: `phone-lunk-alarm` in `jermwatts-projects`.
 - Google Analytics account `337965956`, property **Phone Lunk** `520041561`.
 - Web stream **Phone Lunk Web**, stream `13301482795`, measurement ID
-  `G-PM737NZX2R`. Its current URL is `https://phone-lunk.app`; the Analytics
+  `G-PM737NZX2R`. Its current URL is `https://phone-lunk.neonwatty.com`; the Analytics
   dashboard reports active collection in the past 48 hours.
 - Google Tag Manager: `GTM-MKS2GNDH`.
 - Existing Vercel Analytics and Speed Insights integrations and funnel events.
@@ -24,22 +24,25 @@ preferences/cookies on phone-lunk.app do not transfer to neonwatty.com.
 
 ## Prepared configuration
 
-The new subdomain is attached to the existing Vercel project. No DNS cutover
-has been made. Vercel's October 18 verification recommends this Cloudflare
-record in the neonwatty.com zone:
+The new subdomain is attached to the existing Vercel project. This Cloudflare
+record is saved in the neonwatty.com zone (TTL Auto); authoritative DNS and
+1.1.1.1 return the exact target, and Vercel reports configured-correctly:
 
 | Type | Name | Target | Proxy |
 | --- | --- | --- | --- |
 | CNAME | phone-lunk | 6629076320876e32.vercel-dns-017.com | DNS only |
 
-Recheck with `npx vercel domains verify phone-lunk.neonwatty.com` before applying
-the record in case Vercel's recommendation changes. Add only this subdomain's
-record; do not change the blog's apex, www, or nameservers.
+Verify with `npx vercel domains verify phone-lunk.neonwatty.com`. The blog's
+apex, www, nameservers, and email DNS were not changed. Vercel certificate
+`cert_CPpZGqPc5pHxHJnjpBHdhmVE` has automatic renewal enabled; public HTTPS
+passes normal certificate validation.
 
 Application canonical/structured-data URLs, sitemap/robots, sharing links,
 form return URL, and recording/image watermarks now target the subdomain.
 Vercel host-specific redirects are prepared for both legacy hosts, preserving
-paths. They become active only when this configuration reaches production.
+paths. Both legacy domains additionally have Vercel project-domain redirects
+to `phone-lunk.neonwatty.com` with status 308. These were necessary because
+production host-rule checks initially still served pages from the old www host.
 
 ## Cutover order
 
@@ -85,5 +88,18 @@ visitors back. Do not delete the existing GA property, stream, or Vercel project
 - The local detector responds at http://phone-lunk.localhost:3107/demo/.
 - Production GA ID and existing stream ID were independently checked against
   deployment configuration and the Analytics dashboard.
-- DNS verification currently reports the missing new-host CNAME; end-to-end
-  new-host analytics collection and redirects remain cutover checks.
+- Production deployment `dpl_Fb71RAhHWwk2A75nbN1Uacjm4ytQ` is Ready and
+  matches the merge SHA. Browser review confirms the Athletic Signal landing
+  and detector model loading reaches Start Camera. Physical iPhone testing is deferred.
+- GA stream Website URL saved as `https://phone-lunk.neonwatty.com`; stream
+  `13301482795` and measurement `G-PM737NZX2R` retained. Realtime received a
+  page view and actual Launch detector `cta_click`; its `page_location` was
+  `https://phone-lunk.neonwatty.com/?utm_source=cutover_qa&utm_medium=verification&utm_campaign=domain_migration_20261018`.
+- Eight public redirect checks cover both legacy hosts at `/`, `/demo/`,
+  `/gym-phone-policy/`, and `/demo/?source=cutover-check&test=1`: each returns
+  308 directly to the same path/query on the new host, then 200, without loops.
+- Vercel Web Analytics dashboard shows Enable, so collection is not enabled
+  there despite bundled integration scripts. GA collection is verified; no
+  paid analytics feature was enabled as part of cutover.
+- The post-deployment checker had stale old-host and purple-theme expectations.
+  These are updated to the configured canonical host and Athletic Signal cobalt.

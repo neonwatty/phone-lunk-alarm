@@ -38,7 +38,7 @@ export default function Footer() {
             aria-label="Footer"
             style={{ color: 'var(--color-text-tertiary)' }}
           >
-            <Link href="/demo" className="hover:opacity-70 transition-opacity">Launch detector</Link>
+            <Link href="/demo" className="hover:opacity-70 transition-opacity">Open Lunk Alarm</Link>
             <Link href="/privacy" className="hover:opacity-70 transition-opacity">Privacy</Link>
           </nav>
 

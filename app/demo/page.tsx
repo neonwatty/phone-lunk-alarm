@@ -9,10 +9,10 @@ export const metadata: Metadata = buildPageMetadata('/demo')
 export default function DemoPage() {
   return (
     <div className="detector-page min-h-screen flex flex-col">
-      <Header />
+      <Header showThemeToggle={false} />
       <main className="flex-grow">
         <section className="detector-title max-w-5xl mx-auto px-4 text-center">
-          <h1 className="heading-xl mb-3">Phone Lunk Detector</h1>
+          <h1 className="heading-xl mb-3">Lunk Alarm</h1>
         </section>
         <PhoneDetector
           heading="Catch phone lunks in the act."

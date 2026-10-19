@@ -33,7 +33,7 @@ describe('Hero', () => {
 
   it('offers one launch action without pilot links', () => {
     render(<Hero />)
-    expect(screen.getByRole('link', { name: 'Launch detector' })).toHaveAttribute('href', '/demo')
+    expect(screen.getByRole('link', { name: 'Launch Lunk Alarm' })).toHaveAttribute('href', '/demo')
     expect(screen.getAllByRole('link')).toHaveLength(1)
   })
 
@@ -41,12 +41,12 @@ describe('Hero', () => {
     const user = userEvent.setup()
     render(<Hero />)
 
-    await user.click(screen.getByRole('link', { name: 'Launch detector' }))
+    await user.click(screen.getByRole('link', { name: 'Launch Lunk Alarm' }))
 
     expect(trackFunnelEvent).toHaveBeenCalledWith('cta_click', {
       location: 'hero_primary',
       href: '/demo',
-      label: 'Launch detector',
+      label: 'Launch Lunk Alarm',
     })
   })
 

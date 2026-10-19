@@ -16,7 +16,7 @@ export const pageMetadata = {
     path: '/',
   },
   '/demo': {
-    title: 'Phone Lunk Detector | Live Camera',
+    title: 'Lunk Alarm | Live Camera',
     description: 'Launch Phone Lunk to detect visible phones and sound an alarm on your device.',
     path: '/demo',
   },

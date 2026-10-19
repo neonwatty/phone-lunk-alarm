@@ -51,7 +51,7 @@ const siteConfig = {
 
   // Navigation menu items
   navigation: [
-    { name: 'Launch Detector', href: '/demo' },
+    { name: 'Lunk Alarm', href: '/demo' },
     { name: 'How It Works', href: '/#how-it-works' },
     { name: 'Privacy', href: '/privacy' },
   ],
@@ -61,7 +61,7 @@ const siteConfig = {
     headline: 'Put phone lunks on blast.',
     subheadline: 'Point your camera. Detect a phone. Sound the alarm.',
     primaryCTA: {
-      text: 'Launch detector',
+      text: 'Launch Lunk Alarm',
       href: '/demo',
     },
     secondaryCTA: {

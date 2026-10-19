@@ -12,12 +12,24 @@ export default function Home() {
     <div className="landing landing-home detector-page">
       <JsonLd data={buildWebsiteJsonLd()} /><JsonLd data={buildSoftwareApplicationJsonLd()} />
       <a className="landing-skip" href="#main">Skip to content</a>
-      <header className="landing-header landing-width">
+      <header className="landing-navigation">
+        <div className="landing-header landing-width">
         <Link href="/" className="landing-brand"><ViewfinderCircleIcon aria-hidden="true" />Phone Lunk<span className="brand-dot">.</span></Link>
-        <nav aria-label="Main navigation"><Link href="#how-it-works" className="how-link">How it works</Link><Link href="/demo" className="nav-launch">Launch detector <span aria-hidden="true">↗</span></Link><ThemeToggle /></nav>
+        <nav aria-label="Main navigation">
+          <div className="landing-section-links">
+            <a href="#overview">Overview</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#privacy">Privacy</a>
+          </div>
+          <div className="landing-nav-actions">
+            <Link href="/demo" className="nav-launch">Open app <span aria-hidden="true">↗</span></Link>
+            <ThemeToggle />
+          </div>
+        </nav>
+        </div>
       </header>
       <main id="main"><Hero /><HowItWorks />
-        <section className="landing-screen landing-privacy-screen" aria-labelledby="privacy-title">
+        <section id="privacy" className="landing-screen landing-privacy-screen" aria-labelledby="privacy-title">
           <div className="landing-privacy landing-width">
           <div className="privacy-icon"><LockClosedIcon aria-hidden="true" /></div>
           <div><h2 id="privacy-title">Your camera. Your device.</h2><p>Camera frames are processed in your browser, without uploading your live feed. You control when the camera starts and stops.</p><Link href="/privacy">Read about privacy <span aria-hidden="true">↗</span></Link></div>

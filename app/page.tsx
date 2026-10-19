@@ -37,7 +37,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <footer className="landing-footer landing-width"><p>Phone Lunk <span>© {new Date().getFullYear()}</span></p><div><Link href="/privacy">Privacy</Link><a href={siteConfig.social.blog} target="_blank" rel="noopener noreferrer">Built by {siteConfig.author.name} <span aria-hidden="true">↗</span></a></div></footer>
+      <footer className="landing-footer landing-width"><p>Phone Lunk <span>© {new Date().getFullYear()}</span></p><div><a href="https://neonwatty.com/projects/">All projects</a><a href="https://neonwatty.com/posts/">Blog</a><Link href="/privacy">Privacy</Link><a href={siteConfig.social.blog} target="_blank" rel="noopener noreferrer">Built by {siteConfig.author.name} <span aria-hidden="true">↗</span></a></div></footer>
     </div>
   )
 }

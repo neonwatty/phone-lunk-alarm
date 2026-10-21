@@ -47,7 +47,8 @@ jobs:
           NEXT_PUBLIC_SITE_URL: http://localhost:3000
 
   e2e-watermark:
-    runs-on: ubuntu-latest
+    # Playwright 1.55 does not support Ubuntu 26.04 yet.
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4

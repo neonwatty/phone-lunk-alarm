@@ -44,6 +44,32 @@ export default function PhoneDetector({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const recordedChunksRef = useRef<Blob[]>([])
   const [cameraReady, setCameraReady] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const cameraPanelRef = useRef<HTMLDivElement>(null)
+  const expandButtonRef = useRef<HTMLButtonElement>(null)
+  const exitExpandedRef = useRef<HTMLButtonElement>(null)
+  useEffect(() => {
+    if (!expanded) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    exitExpandedRef.current?.focus()
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setExpanded(false)
+      if (event.key === 'Tab') {
+        const buttons = cameraPanelRef.current?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')
+        if (!buttons?.length) return
+        const first = buttons[0], last = buttons[buttons.length - 1]
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus() }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus() }
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = previous
+      document.removeEventListener('keydown', onKey)
+      expandButtonRef.current?.focus()
+    }
+  }, [expanded])
   const switchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   useEffect(() => () => { if (switchTimerRef.current) clearTimeout(switchTimerRef.current) }, [])
   const recordingTimerRef = useRef<NodeJS.Timeout | null>(null)
@@ -100,6 +126,7 @@ export default function PhoneDetector({
   const [error, setError] = useState<string | null>(null)
   const [isCompatible, setIsCompatible] = useState(true)
   const [isCameraActive, setIsCameraActive] = useState(false)
+  useEffect(() => { if (!isCameraActive || error || isLoading) setExpanded(false) }, [isCameraActive, error, isLoading])
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment')
 
   // Recording state
@@ -168,6 +195,9 @@ export default function PhoneDetector({
   }, [selectedModel, isCompatible, modelAttempt])
 
   const changeModel = (id: DetectorModelId) => {
+    if (id === selectedModel) return
+    stopSound(); setPhoneDetected(false); setCameraReady(false); overlayRef.current.reset()
+    if (alarmTimeoutRef.current) clearTimeout(alarmTimeoutRef.current)
     setSelectedModel(id)
     try { localStorage.setItem(DETECTOR_PREFERENCE, id) } catch {}
   }
@@ -659,7 +689,7 @@ export default function PhoneDetector({
         </h2>
 
         {/* Camera Toggle Button */}
-        {!isLoading && !error && isCompatible && (
+        {isCompatible && (isCameraActive || (!isLoading && !error)) && (
           <div className="detector-start mt-4">
             <button
               onClick={toggleCamera}
@@ -686,6 +716,16 @@ export default function PhoneDetector({
           </div>
         )}
       </div>
+
+        <div className="detector-model-card mx-auto mb-4 text-left">
+          <label htmlFor="detector-model" className="block font-semibold mb-2">Detection model</label>
+          <select id="detector-model" aria-describedby="detector-model-description" value={selectedModel || ''} disabled={isRecording} onChange={event => changeModel(event.target.value as DetectorModelId)} className="detector-select w-full min-h-12 p-3 rounded-lg border" style={{background:'var(--color-bg-secondary)',color:'var(--color-text-primary)'}}>
+            {!selectedModel && <option value="">Choosing model…</option>}
+            {Object.entries(DETECTOR_MODELS).map(([id,model])=><option key={id} value={id}>{model.name}</option>)}
+          </select>
+          <p id="detector-model-description" className="text-sm mt-2" style={{color:'var(--color-text-secondary)'}}>{selectedModel && DETECTOR_MODELS[selectedModel].description} {isRecording ? 'Stop recording to change models.' : isCameraActive ? 'Changing models briefly restarts the camera.' : 'Choose a model, then start the camera.'}</p>
+          <Link href="/model-lab/" className="detector-lab-link inline-flex items-center underline text-sm mt-1">Compare models</Link>
+        </div>
 
       <div className="relative">
         {/* Browser compatibility fallback */}
@@ -738,8 +778,16 @@ export default function PhoneDetector({
 
         {/* Webcam and canvas (when camera is active) */}
         {!isLoading && !error && isCompatible && isCameraActive && (
-          <div className="detector-camera relative rounded-2xl overflow-hidden">
-            <div className="relative">
+          <div ref={cameraPanelRef} role={expanded ? 'dialog' : undefined} aria-modal={expanded ? true : undefined} aria-label={expanded ? 'Expanded camera' : undefined} className={`detector-camera relative rounded-2xl overflow-hidden${expanded ? ' detector-camera-expanded' : ''}`}>
+            {expanded && <AlarmEffect active={phoneDetected} theme={selectedTheme} intensity={selectedIntensity} />}
+            <div className="detector-view-actions">
+              <button ref={expanded ? exitExpandedRef : expandButtonRef} type="button" aria-expanded={expanded} onClick={() => setExpanded(value => !value)}>{expanded ? 'Exit expanded view' : 'Expand camera'}</button>
+              {expanded && <>
+                <button type="button" onClick={toggleMute}>{selectedSound === 'none' || volume === 0 ? 'Unmute alarm' : 'Mute alarm'}</button>
+                <button type="button" onClick={() => { setExpanded(false); toggleCamera() }}>Stop camera</button>
+              </>}
+            </div>
+            <div className="detector-video-frame relative">
             {/* Webcam feed */}
             <Webcam
               ref={webcamRef}
@@ -885,16 +933,6 @@ export default function PhoneDetector({
           <SoundSelector selectedSound={selectedSound} volume={volume} onSoundChange={changeSound} onVolumeChange={changeVolume} onPreview={previewSound} onToggleMute={toggleMute} />
           <details className="detector-advanced">
             <summary>Advanced <ChevronDownIcon aria-hidden="true" /></summary>
-        <div className="detector-model-card mx-auto mt-4 text-left">
-          <label htmlFor="detector-model" className="block font-semibold mb-2">Detection model</label>
-          <select id="detector-model" aria-describedby="detector-model-description" value={selectedModel || ''} disabled={isCameraActive} onChange={event => changeModel(event.target.value as DetectorModelId)} className="detector-select w-full min-h-12 p-3 rounded-lg border" style={{background:'var(--color-bg-secondary)',color:'var(--color-text-primary)'}}>
-            {!selectedModel && <option value="">Choosing model…</option>}
-            {Object.entries(DETECTOR_MODELS).map(([id,model])=><option key={id} value={id}>{model.name}</option>)}
-          </select>
-          <p id="detector-model-description" className="text-sm mt-2" style={{color:'var(--color-text-secondary)'}}>{selectedModel && DETECTOR_MODELS[selectedModel].description} {isCameraActive && 'Stop the camera to change models.'}</p>
-          <Link href="/model-lab/" className="detector-lab-link inline-flex items-center underline text-sm mt-1">Compare models</Link>
-        </div>
-
             <div className="detector-appearance">
               <h3>Visual alert</h3>
               <ThemeSelector selectedTheme={selectedTheme} selectedIntensity={selectedIntensity} onThemeChange={handleThemeChange} onIntensityChange={handleIntensityChange} />
@@ -904,7 +942,7 @@ export default function PhoneDetector({
       </details>
 
       {/* Global alarm effect */}
-      <AlarmEffect active={phoneDetected} theme={selectedTheme} intensity={selectedIntensity} />
+      {!expanded && <AlarmEffect active={phoneDetected} theme={selectedTheme} intensity={selectedIntensity} />}
 
       {/* Recording Preview Modal */}
       {showPreview && recordedBlob && (

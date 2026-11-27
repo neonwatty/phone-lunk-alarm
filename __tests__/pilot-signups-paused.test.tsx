@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import WaitlistPage from '@/app/waitlist/page'
 import CTA from '@/components/CTA'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 describe('paused gym pilot signups', () => {
   it('keeps the pilot page and demo available without rendering any signup form or email links', () => {
-    const { container } = render(<WaitlistPage />)
+    const { container } = render(<WaitlistPage />, { wrapper: ThemeProvider })
 
     expect(screen.getByRole('heading', { name: 'Pilot signups are paused' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Try the browser demo' })).toHaveAttribute('href', '/demo')

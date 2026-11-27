@@ -21,8 +21,8 @@ export const pageMetadata = {
     path: '/demo',
   },
   '/waitlist': {
-    title: 'Gym Pilot Interest | Phone Lunk',
-    description: 'Interested in a Phone Lunk gym pilot? See the kiosk scoreboard concept for gym owners, staff moderation, and privacy-first phone detection events.',
+    title: 'Gym Pilot Concept | Phone Lunk',
+    description: 'Explore the Phone Lunk gym kiosk concept and try the browser demo. Gym pilot signups are currently paused.',
     path: '/waitlist',
   },
   '/about': {

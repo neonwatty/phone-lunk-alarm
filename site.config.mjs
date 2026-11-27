@@ -28,7 +28,7 @@ const siteConfig = {
     name: 'neonwatty',
     role: 'Product Builder',
     bio: 'Building innovative tools and products.',
-    email: 'hello@phone-lunk.app',
+    email: null,
   },
 
   // Social media links (set to null to hide)
@@ -36,7 +36,7 @@ const siteConfig = {
     github: null,
     twitter: 'https://x.com/neonwatty',
     linkedin: null,
-    email: 'mailto:hello@phone-lunk.app?subject=Phone%20Lunk%20gym%20pilot',
+    email: null,
     blog: 'https://neonwatty.com/',
     reddit: null,
   },
@@ -134,10 +134,10 @@ const siteConfig = {
 
   // Call-to-action section
   cta: {
-    headline: 'Want to Test the Gym Pilot Concept?',
-    description: 'Try the browser demo, then see how a privacy-first kiosk pilot could make equipment hogging visible without storing personal camera feeds.',
-    buttonText: 'Email About a Pilot',
-    buttonHref: 'mailto:hello@phone-lunk.app?subject=Phone%20Lunk%20gym%20pilot',
+    headline: 'Explore the Gym Pilot Concept',
+    description: 'Pilot signups are paused. See how a privacy-first gym kiosk could work.',
+    buttonText: 'View Pilot Details',
+    buttonHref: '/waitlist',
   },
 
   // SEO defaults

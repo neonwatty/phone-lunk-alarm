@@ -43,8 +43,8 @@ export default function GymTvKioskPage() {
           },
         ]}
         cta={{
-          title: 'Interested in a pilot?',
-          body: 'See the gym-owner pilot page and share what kind of gym you operate.',
+          title: 'Explore the gym pilot concept',
+          body: 'Pilot signups are paused, but you can still see how the concept could work.',
           href: '/waitlist',
           label: 'View pilot details',
         }}
